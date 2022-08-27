@@ -9,5 +9,6 @@ def main():
     recieved = arduino.readline().decode("ascii")  # read arduino data with timeout = 1
     print(recieved)
 
+
 if __name__ == '__main__':
     main()
