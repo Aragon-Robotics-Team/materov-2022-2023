@@ -11,7 +11,7 @@ RSpeed = g(x, y)
 
 
 Thruster values
-1000 to 2000
+1000 to 200
 1500 is middle value, not moving
 
 Joystick values
