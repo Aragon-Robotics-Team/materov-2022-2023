@@ -1,0 +1,44 @@
+#joystick -> computer -> arduino -> thrusters, claw, etc
+
+"""
+
+
+left thruster = LSpeed
+right thruster = RSpeed
+
+LSpeed = f(x, y)
+RSpeed = g(x, y)
+
+
+Thruster values
+1000 to 2000
+1500 is middle value, not moving
+
+Joystick values
+-1 to 1
+
+f(x) = 1500 + x(500)
+
+
+
+(input joystick values)
+
+joystick x axis = x;
+joystick y axis = y;
+LSpeed;
+RSpeed;
+
+forward = y * (500)
+turn = x * (500)
+
+LSpeed = 1500 + forward + turn
+RSpeed = 1500 + forward - turn
+
+if x = 1, y = 0
+LSpeed = 1500 + 0 + 500 = 2k
+RSpeed = 1500 + 0 - 500 = 1k
+
+(write LSpeed and RSpeed to arduino, arduino writes to thrusters)
+
+"""
+
