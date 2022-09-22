@@ -21,4 +21,3 @@ if __name__ == '__main__':
         print(recieved)
         
         time.sleep(1)
-

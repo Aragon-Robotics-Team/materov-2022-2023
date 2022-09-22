@@ -268,7 +268,7 @@ def draw_boxes(image_, boxes, labels):
     return image  
 
 anchors = [[[116,90], [156,198], [373,326]], [[30,61], [62,45], [59,119]], [[10,13], [16,30], [33,23]]]
-image_path = 'C:/Users/alexa/Documents/GitHub/materov-2022-2023/AI Tensorflow'
+image_path = 'C:/Users/alexa/Documents/GitHub/materov-2022-2023/AITensorflow/bus.jpeg'
 
 image_pil = Image.open(image_path)
 image_w, image_h = image_pil.size
@@ -294,7 +294,9 @@ def detect_image(image_pil, obj_thresh = 0.4, nms_thresh = 0.45, darknet=darknet
   else: 
     return draw_boxes(image_pil, [], labels)
  
-detect_image('C:/Users/alexa/Desktop/Github/materov-2022-2023/fish.png')
+detect_image()
+
+
 
 # def detect_video(video_path, output_path, obj_thresh = 0.4, nms_thresh = 0.45, darknet=darknet, net_h=416, net_w=416, anchors=anchors, labels=labels):
 #     vid = cv2.VideoCapture(video_path)
