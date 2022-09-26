@@ -6,7 +6,7 @@ import sklearn
 from tensorflow.keras import datasets, layers, models
 import matplotlib.pyplot as plt
 
-EPOCHS = 10
+EPOCHS = 20
 
 # iris = load_iris()
 # x, y = iris.data(), iris.target
