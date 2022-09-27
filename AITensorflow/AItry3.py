@@ -31,7 +31,7 @@ model.compile(optimizer = 'adam',
             loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
             metrics = ['accuracy'])
 history = model.fit(trainImages, trainLabels, epochs=EPOCHS,
-                    validation_data=(testImages, testLabels))
+                    validation_data= (testImages, testLabels))  
 
 
 plt.plot(history.history['accuracy'], label='accuracy')
