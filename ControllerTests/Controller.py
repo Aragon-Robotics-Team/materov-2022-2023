@@ -17,6 +17,14 @@ Objectives:
  - Write string to Arduino
 """
 
+global FL_PWM
+global FR_PWM
+global BL_PWM
+global BR_PWM
+
+FL_PWM, FR_PWM, BL_PWM, BR_PWM = 1500
+
+
 arduino = Serial(port='/dev/cu.usbmodem14101', baudrate=9600, timeout=1)
 
 def convert(vals): #go from (-1, 1) to PWM Values
@@ -193,6 +201,9 @@ while not done:
         joystick_LY = convert(message[1])
         joystick_RX = convert(message[3])
         # joystick_RY = convert(message[4])
+
+        # joystick2_FL, joystick2_BR = 1500 - (message[] * 400)
+        # joystick2_FR, joystick2_BL = 1500 - (message[] * 400)
 
         
         stringVals = str(joystick_LY) + ", " + str(joystick_RX) + "."
