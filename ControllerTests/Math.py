@@ -1,48 +1,54 @@
-def convert(val): #converting joystick numbers(-1 to 1) to pwm values
-    #default is 1500
-    return 1500 + val*400
+def PWM(joyVal): #converting a double to a PWM value
+    Limit = 400 #with 400 the max is 1900 and the min is 1100 PWM
+    joyVal = joyVal * 400
+    return joyVal
 
-(0.5, 0.5)
+def amalgamateString(Lx, Ly, Rx, A, B): #add in claw buttons and Sensitive Mode
+    #Lx-Double/float, Ly-Double/float, Rx-Double/float, A-Boolean, B-Boolean, "Sensitive Mode" - Boolean
+    v1= v2= fr= fl= br= bl = 1500
 
-def getXVals():
-    pass
+    HastaMañana = "" #constructed string to be sent to the arduino
 
+    if(Lx>0):
+        fr += PWM(Lx)
+        br += PWM(Lx)
+        #fr and br activate
+    elif(Lx<0):
+        fl += PWM(Lx)
+        bl += PWM(Lx)
+        #fl and bl activate
 
-def mathify(LJ, RJ): #get all the stuffs together  #left and right joysticks
-    Lx =  LJ.getXVals()  # left joystick x position
-    Ly = LJ.getYVals() # left joystick y position
-    Rx = RJ.getXvals() # right joystick x position
-    LxPWM = convert(LJ.getXvals())  # mapped value (to be added as PMW)
-    LyPWM = convert(LJ.getYVals())  # mapped value (to be added as PMW)
-    RxPWM = convert(RJ.getXvals())  # mapped value (to be added as PMW)
+    if(Ly>0):
+        br += PWM(Ly)
+        bl += PWM(Ly)
+        #br and bl enable
+    elif(Ly<0):
+        fr += PWM(Ly)
+        fl += PWM(Ly)
+        #fr and fl enable
 
-    #Ry values not necessary
-
-    deadband = 0.1
-
-    fl, fr, bl, br = 0  #each thrusters speed(2d motion)
-
-    if(abs(Lx)<deadband): # if its greater than deadband
-        #go right, else go left (my fault jiaqi)
-        fl, bl += LxPWM
-        #add onto the left thrusters
-        pass
-    if(Lx<0):
-        fr, br += LxPWM
-        #add onto the right thrusters
-        pass
-    if (Ly>0): #go forward, else go backwards
-        br, bl += LyPWM
-        #add onto the back thrusters
-        pass
-    if(Ly<0):
-        fr, fl += LyPWM
-        #add onto the front thrusters
-        pass
-    StringToSend  = str(fr)+str(fl)+str(br)+str(bl) 
-    return StringToSend
+    turnPWM = Rx50 #the fifty scales it down, bc we don't need 4 thrusters at 1900 pwm just to turn
+    fl -= turnPWM
+    bl += turnPWM
+    br -= turnPWM
+    fr += turnPWM
 
 
+    Vstrength = 200 #deviation from 1500 for vertical thrusters from one button click
+    if(A): #if A is pressed
+        v1 += Vstrength
+        v2 += Vstrength
+        #v1 and v2 go up
+    if(B): #if B is pressed
+        v1 -= Vstrength
+        v2 -= Vstrength
+        #v1 and v2 go down
 
+    list = [v1, v2, fr, fl, br, bl]
+    for i in range(len(list)): #constructing HastaMañana
+        list[i] = round(list[i])
+        HastaMañana+= str(list[i])+","
+    #return list #return an array of thruster values rather than a string
+    return HastaMañana
 
-
+print(amalgamateString(0.5, 0.5, 0, True, False))
