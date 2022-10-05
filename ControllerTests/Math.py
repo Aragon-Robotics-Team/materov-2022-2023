@@ -1,54 +1,59 @@
-def PWM(joyVal): #converting a double to a PWM value
-    Limit = 400 #with 400 the max is 1900 and the min is 1100 PWM
-    joyVal = joyVal * 400
+def PWM(joyVal): # converting a double to a PWM value
+    Limit = 400 # with 400 the max is 1900 and the min is 1100 PWM
+    joyVal = (joyVal * Limit)
     return joyVal
 
-def amalgamateString(Lx, Ly, Rx, A, B): #add in claw buttons and Sensitive Mode
-    #Lx-Double/float, Ly-Double/float, Rx-Double/float, A-Boolean, B-Boolean, "Sensitive Mode" - Boolean
-    v1= v2= fr= fl= br= bl = 1500
+def ConvertString(LX, LY, RX, A, B): # add in claw buttons and Sensitive Mode
+    #LX-Double/float, LY-Double/float, Rx-Double/float, A-Boolean, B-Boolean, "Sensitive Mode" - Boolean
+    
+    v1 = v2 = fr = fl = br = bl = 1500
+    string_values = ""
 
-    HastaMañana = "" #constructed string to be sent to the arduino
-
-    if(Lx>0):
-        fr += PWM(Lx)
-        br += PWM(Lx)
+    if (LX > 0):
+        fr += PWM(LX)
+        br += PWM(LX)
         #fr and br activate
-    elif(Lx<0):
-        fl += PWM(Lx)
-        bl += PWM(Lx)
+    elif (LX < 0):
+        fl += PWM(LX)
+        bl += PWM(LX)
         #fl and bl activate
-
-    if(Ly>0):
-        br += PWM(Ly)
-        bl += PWM(Ly)
+    if (LY > 0):
+        br += PWM(LY)
+        bl += PWM(LY)
         #br and bl enable
-    elif(Ly<0):
-        fr += PWM(Ly)
-        fl += PWM(Ly)
+    elif (LY < 0):
+        fr += PWM(LY)
+        fl += PWM(LY)
         #fr and fl enable
 
-    turnPWM = Rx50 #the fifty scales it down, bc we don't need 4 thrusters at 1900 pwm just to turn
-    fl -= turnPWM
-    bl += turnPWM
-    br -= turnPWM
-    fr += turnPWM
+    if (RX): # right controller joystick formula
+        cap = 50
+        modifier = 400/cap
+        br -= PWM(RX)/modifier
+        fr += PWM(RX)/modifier
+        fl -= PWM(RX)/modifier
+        bl += PWM(RX)/modifier
 
-
-    Vstrength = 200 #deviation from 1500 for vertical thrusters from one button click
-    if(A): #if A is pressed
-        v1 += Vstrength
-        v2 += Vstrength
+    vertical_strength = 200 #deviation from 1500 for vertical thrusters from one button click
+    if (A): #if A is pressed
+        v1 += vertical_strength
+        v2 += vertical_strength
         #v1 and v2 go up
-    if(B): #if B is pressed
-        v1 -= Vstrength
-        v2 -= Vstrength
+
+    if (B): #if B is pressed
+        v1 -= vertical_strength
+        v2 -= vertical_strength
         #v1 and v2 go down
 
-    list = [v1, v2, fr, fl, br, bl]
-    for i in range(len(list)): #constructing HastaMañana
-        list[i] = round(list[i])
-        HastaMañana+= str(list[i])+","
-    #return list #return an array of thruster values rather than a string
-    return HastaMañana
+    array_values = [fr, fl, br, bl, v1, v2]
+    print(array_values)
 
-print(amalgamateString(0.5, 0.5, 0, True, False))
+    for value in array_values:
+        value = max(1400, value)
+        value = min(1900, value)
+        string_values += str(value) + ", "
+
+    #return array_values #return an array of thruster values rather than a string
+    return string_values
+
+print(ConvertString(1, 0, 1, False, False))
