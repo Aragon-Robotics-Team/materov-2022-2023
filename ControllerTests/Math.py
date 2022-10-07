@@ -1,6 +1,6 @@
 def PWM(joyVal): # converting a double to a PWM value
-    Limit = 400 # with 400 the max is 1900 and the min is 1100 PWM
-    joyVal = (joyVal * Limit)
+    limit = 400 # with 400 the max is 1900 and the min is 1100 PWM
+    joyVal = (joyVal * limit)
     return joyVal
 
 def ConvertString(LX, LY, RX, A, B): # add in claw buttons and Sensitive Mode
@@ -26,14 +26,29 @@ def ConvertString(LX, LY, RX, A, B): # add in claw buttons and Sensitive Mode
         fl += PWM(LY)
         #fr and fl enable
 
-    if (RX): # right controller joystick formula
-        cap = 50
-        modifier = 400/cap
-        br -= PWM(RX)/modifier
-        fr += PWM(RX)/modifier
-        fl -= PWM(RX)/modifier
-        bl += PWM(RX)/modifier
 
+    if(RX>0):
+
+        pass
+    elif(RX<0):
+
+        pass
+    
+
+    if RX > 0:
+        maxRight = max(fl, br)
+        spaceRight = 1900 - maxRight
+        fl -= RX*spaceRight
+        br -= RX*spaceRight
+
+    elif RX < 0:
+        maxLeft = max(fr, bl)
+        spaceLeft = 1900 - maxLeft
+        fr += RX*spaceLeft
+        bl += RX*spaceLeft
+
+
+        
     vertical_strength = 200 #deviation from 1500 for vertical thrusters from one button click
     if (A): #if A is pressed
         v1 += vertical_strength
@@ -48,12 +63,22 @@ def ConvertString(LX, LY, RX, A, B): # add in claw buttons and Sensitive Mode
     array_values = [fr, fl, br, bl, v1, v2]
     print(array_values)
 
-    for value in array_values:
-        value = max(1400, value)
+    for value in array_values: 
+        value = max(1100, value)
         value = min(1900, value)
         string_values += str(value) + ", "
 
     #return array_values #return an array of thruster values rather than a string
     return string_values
+    
+"""
+if (RX): # right controller joystick formula
+        cap = 50
+        modifier = 400/cap
+        br -= PWM(RX)/modifier
+        fr += PWM(RX)/modifier
+        fl -= PWM(RX)/modifier
+        bl += PWM(RX)/modifier
+"""  
 
 print(ConvertString(1, 0, 1, False, False))
