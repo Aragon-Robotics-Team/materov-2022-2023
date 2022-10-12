@@ -1,3 +1,5 @@
+
+
 def PWM(joyVal): #converting a double to a PWM value
     Limit = 400 #with 400 the max is 1900 and the min is 1100 PWM
     joyVal = joyVal*Limit
@@ -34,7 +36,6 @@ def makeString(Lx, Ly, Rx, A, B):
     
     
     sendStr  = str(br)+","+str(fl)+","+str(bl)+","+str(fr)+","+str(v1)+","+str(v2)
-    print(sendStr)
     return sendStr
 
     

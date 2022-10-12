@@ -24,15 +24,48 @@ global BR_PWM
 
 # FL_PWM, FR_PWM, BL_PWM, BR_PWM = 1500
 
+def PWM(joyVal): #converting a double to a PWM value
+    Limit = 400 #with 400 the max is 1900 and the min is 1100 PWM
+    joyVal = joyVal*Limit
+    return joyVal
 
-arduino = Serial(port='/dev/cu.usbmodem14101', baudrate=9600, timeout=1)
+def makeString(Lx, Ly, Rx, A, B):
+    #Lx-Double/float, Ly-Double/float, Rx-Double/float, A-Boolean, B-Boolean, "Sensitive Mode" - Boolean
+    v1= v2= fr= fl= br= bl = 1500
+    sendStr = "" #constructed string to be sent to the arduino
 
-def convert(vals): #go from (-1, 1) to PWM Values
-    vals = 1500 - (vals * 400)
-    return round(vals) #integer pwm
+    if(Lx < 0.1 and Lx > -0.1):
+        Lx = 0
+    if(Ly < 0.1 and Ly > -0.1):
+        Ly = 0
+    
 
-#change modem number accordingly(currently 142101)
-#arduino = serial.Serial(port='/dev/cu.usbmodem142101', baudrate=9600, timeout=1)
+    turn = PWM(Rx/6)
+    br += round(PWM((Lx+Ly)/4) - turn)
+    fl -= round(PWM((Lx+Ly)/4) - turn)
+    bl += round(PWM((Ly-Lx)/4) - turn)
+    fr -= round(PWM((Lx-Ly)/4) - turn)
+    
+
+    Vstrength = 200 #vertical thruster code chunks
+    if(A): #if A is pressed
+        v1 += Vstrength
+        v2 += Vstrength
+        #v1 and v2 go up
+    if(B): #if B is pressed
+        v1 -= Vstrength
+        v2 -= Vstrength
+        #v1 and v2 go down
+
+    
+    
+    sendStr  = str(br)+","+str(fl)+","+str(bl)+","+str(fr)+","+str(v1)+","+str(v2) + ","
+    return sendStr
+
+arduino = Serial(port='/dev/cu.usbmodem14201', baudrate=9600, timeout=1)
+
+#change modem number accordingly
+
 
 os.system('title client')  #rename command prompt
 os.system('cls')           #clear command prompt screen
@@ -198,20 +231,14 @@ while not done:
         textPrint.tprint(screen, "array length {}".format(i))
         
         # joystick_LX = convert(message[0])
-        joystick_LY = convert(message[1])
-        joystick_RX = convert(message[3])
+        
         # joystick_RY = convert(message[4])
 
         # joystick2_FL, joystick2_BR = 1500 - (message[] * 400)
         # joystick2_FR, joystick2_BL = 1500 - (message[] * 400)
 
         
-        stringVals = str(joystick_LY) + ", " + str(joystick_RX) + "."
-        
-        
-        stringVals = stringVals.encode("ascii")
-        arduino.write(stringVals)
-        print(stringVals)
+        arduino.write(makeString(message[0], message[1], message[3], 1, 0.5).encode("ascii"))
 
         #arduino.write(funcs.mathify(message)) #write the arduino the instructions
         for i in range(len(message)):  
