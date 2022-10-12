@@ -22,7 +22,7 @@ global FR_PWM
 global BL_PWM
 global BR_PWM
 
-FL_PWM, FR_PWM, BL_PWM, BR_PWM = 1500
+# FL_PWM, FR_PWM, BL_PWM, BR_PWM = 1500
 
 
 arduino = Serial(port='/dev/cu.usbmodem14101', baudrate=9600, timeout=1)

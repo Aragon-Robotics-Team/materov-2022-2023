@@ -24,7 +24,7 @@ void setup() {
   fr.attach(4);
   fl.attach(5);
   br.attach(6); //check 6 and 7 pins(if they are pwm)
-  bl.attach(7);
+  bl.attach(7);git 
 }
 
 void loop() {

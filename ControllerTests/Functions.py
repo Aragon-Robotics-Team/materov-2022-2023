@@ -14,7 +14,7 @@ def amalgamateString(LX, LY, RX, A, B): # add in claw buttons and Sensitive Mode
         fr += PWM(LX)
         br += PWM(LX)
         #fr and br activate
-    elif (LX < 0): #hi JIAQI
+    elif (LX < 0):
         fl += PWM(LX)
         bl += PWM(LX)
         #fl and bl activate
