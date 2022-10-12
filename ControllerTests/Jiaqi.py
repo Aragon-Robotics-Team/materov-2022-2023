@@ -1,6 +1,3 @@
-
-
-
 def PWM(joyVal): #converting a double to a PWM value
     Limit = 400 #with 400 the max is 1900 and the min is 1100 PWM
     joyVal = joyVal*Limit
@@ -11,10 +8,10 @@ def makeString(Lx, Ly, Rx, A, B):
     v1= v2= fr= fl= br= bl = 1500
     sendStr = "" #constructed string to be sent to the arduino
 
-    if(Lx<0.1):
-        Lx=0
-    if(Ly<0.1):
-        Ly=0
+    if(Lx < 0.1 and Lx > -0.1):
+        Lx = 0
+    if(Ly < 0.1 and Ly > -0.1):
+        Ly = 0
     
 
     turn = PWM(Rx/6)
