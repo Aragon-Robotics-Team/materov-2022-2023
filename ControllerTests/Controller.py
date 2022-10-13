@@ -64,6 +64,9 @@ def makeString(Lx, Ly, Rx, A, B):
 
 arduino = Serial(port='/dev/cu.usbmodem14201', baudrate=9600, timeout=1)
 
+while (arduino.in_waiting == 0):
+    pass
+
 #change modem number accordingly
 
 
