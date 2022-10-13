@@ -17,13 +17,6 @@ Objectives:
  - Write string to Arduino
 """
 
-global FL_PWM
-global FR_PWM
-global BL_PWM
-global BR_PWM
-
-# FL_PWM, FR_PWM, BL_PWM, BR_PWM = 1500
-
 def PWM(joyVal): #converting a double to a PWM value
     Limit = 400 #with 400 the max is 1900 and the min is 1100 PWM
     joyVal = joyVal*Limit
@@ -63,10 +56,6 @@ def makeString(Lx, Ly, Rx, A, B):
     return sendStr
 
 arduino = Serial(port='/dev/cu.usbmodem14201', baudrate=9600, timeout=1)
-
-while (arduino.in_waiting == 0):
-    pass
-
 #change modem number accordingly
 
 
@@ -223,7 +212,7 @@ while not done:
         # Hat position. All or nothing for direction, not a float like
         # get_axis(). Position is a tuple of int values (x, y).
         for i in range(hats):
-            ha = joystick.get_hat(i)
+            hat = joystick.get_hat(i)
             textPrint.tprint(screen, "Hat {} value: {}".format(i, str(hat)))
         textPrint.unindent()
 
@@ -232,18 +221,11 @@ while not done:
         i = range(len(message))
 
         textPrint.tprint(screen, "array length {}".format(i))
-        
-        # joystick_LX = convert(message[0])
-        
-        # joystick_RY = convert(message[4])
 
-        # joystick2_FL, joystick2_BR = 1500 - (message[] * 400)
-        # joystick2_FR, joystick2_BL = 1500 - (message[] * 400)
 
         
-        arduino.write(makeString(message[0], message[1], message[3], 1, 0.5).encode("ascii"))
+        arduino.write(makeString(message[0], message[1], message[3], message[6], message[7]).encode("ascii"))
 
-        #arduino.write(funcs.mathify(message)) #write the arduino the instructions
         for i in range(len(message)):  
             value = message[int(i)]
             textPrint.tprint(screen, "value {}: {}".format(i, value))
