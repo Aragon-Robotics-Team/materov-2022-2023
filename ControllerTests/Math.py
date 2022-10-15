@@ -26,15 +26,6 @@ def ConvertString(LX, LY, RX, A, B): # add in claw buttons and Sensitive Mode
         fl += PWM(LY)
         #fr and fl enable
 
-
-    if(RX>0):
-
-        pass
-    elif(RX<0):
-
-        pass
-    
-
     if RX > 0:
         maxRight = max(fl, br)
         spaceRight = 1900 - maxRight
