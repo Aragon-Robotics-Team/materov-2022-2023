@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 
-import glob 
+import globvar 
 
 import cv2 
 import multiprocessing 
@@ -31,17 +31,17 @@ label.grid(row = 1, column = 0, rowspan = 40, columnspan = vcol, sticky = 'n')
 
 def showFrames():
     cv2image= cv2.cvtColor(cap.read()[1],cv2.COLOR_BGR2RGB)
+    #error is fine 
     img = Image.fromarray(cv2image)
     # Convert image to PhotoImage
     imgtk = ImageTk.PhotoImage(image = img)
+    #error is fine
     label.imgtk = imgtk
     label.configure(image=imgtk)
     # Repeat after an interval to capture continiously
     label.after(20, showFrames)
 
 showFrames()
-
-root.mainloop()
 
 if __name__ == "__main__":
     root.mainloop()

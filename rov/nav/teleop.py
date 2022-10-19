@@ -9,8 +9,12 @@ def teleopMain(input_queue, output_queue):
     # output_queue.put(statuses)
     # print("put in queue")
 
+    print("in teleopMain")
+
     robot = Config('Mac', True, False, input_queue, output_queue)
+    print("starting teleop")
     robot.joy_init()
+    print("starting joy_init")
 
 
 
