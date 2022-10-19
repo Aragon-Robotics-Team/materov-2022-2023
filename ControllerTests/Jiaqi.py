@@ -1,5 +1,3 @@
-
-
 def PWM(joyVal): #converting a double to a PWM value
     Limit = 400 #with 400 the max is 1900 and the min is 1100 PWM
     joyVal = joyVal*Limit

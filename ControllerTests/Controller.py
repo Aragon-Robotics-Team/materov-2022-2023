@@ -225,6 +225,10 @@ while not done:
 
         
         arduino.write(makeString(message[0], message[1], message[3], message[6], message[7]).encode("ascii"))
+        while (arduino.in_waiting == 0):
+            pass
+        recieved = arduino.readline().decode("ascii")  # read arduino data with timeout = 1
+        print(recieved)
 
         for i in range(len(message)):  
             value = message[int(i)]
