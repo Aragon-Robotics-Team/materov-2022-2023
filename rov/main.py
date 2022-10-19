@@ -16,6 +16,7 @@ class ThrusterProcess(multiprocessing.Process):
         self.output_queue = output_queue
     def run(self):
         #nav.teleop.teleopMain()
+        print("running teleopMain")
         teleopMain(self.input_queue, self.output_queue)
         # print("h")
         # pygame.init()
@@ -29,6 +30,7 @@ if __name__ == "__main__":
 
     thruster_in_queue = multiprocessing.Queue()
     thruster_out_queue = multiprocessing.Queue()
+
     # gui.queue(thruster_in_queue, thruster_out_queue)
 
     #

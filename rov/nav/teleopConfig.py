@@ -6,7 +6,7 @@ from nav.tracer import start, end, agg
 class Config: 
     def __init__(self, computerType, serialOn, serialRecieveOn, inputQueue, outputQueue):
         self.computerType = computerType
-        self.serialPort = '/dev/cu.usbmodem142101'
+        self.serialPort = '/dev/cu.usbmodem114401'
         self.LH = 0  # Left horizontal axis
         self.LV = 1  # Left vertical axis6
         self.RH = 2  # Right horizontal axis
@@ -81,8 +81,10 @@ class Config:
 
         sleep(self.initSleep)
 
+
         if self.computerType == "Mac":
             self.joy_tests_mac()
+            print("starting joy_tests")
         elif self.computerType == "RPI":
             self.joy_tests_rpi()
 
