@@ -1,6 +1,8 @@
+from email import message
 import pygame
 import Jiaqi
 import time
+import serial
 
 # Initialize pygame modules
 pygame.init()
@@ -50,6 +52,10 @@ PWM_values = [0, 0, 0, 0, 0]
 # [4] = V1
 # [5] = V2
 
+# ------------------------------------------------------------------------------------------------------ #
+# Arduino
+
+arduino = serial.Serial(port='/dev/cu.usbmodem14201', baudrate=9600, timeout=1)
 
 # ------------------------------------------------------------------------------------------------------ #
 # Start of MAIN LOOP
@@ -58,7 +64,7 @@ PWM_values = [0, 0, 0, 0, 0]
 while loop:
 
     pygame.event.pump()
-
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             loop = False
@@ -82,16 +88,16 @@ while loop:
                 button = joystick.get_button(i)
                 button_values[i] = button
 
-        # vals for makeString() method
-        LX = axis_values[0]
-        LY = axis_values[1]
-        RX = axis_values[3]
-        A_button = button_values[0]
-        B_button = button_values[1]
-        
-        print(axis_values)
-        print(button_values)
+        messageSerial = str(axis_values[0]) + ","
+        # messageSerial = Jiaqi.makeString(axis_values[0], axis_values[1], axis_values[3], button_values[0], button_values[1]) 
 
-        message = Jiaqi.makeString(LX, LY, RX, A_button, B_button)
-        print(message)
-  
+        arduino.write(messageSerial.encode("ascii"))
+
+        recieved = arduino.readline().decode("ascii")  # read arduino data with timeout = 1
+
+        print(recieved)
+
+        
+
+        
+

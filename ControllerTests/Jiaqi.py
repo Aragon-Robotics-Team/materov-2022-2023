@@ -5,7 +5,7 @@ def PWM(joyVal): #converting a double to a PWM value
 
 def makeString(Lx, Ly, Rx, A, B):
     #Lx-Double/float, Ly-Double/float, Rx-Double/float, A-Boolean, B-Boolean, "Sensitive Mode" - Boolean
-    v1= v2= fr= fl= br= bl = 1500
+    v1 = v2 = fr = fl = br = bl = 1500
     sendStr = "" #constructed string to be sent to the arduino
 
     if(Lx < 0.1 and Lx > -0.1):
@@ -33,7 +33,7 @@ def makeString(Lx, Ly, Rx, A, B):
 
     
     
-    sendStr  = str(br)+","+str(fl)+","+str(bl)+","+str(fr)+","+str(v1)+","+str(v2)
+    sendStr  = str(br) + "," + str(fl) + "," + str(bl) + "," + str(fr) + "," + str(v1) + "," +str(v2) + ","
     return sendStr
 
     
