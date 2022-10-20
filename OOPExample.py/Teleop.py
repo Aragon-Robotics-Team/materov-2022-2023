@@ -1,8 +1,11 @@
-from Controller import *
+from Gamepad import *
 
 class Teleop:
-    def __init__(self, controller) -> None:
+    def __init__(self, Robot) -> None:
+        self.Robot = Robot
+
+    def init(self):
         pass
 
     def start(self):
-        pass
+        print(self.Robot.arduino.getSerial())
