@@ -1,6 +1,6 @@
 from email import message
 import pygame
-import Jiaqi
+import JiaqiAndVishal
 import time
 import serial
 
@@ -88,14 +88,16 @@ while loop:
                 button = joystick.get_button(i)
                 button_values[i] = button
 
-        messageSerial = str(axis_values[0]) + ","
-        # messageSerial = Jiaqi.makeString(axis_values[0], axis_values[1], axis_values[3], button_values[0], button_values[1]) 
+        messageSerial = "LX: " + str(axis_values[0]) + ", LY: " +  str(axis_values[1]) + "p"
+        # axis_values[0]
+        # messageSerial = JiaqiAndVishal.makeString(axis_values[0], axis_values[1], axis_values[3], button_values[0], button_values[1]) 
 
         arduino.write(messageSerial.encode("ascii"))
 
         recieved = arduino.readline().decode("ascii")  # read arduino data with timeout = 1
 
         print(recieved)
+        print(messageSerial)
 
         
 

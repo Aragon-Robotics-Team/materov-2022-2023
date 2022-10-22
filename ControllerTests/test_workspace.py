@@ -1,5 +1,5 @@
 import pygame
-import Jiaqi
+import JiaqiAndVishal
 import time
 import serial
 
@@ -76,7 +76,6 @@ while loop:
                 print(f"Joystick {joy.get_instance_id()} connected")
         
         for joystick in joysticks.values():
-            
             axes = joystick.get_numaxes()
             for i in range(axes):
                 axis = joystick.get_axis(i)
@@ -97,11 +96,13 @@ while loop:
         # print(axis_values)
         # print(button_values)
 
-        message = Jiaqi.makeString(LX, LY, RX, A_button, B_button)
-        arduino.write(message.encode("ascii"))
-
-        time.sleep(0.1)
+        message = JiaqiAndVishal.makeString(LX, LY, RX, A_button, B_button)
         
+        arduino.write(message.encode("ascii"))
+        print(message.encode("ascii"))
+
+        # time.sleep(0.1)
+
         recieved = arduino.readline().decode("ascii")  # read arduino data with timeout = 1
         print(recieved)
 

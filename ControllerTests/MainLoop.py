@@ -1,6 +1,7 @@
 import pygame
-import Jiaqi
+import JiaqiAndVishal
 import time
+import serial
 
 # Initialize pygame modules
 pygame.init()
@@ -50,6 +51,10 @@ PWM_values = [0, 0, 0, 0, 0]
 # [4] = V1
 # [5] = V2
 
+# ------------------------------------------------------------------------------------------------------ #
+# Arduino
+
+arduino = serial.Serial(port='/dev/cu.usbmodem14201', baudrate=9600, timeout=1)
 
 # ------------------------------------------------------------------------------------------------------ #
 # Start of MAIN LOOP
@@ -71,7 +76,6 @@ while loop:
                 print(f"Joystick {joy.get_instance_id()} connected")
         
         for joystick in joysticks.values():
-            
             axes = joystick.get_numaxes()
             for i in range(axes):
                 axis = joystick.get_axis(i)
@@ -89,9 +93,20 @@ while loop:
         A_button = button_values[0]
         B_button = button_values[1]
         
-        print(axis_values)
-        print(button_values)
+        # print(axis_values)
+        # print(button_values)
 
-        message = Jiaqi.makeString(LX, LY, RX, A_button, B_button)
-        print(message)
-  
+        message = JiaqiAndVishal.makeString(LX, LY, RX, A_button, B_button)
+        
+        arduino.write(message.encode("ascii"))
+
+        time.sleep(0.1)
+
+        recieved = arduino.readline().decode("ascii")  # read arduino data with timeout = 1
+        print(recieved)
+
+        
+
+        
+
+        
