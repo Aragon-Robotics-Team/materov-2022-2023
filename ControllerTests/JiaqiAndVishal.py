@@ -3,6 +3,8 @@ def PWM(joyVal): #converting a double to a PWM value
     joyVal = joyVal*Limit
     return joyVal
 
+#change the range of values for the PWM values later if we want to
+
 def makeString(Lx, Ly, Rx, A, B):
     #Lx-Double/float, Ly-Double/float, Rx-Double/float, A-Boolean, B-Boolean, "Sensitive Mode" - Boolean
     v1 = v2 = fr = fl = br = bl = 1500
@@ -14,11 +16,11 @@ def makeString(Lx, Ly, Rx, A, B):
         Ly = 0
     
 
-    turn = PWM(Rx/6)
-    br += round(PWM((Lx+Ly)/4) - turn)
-    fl -= round(PWM((Lx+Ly)/4) - turn)
-    bl += round(PWM((Ly-Lx)/4) - turn)
-    fr -= round(PWM((Lx-Ly)/4) - turn)
+    turn = PWM(Rx/3)
+    br += round(PWM((Lx+Ly)/2) - turn)
+    fl -= round(PWM((Lx+Ly)/2) - turn)
+    bl += round(PWM((Ly-Lx)/2) - turn)
+    fr -= round(PWM((Lx-Ly)/2) - turn)
     
 
     Vstrength = 200 #vertical thruster code chunks
