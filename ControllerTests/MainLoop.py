@@ -1,5 +1,5 @@
 import pygame
-import JiaqiAndVishal
+import Math
 import time
 import serial
 
@@ -96,7 +96,7 @@ while loop:
         # print(axis_values)
         # print(button_values)
 
-        message = JiaqiAndVishal.makeString(LX, LY, RX, A_button, B_button)
+        message = Math.makeString(LX, LY, RX, A_button, B_button)
         
         arduino.write(message.encode("ascii"))
 
