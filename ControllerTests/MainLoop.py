@@ -1,5 +1,5 @@
 import pygame
-import Math
+import calc
 import time
 import serial
 
@@ -54,7 +54,7 @@ PWM_values = [0, 0, 0, 0, 0]
 # ------------------------------------------------------------------------------------------------------ #
 # Arduino
 
-arduino = serial.Serial(port='/dev/cu.usbmodem14201', baudrate=9600, timeout=1)
+arduino = serial.Serial(port='/dev/cu.usbmodem14201', baudrate=115200, timeout=1)
 
 # ------------------------------------------------------------------------------------------------------ #
 # Start of MAIN LOOP
@@ -96,7 +96,7 @@ while loop:
         # print(axis_values)
         # print(button_values)
 
-        message = Math.makeString(LX, LY, RX, A_button, B_button)
+        message = calc.makeString(LX, LY, RX, A_button, B_button)
         
         arduino.write(message.encode("ascii"))
 

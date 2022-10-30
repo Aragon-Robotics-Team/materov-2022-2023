@@ -39,3 +39,28 @@ void loop() {
 }
 
 */
+
+//current arduino code
+
+/*
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(115200);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  while (!Serial.available());
+
+  String value1 = Serial.readStringUntil(',');
+  String value2 = Serial.readStringUntil(',');
+  String value3 = Serial.readStringUntil(',');
+  String value4 = Serial.readStringUntil(',');
+  String value5 = Serial.readStringUntil(',');
+  String value6 = Serial.readStringUntil(',');
+  Serial.println(value1 + ", " + value2 + ", " 
+  + value3 + ", " + value4 + ", " + value5 + ", " + value6);
+}
+
+*/
