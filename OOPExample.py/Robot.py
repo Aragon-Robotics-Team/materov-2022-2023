@@ -1,5 +1,6 @@
 from Arduino import Arduino
 from Teleop import *
+from Gamepad import *
 
 """
 Robot runs the main loop, starts the tasks such as Teleop and Autonomous
@@ -19,7 +20,7 @@ class Robot:  # Robot is a multiprocessing class process?
     def run(self):  # immediately runs
         self.arduino.init()
         self.gamepad.init()
-
+        pass
     def testGamepad(self):
         while True:  
             # Ensures that every time each task terminates, it will always

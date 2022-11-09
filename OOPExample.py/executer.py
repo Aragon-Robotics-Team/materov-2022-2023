@@ -6,7 +6,8 @@ from Gamepad import Gamepad
 def run():  # initializes and creates Robot object
     rob = Robot("cont", 12123, "wuwu")  # pass in the arduino, controller, queue
     rob.run()
-    nextTask = rob.testGamepad()
+    print(rob.arduino.getSerial())
+    # nextTask = rob.testGamepad()
 """ 
 Ensures that every time each task terminates, it will always
 circle back to controller.test (default starting place).
@@ -16,7 +17,12 @@ the Queue tells it to, and go back to controller.test
 Controller.test is merely a place to wait for the GUI to send tasks through the Queue
 Once it recieves something, it will return it, and the Loop will perform the necessary task
 
-        
+
+while True:
+//receive stuff from gui
+list qeuestuff
+queue.recieve() =  queuestuff
+   
         if nextTask = teleop:  # enters a loop
             teleopPeriod = Teleop(rob)
             nextTask = teleopPeriod.start()  will return the next GUI command
@@ -28,9 +34,9 @@ Once it recieves something, it will return it, and the Loop will perform the nec
             nextTask = auto2.start()  will return the next GUI command
         else if nextTask = test gamepad:
             nextTask = rob.testGamepad()  will return the next GUI command
+            
 
 """
 
 if __name__ == '__main__':
-    run()
-
+    import serial

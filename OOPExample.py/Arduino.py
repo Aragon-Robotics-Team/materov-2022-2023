@@ -5,7 +5,6 @@ class Arduino:
         self.serial = serial
 
     def init(self):
-        pass
-
+        arduino = serial.Serial(port='/dev/cu.usbmodem142201', baudrate=9600, timeout=3)
     def getSerial(self):
         return self.serial
