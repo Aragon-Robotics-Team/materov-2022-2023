@@ -7,7 +7,7 @@
 import multiprocessing 
 
 from nav.teleop import teleopMain  # RPI IMPORTS
-import gui
+import martingui
 
 class ThrusterProcess(multiprocessing.Process):
     def __init__(self, input_queue, output_queue):

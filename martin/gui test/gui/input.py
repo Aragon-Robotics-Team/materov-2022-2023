@@ -1,5 +1,5 @@
 import pygame
-import calc
+import JiaqiAndVishal #inlove
 import time
 import serial
 
@@ -54,7 +54,7 @@ PWM_values = [0, 0, 0, 0, 0]
 # ------------------------------------------------------------------------------------------------------ #
 # Arduino
 
-# arduino = serial.Serial(port='/dev/cu.usbmodem14201', baudrate=115200, timeout=1)
+arduino = serial.Serial(port='COM8', baudrate=115200, timeout=1)
 
 # ------------------------------------------------------------------------------------------------------ #
 # Start of MAIN LOOP
@@ -93,20 +93,14 @@ while loop:
         A_button = button_values[0]
         B_button = button_values[1]
         
-        print(axis_values)
-        print(button_values)
+        # print(axis_values)
+        # print(button_values)
 
-        # message = calc.makeString(LX, LY, RX, A_button, B_button)
+        message = JiaqiAndVishal.makeString(LX, LY, RX, A_button, B_button)
         
-        # arduino.write(message.encode("ascii"))
+        arduino.write(message.encode("ascii"))
 
-        # time.sleep(0.1)
+        time.sleep(0.1)
 
-        # recieved = arduino.readline().decode("ascii")  # read arduino data with timeout = 1
-        # print(recieved)
-
-        
-
-        
-
-        
+        recieved = arduino.readline().decode("ascii")  # read arduino data with timeout = 1
+        print(recieved)

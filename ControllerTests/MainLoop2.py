@@ -105,6 +105,7 @@ while loop:
         # recieved = arduino.readline().decode("ascii")  # read arduino data with timeout = 1
         # print(recieved)
 
+
         
 
         
