@@ -1,0 +1,12 @@
+ZEROTH project:
+in arduino, enter a number from 0 to 180 in the serial monitor and more the servo to that angle
+
+FIRST PROJECT:
+user enters a number in the python terminal
+python reads this number, sends it to arduino serially
+arduino reads this number, sends it back to python
+python reads this number, prints it to terminal
+
+
+SECOND PROJECT:
+same as first but arduino moves the servo to the angle 0 to 180

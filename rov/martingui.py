@@ -1,7 +1,11 @@
 from tkinter import *
 from tkinter import ttk
 
+<<<<<<< Updated upstream:rov/gui.py
 import globvar 
+=======
+#import glob 
+>>>>>>> Stashed changes:rov/martingui.py
 
 import cv2 
 import multiprocessing 

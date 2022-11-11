@@ -3,7 +3,11 @@ import time
 
 
 if __name__ == '__main__':
+<<<<<<< Updated upstream
     arduino = serial.Serial(port='/dev/cu.usbmodem14301', baudrate=9600, timeout=1)
+=======
+    arduino = serial.Serial(port='COM6', baudrate=9600, timeout=1)
+>>>>>>> Stashed changes
     # while not arduino.is_open:
     #     print("not open")
     # print("open, starting string sending")
@@ -33,4 +37,11 @@ if __name__ == '__main__':
         recieved = arduino.readline().decode("ascii")  # read arduino data with timeout = 1
         print(recieved)
         
+<<<<<<< Updated upstream
         
+=======
+        time.sleep(1)
+
+        
+
+>>>>>>> Stashed changes
