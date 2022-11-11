@@ -1,3 +1,4 @@
+from curses import window
 import globvar
 #
 from tkinter import *
@@ -6,13 +7,16 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 import cv2 
-#
 
-self = tk.Tk()
-self.title('Joystick Graphics Test 0.1')
-self.geometry('400x400')
 
-c= Canvas(self,width=350, height=350)
+
+
+
+window = tk.Tk()
+window.title('Joystick Graphics Test 0.1')
+window.geometry('400x400')
+
+c = Canvas(window,width=350, height=350)
 c.pack()
 
 ovalcenterx = 350/2
@@ -42,4 +46,19 @@ def updatePoint():
 
 updatePoint()
 
-self.mainloop()
+import multiprocessing
+
+class JiaqiSucks(multiprocessing.Process):
+    def __init__(self):
+        multiprocessing.Process.__init__(self)
+    def run(self):
+        print("running teleopMain")
+        teleopMain() 
+
+if __name__ == "__main__":
+    obj = JiaqiSucks()
+    obj.start()
+    window.mainloop()
+    
+
+#window.mainloop()
