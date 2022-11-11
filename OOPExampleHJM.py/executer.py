@@ -4,9 +4,9 @@ from Arduino import Arduino
 from Gamepad import Gamepad
 
 def run():  # initializes and creates Robot object
-    rob = Robot("cont", 12123, "wuwu")  # pass in the arduino, controller, queue
-    rob.run()
-    print(rob.arduino.getSerial())
+    rob = Gamepad()  # pass in the arduino, controller, queue
+    #rob.run()
+    # print(rob.arduino.getSerial())
     # nextTask = rob.testGamepad()
 """ 
 Ensures that every time each task terminates, it will always
@@ -39,4 +39,4 @@ queue.recieve() =  queuestuff
 """
 
 if __name__ == '__main__':
-    import serial
+    run()
