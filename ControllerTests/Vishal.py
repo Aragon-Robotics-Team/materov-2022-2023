@@ -38,9 +38,6 @@ def makeString(Lx, Ly, Rx, A, B):
     sendStr  = str(br)+","+str(fl)+","+str(bl)+","+str(fr)+","+str(v1)+","+str(v2)
     return sendStr
 
-    
-makeString(0.5, 0.5, 0.2,0, 0)
-makeString(0.05, 0.05, 0, 0, 0)
 
 
 

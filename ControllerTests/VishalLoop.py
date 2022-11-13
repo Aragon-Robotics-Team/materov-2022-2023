@@ -1,35 +1,14 @@
-#https://stackoverflow.com/questions/67428827/stream-pygame-joystick-input-over-socket-by-sending-joystick-values-to-array
+import pygame    #Read Joystick data
+import serial    #communicate with arduino
+import Vishal     #Vishal's math stuffs
+from time import sleep #the sleep is supa important
 
-import os           #gain control of command prompt features
-import pygame       #Read Joystick data
-import array
-from serial import Serial
-import time
-
-#the message array has all the values needed(that can then be stringified)
-#funcs.py
-#arduino.write(funcs.mathify(message)) line is near line 188
-"""
-Objectives:
- - Connect to Arduino port
- - Read thruster values and mathify 
- - Construct String
- - Encode String(ASCII)
- - Write string to Arduino
-"""
-
-arduino = Serial(port='/dev/cu.usbmodem14201', baudrate=9600, timeout=1)
-#change modem number accordingly
-
-
-os.system('title client')  #rename command prompt
-os.system('cls')           #clear command prompt screen
-
-
+arduino = serial.Serial('/dev/cu.usbmodem1101', 9600)
+#make the serial path...exist
 
 # Define some colors.
-TextColor = pygame.Color('blue')
-BackgroundColor= pygame.Color('pink')
+BLACK = pygame.Color('blue')  #test
+WHITE = pygame.Color('pink')  #window-color
 
 
 # This is a simple class that will help us print to the screen.
@@ -41,7 +20,7 @@ class TextPrint(object):
         self.font = pygame.font.Font(None, 20)
 
     def tprint(self, screen, textString):
-        textBitmap = self.font.render(textString, True, TextColor)
+        textBitmap = self.font.render(textString, True, BLACK)
         screen.blit(textBitmap, (self.x, self.y))
         self.y += self.line_height
 
@@ -60,9 +39,9 @@ class TextPrint(object):
 pygame.init()
 
 # Set the width and height of the screen (width, height).
-screen = pygame.display.set_mode((500, 700))
+screen = pygame.display.set_mode((500, 700)) #500, 700
 
-pygame.display.set_caption("The Name Is Bob")  # the top of the Python window
+pygame.display.set_caption("Vishal's Dominion")
 
 # Loop until the user clicks the close button.
 done = False
@@ -74,37 +53,25 @@ clock = pygame.time.Clock()
 pygame.joystick.init()
 
 # Get ready to print.
-textPrint = TextPrint()
+textPrint = TextPrint() #textPrint is initialized as a TextPrint Object
 
-#message = array.array('d',[])
-
+message = []
 # -------- Main Program Loop -----------
 while not done:
     
-    #clear message
-    #message = array.array('d', [])
-    message = []
-    #
+    #message here is going to have ALL the information in 
+    #it's smooth lil brain so make sure to treat it well
+    message = [] #clearing the contents of the list with each loop iteration
+    
     # EVENT PROCESSING STEP
     #
     # Possible joystick actions: JOYAXISMOTION, JOYBALLMOTION, JOYBUTTONDOWN,
     # JOYBUTTONUP, JOYHATMOTION
-
     for event in pygame.event.get(): # User did something.
         if event.type == pygame.QUIT: # If user clicked close.
             done = True # Flag that we are done so we exit this loop.
         elif event.type == pygame.JOYBUTTONDOWN:
             print("Joystick button pressed.")
-            if event.button == 0: #button A
-                print("Button A was pressed bois")  #up
-            if event.button == 1:
-                print("Button B")  #down
-            if event.button == 2:
-                print("Button X")  #claw
-            if event.button == 3:
-                print("Button Y")
-            
-
         elif event.type == pygame.JOYBUTTONUP:
             print("Joystick button released.")
 
@@ -113,7 +80,7 @@ while not done:
     #
     # First, clear the screen to white. Don't put other drawing commands
     # above this, or they will be erased with this command.
-    screen.fill(BackgroundColor)
+    screen.fill(WHITE)
     textPrint.reset()
 
     # Get count of joysticks.
@@ -123,7 +90,7 @@ while not done:
     textPrint.indent()
 
     # For each joystick:
-    for i in range(joystick_count): #initializing joysticks
+    for i in range(joystick_count):
         joystick = pygame.joystick.Joystick(i)
         joystick.init()
 
@@ -139,14 +106,6 @@ while not done:
         name = joystick.get_name()
         textPrint.tprint(screen, "Joystick name: {}".format(name))
 
-        # try:
-        #     guid = joystick.get_guid()
-        # except AttributeError:
-        #     # get_guid() is an SDL2 method
-        #     pass
-        # else:
-        #     textPrint.tprint(screen, "GUID: {}".format(guid))
-
         # Usually axis run in pairs, up/down for one, and left/right for
         # the other.
         axes = joystick.get_numaxes()
@@ -157,7 +116,7 @@ while not done:
             axis = joystick.get_axis(i)
             textPrint.tprint(screen, "Axis {} value: {:>6.3f}".format(i, axis))
             message.append(joystick.get_axis(i))
-        textPrint.unindent()  #are these the axes?
+        textPrint.unindent()
 
         buttons = joystick.get_numbuttons()
         textPrint.tprint(screen, "Number of buttons: {}".format(buttons))
@@ -168,10 +127,11 @@ while not done:
             textPrint.tprint(screen, "Button {:>2} value: {}".format(i, button))
             message.append(button)
         textPrint.unindent()
+
         hats = joystick.get_numhats()
         textPrint.tprint(screen, "Number of hats: {}".format(hats))
         textPrint.indent()
-        
+
         # Hat position. All or nothing for direction, not a float like
         # get_axis(). Position is a tuple of int values (x, y).
         for i in range(hats):
@@ -185,21 +145,29 @@ while not done:
 
         textPrint.tprint(screen, "array length {}".format(i))
 
-
         
-        
-
-        for i in range(len(message)):  
+        for i in range(len(message)):
+            print(message)
             value = message[int(i)]
             textPrint.tprint(screen, "value {}: {}".format(i, value))
 
-            
-            
+        #taking the values from message that we actually need
+            Lx = message[0]
+            Ly = message[1]
+            Rx = message[3]
+            A = message[6]
+            B = message[7]
+            #0, 1, 3, 6, 7 are the indices we need
 
-    #
+            mensaje = Vishal.makeString(Lx, Ly, Rx, A, B)
+            if (serial.Serial.inWaiting(arduino) > len(mensaje)):
+             arduino.write(str(mensaje).encode('utf-8')) 
+             print(arduino.readline()) # Read the newest output from the Arduino
+            
+            #sleep(0.00001) # Delay for one tenth of a second   
+
+    
     # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
-    #
-
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
 
@@ -210,3 +178,26 @@ while not done:
 # If you forget this line, the program will 'hang'
 # on exit if running from IDLE.
 pygame.quit()
+
+"""
+ARDUINO CODE:
+void setup() {
+Serial.begin(9600); // set the baud rate
+Serial.println("Ready"); // print "Ready" once
+}
+void loop() {
+String inStr = " ";
+if(Serial.available()){ // only send data back if data has been sent
+  String inStr = String(Serial.read()); // read the incoming data
+  if (Serial.availableForWrite() > inStr.length()) {
+  Serial.println(inStr); // send the data back in a new line so that it is not all one long line
+  //delay(0.00001);
+  }
+}
+}
+
+
+
+
+"""
+
