@@ -147,24 +147,18 @@ while not done:
 
         
         for i in range(len(message)):
-            print(message)
+            #print(message)
             value = message[int(i)]
             textPrint.tprint(screen, "value {}: {}".format(i, value))
 
         #taking the values from message that we actually need
-            Lx = message[0]
-            Ly = message[1]
-            Rx = message[3]
-            A = message[6]
-            B = message[7]
+        Lx = message[0]
+        Ly = message[1]
+        Rx = message[3]
+        A = message[6]
+        B = message[7]
             #0, 1, 3, 6, 7 are the indices we need
-
-            mensaje = Vishal.makeString(Lx, Ly, Rx, A, B)
-            if (serial.Serial.inWaiting(arduino) > len(mensaje)):
-             arduino.write(str(mensaje).encode('utf-8')) 
-             print(arduino.readline()) # Read the newest output from the Arduino
-            
-            #sleep(0.00001) # Delay for one tenth of a second   
+   
 
     
     # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT

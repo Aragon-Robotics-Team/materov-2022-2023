@@ -35,7 +35,7 @@ def makeString(Lx, Ly, Rx, A, B):
 
     
     
-    sendStr  = str(br)+","+str(fl)+","+str(bl)+","+str(fr)+","+str(v1)+","+str(v2)
+    sendStr  = str(br)+","+str(fl)+","+str(bl)+","+str(fr)+","+str(v1)+","+str(v2)+","
     return sendStr
 
 

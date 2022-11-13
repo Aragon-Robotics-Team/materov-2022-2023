@@ -3,12 +3,12 @@
 import serial
 from time import sleep  #the sleep is supa important
 
-ser = serial.Serial('/dev/cu.usbmodem101', 9600)
+ser = serial.Serial('/dev/cu.usbmodem1101', 9600)
 
 counter = 32 # Below 32 everything in ASCII is gibberish
 while True:
     counter +=1
-    ser.write(str(chr(counter)).encode('utf-8')) # Convert the decimal number to ASCII then send it to the Arduino
+    ser.write(str(chr(counter)+",").encode('utf-8')) # Convert the decimal number to ASCII then send it to the Arduino
     print(ser.readline()) # Read the newest output from the Arduino
     sleep(.1) # Delay for one tenth of a second
     if counter == 255:

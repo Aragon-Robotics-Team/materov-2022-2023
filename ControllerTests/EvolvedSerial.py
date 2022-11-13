@@ -1,18 +1,91 @@
-
-import serial
-from time import sleep  #the sleep is supa important
-import Vishal
-
-arduino = serial.Serial('/dev/cu.usbmodem101', 9600)
+import pygame    #Read Joystick data
+import serial    #communicate with arduino
+import Vishal     #Vishal's math stuffs
+from time import sleep #the sleep is supa important
 
 
-while True:
-    message = [] #already defined in main file
-    mensaje = Vishal.makeString() #in () put the stuff you want from message
-    arduino.write(str(mensaje).encode('utf-8')) 
-    print(arduino.readline()) # Read the newest output from the Arduino
+arduino = serial.Serial('/dev/cu.usbmodem1101', 9600) #make the serial path...exist
+
+pygame.init()
+done = False # Loop until the user clicks the Red X button.
+clock = pygame.time.Clock() # Used to manage how fast the screen updates.
+pygame.joystick.init() # Initialize the joysticks.
+message = [] #message will have all the button info in it
+
+while not done: # Main Program Loop
+    message = [] #clearing the contents of the list with each loop iteration
     
-    sleep(0.1) # Delay for one tenth of a second
+    # # EVENT PROCESSING STEP
+    for event in pygame.event.get(): # User did something.
+        if event.type == pygame.QUIT: # If user clicked close.
+            done = True # Flag that we are done so we exit this loop.
+        elif event.type == pygame.JOYBUTTONDOWN:
+            print("Joystick button pressed.")
+        elif event.type == pygame.JOYBUTTONUP:
+            print("Joystick button released.")
+
+    # Get count of interactables.
+    joystick_count = pygame.joystick.get_count()
+
+    # For each interactable:
+    for i in range(joystick_count):
+        joystick = pygame.joystick.Joystick(i)
+        joystick.init()          
+
+        axes = joystick.get_numaxes() #Lx, Ly, Rx
+        for i in range(axes):
+            axis = joystick.get_axis(i)
+            message.append(joystick.get_axis(i))
+
+        buttons = joystick.get_numbuttons() #A and B
+        for i in range(buttons):
+            button = joystick.get_button(i)
+            message.append(button)
+
+        #print(message)
+        
+        Lx = message[0] #taking the values from message that we actually need
+        Ly = message[1]
+        Rx = message[3]
+        A = message[6]
+        B = message[7]
+        #0, 1, 3, 6, 7 are the indices we need
+
+        mensaje = Vishal.makeString(Lx, Ly, Rx, A, B)
+        #print(mensaje.encode()) # testing math string
+
+        #if (serial.Serial.inWaiting(arduino) > len(mensaje)):
+        arduino.write(str(mensaje).encode()) 
+        print(arduino.readline().decode()) # Read the newest output from the Arduino
+            
+    # Limit to 20 frames per second.
+    clock.tick(20)
+
+pygame.quit()
+
+"""
+ARDUINO CODE:
+void setup() {
+Serial.begin(9600); // set the baud rate
+Serial.println("Ready"); // print "Ready" once
+}
+void loop() {
+String inStr = " ";
+if(Serial.available()){ // only send data back if data has been sent
+  String inStr = String(Serial.read()); // read the incoming data
+  if (Serial.availableForWrite() > inStr.length()) {
+  Serial.println(inStr); // send the data back in a new line so that it is not all one long line
+  //delay(0.00001);
+  }
+}
+}
+
+
+
+
+"""
+
+
     
 
 """
