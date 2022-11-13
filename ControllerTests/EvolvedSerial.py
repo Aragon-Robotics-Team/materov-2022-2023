@@ -65,24 +65,29 @@ pygame.quit()
 
 """
 ARDUINO CODE:
+String inStr = " ";
+String br = " ";
+String fl = " ";
+String bl = " ";
+String fr = " ";
+String v1 = " ";
+String v2 = " ";
+
 void setup() {
 Serial.begin(9600); // set the baud rate
 Serial.println("Ready"); // print "Ready" once
 }
 void loop() {
-String inStr = " ";
-if(Serial.available()){ // only send data back if data has been sent
-  String inStr = String(Serial.read()); // read the incoming data
-  if (Serial.availableForWrite() > inStr.length()) {
-  Serial.println(inStr); // send the data back in a new line so that it is not all one long line
-  //delay(0.00001);
-  }
+
+  br = Serial.readStringUntil(',');
+  fl = Serial.readStringUntil(',');
+  bl = Serial.readStringUntil(',');
+  fr = Serial.readStringUntil(',');
+  v1 = Serial.readStringUntil(',');
+  v2 = Serial.readStringUntil(',');
+
+  Serial.println("arduino say yass"+br+","+fl+","+bl+","+fr+","+v1+","+v2);
 }
-}
-
-
-
-
 """
 
 
