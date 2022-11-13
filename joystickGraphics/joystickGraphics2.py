@@ -1,4 +1,4 @@
-from curses import window
+#from curses import window
 import globvar
 #
 from tkinter import *
@@ -8,15 +8,13 @@ from tkinter import *
 from tkinter import ttk
 import cv2 
 
+import executer
 
+win = tk.Tk()
+win.title('Joystick Graphics Test 0.1')
+win.geometry('400x400')
 
-
-
-window = tk.Tk()
-window.title('Joystick Graphics Test 0.1')
-window.geometry('400x400')
-
-c = Canvas(window,width=350, height=350)
+c = Canvas(win,width=350, height=350)
 c.pack()
 
 ovalcenterx = 350/2
@@ -53,12 +51,15 @@ class JiaqiSucks(multiprocessing.Process):
         multiprocessing.Process.__init__(self)
     def run(self):
         print("running teleopMain")
-        teleopMain() 
+        executer.run() 
 
 if __name__ == "__main__":
+    multiprocessing.set_start_method('spawn')
+
+
     obj = JiaqiSucks()
     obj.start()
-    window.mainloop()
+    win.mainloop()
     
 
-#window.mainloop()
+#win.mainloop()

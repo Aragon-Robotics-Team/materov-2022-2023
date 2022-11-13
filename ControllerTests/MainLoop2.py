@@ -102,16 +102,12 @@ while loop:
 
         # time.sleep(0.1)
 
-<<<<<<< HEAD
-        recieved = arduino.readline().decode("ascii")  # read arduino data with timeout = 1
-        print(recieved)
-=======
         # recieved = arduino.readline().decode("ascii")  # read arduino data with timeout = 1
         # print(recieved)
 
-        
 
         
 
         
->>>>>>> 5e60750d4748264b856d9e05c9ea760af6077185
+
+        

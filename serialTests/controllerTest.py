@@ -1,6 +1,4 @@
-from calendar import c
-from multiprocessing.forkserver import connect_to_new_process
-import pygame 
+import pygame
 from time import sleep
 pygame.init()
 pygame.joystick.init()

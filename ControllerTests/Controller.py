@@ -5,7 +5,11 @@ import pygame       #Read Joystick data
 import array
 from serial import Serial
 import time
+<<<<<<< HEAD
 
+=======
+# import Math
+>>>>>>> 5e60750d4748264b856d9e05c9ea760af6077185
 #the message array has all the values needed(that can then be stringified)
 #funcs.py
 #arduino.write(funcs.mathify(message)) line is near line 188
@@ -28,8 +32,8 @@ os.system('cls')           #clear command prompt screen
 
 
 # Define some colors.
-TextColor = pygame.Color('blue')
-BackgroundColor= pygame.Color('pink')
+# TextColor = pygame.Color('blue')
+# BackgroundColor= pygame.Color('pink')
 
 
 # This is a simple class that will help us print to the screen.
