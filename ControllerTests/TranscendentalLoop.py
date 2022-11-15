@@ -14,6 +14,9 @@ clock = pygame.time.Clock()
 message = [] 
 loop = True
 
+# this make code work instant
+sleep(1)
+
 # ---------- MAIN PROGRAM LOOP ---------- #
 
 while loop:
@@ -23,10 +26,6 @@ while loop:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             loop = False
-        # elif event.type == pygame.JOYBUTTONDOWN:
-        #     print("Joystick button pressed.")
-        # elif event.type == pygame.JOYBUTTONUP:
-        #     print("Joystick button released.")
 
     # Get count of interactables.
     joystick_count = pygame.joystick.get_count()
@@ -62,7 +61,6 @@ while loop:
         arduino.write(messageToSend) 
 
         received = arduino.readline().decode("ascii")
-
         print(received)
             
 # ---------- END MAIN PROGRAM LOOP ---------- #
@@ -82,6 +80,7 @@ pygame.quit()
 
 # void setup() {
 # Serial.begin(9600); // set the baud rate
+# delay(2000);
 # Serial.println("Arduino is ready!");
 # }
 
