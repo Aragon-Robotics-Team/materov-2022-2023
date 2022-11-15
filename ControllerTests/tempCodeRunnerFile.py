@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 counter = 32 # Below 32 everything in ASCII is gibberish
 # while True:
 #     counter +=1
@@ -6,3 +7,7 @@ counter = 32 # Below 32 everything in ASCII is gibberish
 #     sleep(.1) # Delay for one tenth of a second
 #     if counter == 255:
 #         counter = 32
+=======
+print("bye")
+print("bye")
+>>>>>>> e424c6a (none)
