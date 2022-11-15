@@ -4,7 +4,7 @@ import MathFunc
 from time import sleep
 
 
-arduino = serial.Serial('/dev/cu.usbmodem14201', 9600)
+arduino = serial.Serial('/dev/cu.usbmodem1101', 9600)
 
 pygame.init()
 pygame.joystick.init()
@@ -22,7 +22,7 @@ sleep(1)
 while loop:
     message = [] #clearing the contents of the list with each loop iteration
     
-    # event handler
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             loop = False
