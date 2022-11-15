@@ -4,7 +4,7 @@ import MathFunc
 from time import sleep
 
 
-arduino = serial.Serial('/dev/cu.usbmodem14201', 9600)
+arduino = serial.Serial('/dev/cu.usbmodem1101', 9600)
 
 pygame.init()
 pygame.joystick.init()
@@ -19,14 +19,11 @@ loop = True
 while loop:
     message = [] #clearing the contents of the list with each loop iteration
     
-    # event handler
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             loop = False
-        # elif event.type == pygame.JOYBUTTONDOWN:
-        #     print("Joystick button pressed.")
-        # elif event.type == pygame.JOYBUTTONUP:
-        #     print("Joystick button released.")
+        #event handler
 
     # Get count of interactables.
     joystick_count = pygame.joystick.get_count()
@@ -56,13 +53,10 @@ while loop:
         B = message[7]
         
 
-        messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B)
-        messageToSend = messageToSend.encode("ascii")
+        mensaje = MathFunc.makeString(Lx, Ly, Rx, A, B)
+        arduino.write(message.encode()) 
 
-        arduino.write(messageToSend) 
-
-        received = arduino.readline().decode("ascii")
-
+        received = arduino.readline().decode()
         print(received)
             
 # ---------- END MAIN PROGRAM LOOP ---------- #
