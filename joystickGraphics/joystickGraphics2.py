@@ -47,7 +47,7 @@ def queuereciever():
     while not nav_out_queue.empty():
         joyx = nav_out_queue.get()[0]
         joyy = nav_out_queue.get()[1]
-        print("reading from queue")
+        # print("reading from queue")
 
 def updatePoint(): 
     global point 
@@ -55,15 +55,20 @@ def updatePoint():
     global currenty
     global joyx 
     global joyy
+    global rad
+    global ovalcenterx
+    global ovalcentery
     queuereciever()
+    print(joyx)
+    print(joyy)
     # print("X:" + str(joyx))
     # print("Y:" + str(joyy))
-    newx = rad*globvar.joyx + ovalcenterx
-    newy = rad*globvar.joyy + ovalcentery
+    newx = rad*joyx + ovalcenterx
+    newy = rad*joyy + ovalcentery
     c.move(point, newx - currentx, newy - currenty)
     currentx = newx
     currenty = newy
-    c.after(20, updatePoint)
+    c.after(5, updatePoint)
 
 updatePoint()
 
