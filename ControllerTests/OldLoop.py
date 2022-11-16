@@ -1,18 +1,17 @@
 import pygame
-import calc
+import MathFunc
 import time
 import serial
 
 # Initialize pygame modules
 pygame.init()
 pygame.joystick.init()
-pygame.display.init()
 # pygame.display.init()
 
 # Window setup
-WIDTH, HEIGHT = 500, 500
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-CAPTION = pygame.display.set_caption("Yes")
+# WIDTH, HEIGHT = 500, 500
+# WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+# CAPTION = pygame.display.set_caption("Yes")
 
 # Intialize Joysticks
 joysticks = []
@@ -54,15 +53,13 @@ PWM_values = [0, 0, 0, 0, 0]
 # ------------------------------------------------------------------------------------------------------ #
 # Arduino
 
-# arduino = serial.Serial(port='/dev/cu.usbmodem14201', baudrate=115200, timeout=1)
+arduino = serial.Serial(port='/dev/cu.usbmodem14201', baudrate=9600, timeout=1)
 
 # ------------------------------------------------------------------------------------------------------ #
 # Start of MAIN LOOP
 
 
 while loop:
-
-    pygame.event.pump()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -75,16 +72,16 @@ while loop:
                 joysticks[joy.get_instance_id()] = joy
                 print(f"Joystick {joy.get_instance_id()} connected")
         
-        for joystick in joysticks.values():
-            axes = joystick.get_numaxes()
-            for i in range(axes):
-                axis = joystick.get_axis(i)
-                axis_values[i] = axis
+    for joystick in joysticks.values():
+        axes = joystick.get_numaxes()
+        for i in range(axes):
+            axis = joystick.get_axis(i)
+            axis_values[i] = axis
 
-            buttons = joystick.get_numbuttons()
-            for i in range(buttons):
-                button = joystick.get_button(i)
-                button_values[i] = button
+        buttons = joystick.get_numbuttons()
+        for i in range(buttons):
+            button = joystick.get_button(i)
+            button_values[i] = button
 
         # vals for makeString() method
         LX = axis_values[0]
@@ -93,17 +90,18 @@ while loop:
         A_button = button_values[0]
         B_button = button_values[1]
         
-        print(axis_values)
-        print(button_values)
+        # print(axis_values)
+        # print(button_values)
 
-        # message = calc.makeString(LX, LY, RX, A_button, B_button)
+        message = MathFunc.makeString(LX, LY, RX, A_button, B_button)
         
-        # arduino.write(message.encode("ascii"))
+        arduino.write(message.encode("ascii"))
 
         # time.sleep(0.1)
 
-        # recieved = arduino.readline().decode("ascii")  # read arduino data with timeout = 1
-        # print(recieved)
+        recieved = arduino.readline().decode("ascii")  # read arduino data with timeout = 1
+        print(recieved)
+
 
         
 

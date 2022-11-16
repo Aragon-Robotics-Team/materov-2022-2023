@@ -8,6 +8,7 @@ def run():  # initializes and creates Robot object
     #rob.run()
     # print(rob.arduino.getSerial())
     # nextTask = rob.testGamepad()
+    
 """ 
 Ensures that every time each task terminates, it will always
 circle back to controller.test (default starting place).
@@ -22,7 +23,7 @@ while True:
 //receive stuff from gui
 list qeuestuff
 queue.recieve() =  queuestuff
-   
+
         if nextTask = teleop:  # enters a loop
             teleopPeriod = Teleop(rob)
             nextTask = teleopPeriod.start()  will return the next GUI command
@@ -34,7 +35,6 @@ queue.recieve() =  queuestuff
             nextTask = auto2.start()  will return the next GUI command
         else if nextTask = test gamepad:
             nextTask = rob.testGamepad()  will return the next GUI command
-            
 
 """
 

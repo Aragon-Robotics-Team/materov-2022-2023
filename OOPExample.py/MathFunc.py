@@ -1,4 +1,4 @@
-
+# THIS FILE CONTAINS THE MATH FOR NAV CODE
 
 def PWM(joyVal): #converting a double to a PWM value
     Limit = 400 #with 400 the max is 1900 and the min is 1100 PWM
@@ -7,7 +7,7 @@ def PWM(joyVal): #converting a double to a PWM value
 
 def makeString(Lx, Ly, Rx, A, B):
     #Lx-Double/float, Ly-Double/float, Rx-Double/float, A-Boolean, B-Boolean, "Sensitive Mode" - Boolean
-    v1= v2= fr= fl= br= bl = 1500
+    v1 = v2 = fr = fl = br = bl = 1500
     sendStr = "" #constructed string to be sent to the arduino
 
     if(Lx < 0.1 and Lx > -0.1):
@@ -35,20 +35,5 @@ def makeString(Lx, Ly, Rx, A, B):
 
     
     
-    sendStr  = str(br)+","+str(fl)+","+str(bl)+","+str(fr)+","+str(v1)+","+str(v2)
+    sendStr  = str(br) + "," + str(fl) + "," + str(bl) + "," + str(fr) + "," + str(v1) + "," + str(v2) + ","
     return sendStr
-
-    
-makeString(0.5, 0.5, 0.2,0, 0)
-makeString(0.05, 0.05, 0, 0, 0)
-
-
-
-    
-
-
-
-
-
-
- 

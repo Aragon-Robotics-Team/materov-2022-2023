@@ -1,6 +1,4 @@
-from calendar import c
-from multiprocessing.forkserver import connect_to_new_process
-import pygame 
+import pygame
 from time import sleep
 pygame.init()
 pygame.joystick.init()
@@ -19,11 +17,8 @@ print("Controller name:" + controller.get_name())
 
 while True:
     pygame.event.pump()
-    print(str(controller.get_axis(0)))
-    print(str(controller.get_axis(1)))
-    print(str(controller.get_axis(2)))
-    print(str(controller.get_axis(3)))
-    print(str(controller.get_axis(4)))
-    print(str(controller.get_axis(5)))
+
+    for i in range(5):
+        print(str(controller.get_axis(i)))
 
     sleep(0.3)
