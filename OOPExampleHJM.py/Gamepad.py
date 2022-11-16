@@ -13,12 +13,13 @@ import pygame
 # Intialize Joysticks
 
 class Gamepad:  
-    def __init__(self) -> None:
+    def __init__(self, Robot) -> None:
         # holds all axis, button vals
-        self.messageArray = []
+        self.Robot = Robot
+        self.message = []
 
     def getValueArray(self):
-        return self.messageArray
+        return self.message
 
     def MainHandler(self):  # controller test
         # pretend code that updates array goes here 
