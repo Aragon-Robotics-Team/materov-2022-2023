@@ -61,6 +61,8 @@ class Gamepad:
                 for index in range(buttons):
                     button = joystick.get_button(index)
                     self.message.append(button)
+
+            print(self.message)
             
 
 
