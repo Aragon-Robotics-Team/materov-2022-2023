@@ -98,10 +98,7 @@ class NavProcess(multiprocessing.Process):
         # exectest.testMethod()
 
 nav_in_queue = multiprocessing.Queue()
-nav_out_queue = multiprocessing.Queue()
-
-nav_in_queue = multiprocessing.Queue()
-nav_out_queue = multiprocessing.Queue()
+nav_out_queue = multiprocessing.Queue() 
 
 def startNavProcess():
     global p
