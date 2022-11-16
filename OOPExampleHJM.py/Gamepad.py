@@ -27,6 +27,8 @@ class Gamepad:
 
         loop = True
 
+        time.sleep(1)
+
         while loop:
             self.message = [] #clearing the contents of the list with each loop iteration
             

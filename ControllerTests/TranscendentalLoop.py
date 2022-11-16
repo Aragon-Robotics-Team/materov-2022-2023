@@ -22,7 +22,7 @@ sleep(1)
 while loop:
     message = [] #clearing the contents of the list with each loop iteration
     
-    
+    # event handler
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             loop = False
@@ -54,7 +54,7 @@ while loop:
         A = message[6]
         B = message[7]
         
-
+        # construct string, send to arduino, received info back
         messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B)
         messageToSend = messageToSend.encode("ascii")
 
