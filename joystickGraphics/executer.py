@@ -1,9 +1,9 @@
 
 from Gamepad import Gamepad
 
-def run():  # initializes and creates Robot object
+def run(input_queue, output_queue):  # initializes and creates Robot object
     rob = Gamepad()  # pass in the arduino, controller, queue
-    rob.joy_init()
+    rob.joy_init(input_queue, output_queue)
     rob.test()
     #rob.run()
     # print(rob.arduino.getSerial())
