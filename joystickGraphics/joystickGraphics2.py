@@ -96,6 +96,10 @@ class GUI():
         obj = JiaqiSucks(self.nav_in_queue, self.nav_out_queue)
         obj.start()
         win.mainloop()
+
+# def startNav():
+
+    
         
 if __name__ == "__main__":
     gui = GUI()
