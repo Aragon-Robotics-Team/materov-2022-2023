@@ -1,5 +1,7 @@
+import serial
 import MathFunc
 from Gamepad import Gamepad
+
 
 class Teleop:
     def __init__(self, Robot) -> None:
@@ -14,10 +16,11 @@ class Teleop:
         #start telop()
 
     def teleop(self):
+        arduino = self.Robot.arduino.getSerial()
         teleop = True
 
         while teleop:
-            
+
             valueArray = self.Gamepad.getValueArray()
             Lx = valueArray[0] 
             Ly = valueArray[1]
@@ -25,6 +28,11 @@ class Teleop:
             A = valueArray[6]
             B = valueArray[7]
 
+            # send INFO to arduino
             stringToSend = MathFunc.makeString(Lx, Ly, Rx, A, B)
-
+            arduino.write(stringToSend.encode("ascii"))
+            
+            # receive INFO from arduino
+            received = arduino.readline().decode("ascci")
+            print(received)
 

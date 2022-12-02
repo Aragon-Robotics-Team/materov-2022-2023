@@ -14,7 +14,7 @@ class Robot:  # Robot is a multiprocessing class process?
         self.controllername = controllername
         self.serialNum = serialNum
         self.queue = queue
-        self.arduino = Arduino(serialNum)
+        self.arduino = Arduino(14201, 9600, 1)
         # self.gamepad = Gamepad(self.controllername, self.queue)
 
     def run(self):  # immediately runs

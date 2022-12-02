@@ -1,13 +1,17 @@
-<<<<<<< HEAD
-counter = 32 # Below 32 everything in ASCII is gibberish
-# while True:
-#     counter +=1
-#     ser.write(str(chr(counter)+",").encode('utf-8')) # Convert the decimal number to ASCII then send it to the Arduino
-#     print(ser.readline()) # Read the newest output from the Arduino
-#     sleep(.1) # Delay for one tenth of a second
-#     if counter == 255:
-#         counter = 32
-=======
-print("bye")
-print("bye")
->>>>>>> e424c6a (none)
+import serial
+import time
+
+arduino = serial.Serial(port='/dev/cu.usbmodem14201', baudrate=9600, timeout=1)
+
+time.sleep(1)
+
+message = "Hello" + ","
+message = message.encode("ascii")
+
+arduino.write(message)
+
+while (arduino.in_waiting == 0):
+    pass
+
+received = arduino.readline().decode("ascii")
+print(received)

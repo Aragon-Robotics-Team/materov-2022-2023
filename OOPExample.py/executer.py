@@ -4,7 +4,10 @@ from Arduino import Arduino
 from Gamepad import Gamepad
 
 def run():  # initializes and creates Robot object
-    rob = Gamepad()  # pass in the arduino, controller, queue
+
+    controllername = serialNum = queue = None
+
+    rob = Robot(controllername, serialNum, queue)  # pass in the arduino, controller, queue
     #rob.run()
     # print(rob.arduino.getSerial())
     # nextTask = rob.testGamepad()
