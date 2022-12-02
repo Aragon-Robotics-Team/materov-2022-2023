@@ -27,8 +27,8 @@ class Arduino:
     def getSerial(self):
         return self.arduino
 
-arduino = Arduino(14201, 9600, 1)
-arduino.init()
-print(arduino.getSerial())
+# arduino = Arduino(14201, 9600, 1)
+# arduino.init()
+# print(arduino.getSerial())
 
 

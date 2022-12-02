@@ -1,6 +1,6 @@
 import serial
-import MathFunc
-from Gamepad import Gamepad
+import nav.MathFunc
+from nav.Gamepad import Gamepad
 
 
 class Teleop:

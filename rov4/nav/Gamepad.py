@@ -7,7 +7,7 @@ Controller class
 """
 
 import time
-import MathFunc
+import nav.MathFunc
 import pygame
 
 # Intialize Joysticks

@@ -1,6 +1,6 @@
-from Arduino import Arduino
-from Teleop import *
-from Gamepad import *
+from nav.Arduino import Arduino
+from nav.Teleop import *
+from nav.Gamepad import *
 
 """
 Robot runs the main loop, starts the tasks such as Teleop and Autonomous

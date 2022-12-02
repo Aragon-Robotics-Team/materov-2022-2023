@@ -1,11 +1,12 @@
-from Gamepad import Gamepad
-from Robot import Robot
-from Teleop import Teleop
-from Arduino import Arduino
+from nav.Gamepad import Gamepad
+from nav.Robot import Robot
+from nav.Teleop import Teleop
+from nav.Arduino import Arduino
 
 def teleopStart():
 
-    arduino = Arduino(14201, 9600, 1)
+    #arduino = Arduino(14201, 9600, 1)
+    arduino = Arduino(101, 9600, 1)
     arduino.init()
 
 
