@@ -4,11 +4,36 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 from matplotlib import colors
+import time
+import keyboard
 
+snapshots = ["C:/Users/alexa/Desktop/square0.png", "C:/Users/alexa/Desktop/square1.png"]
+
+videoCaptureObject = cv2.VideoCapture(1)
+result = True
+i = 0
+while result:
+    ret, frame = videoCaptureObject.read()
+    cv2.imshow("Capturing Video", frame)
+    # deletes every frame as the next one comes on, closes all windows when q is pressed
+    if cv2.waitKey(1) == ord('q'):
+        videoCaptureObject.release()
+        cv2.destroyAllWindows()
+    # when s is pressed
+    if keyboard.is_pressed('s'):
+        # and the index is less than the length of the snapshot list
+        if i < 2:
+            # take as snapshot, save it, show it
+            cv2.imwrite(snapshots[i], frame)
+            cv2.imshow(snapshots[i], frame)
+            time.sleep(1)
+            i += 1
+        else:
+            result = False
 
 flags = [i for i in dir(cv2) if i.startswith('COLOR_')]
 
-squareOne = cv2.imread("C:/Users/alexa/Desktop/green1.png")
+squareOne = cv2.imread(snapshots[0])
 hsv_squareOne = cv2.cvtColor(squareOne, cv2.COLOR_RGB2HSV)
 
 lowerb = (2, 0, 0)
@@ -42,7 +67,7 @@ cv2.imshow("Multiple Color Detection in Real-TIme", imageFrame)
 cv2.waitKey(0)
 
 
-squareTwo = cv2.imread("C:/Users/alexa/Desktop/square2.png")
+squareTwo = cv2.imread(snapshots[1])
 hsv_squareTwo = cv2.cvtColor(squareTwo, cv2.COLOR_RGB2HSV)
 
 mask = cv2.inRange(hsv_squareTwo, lowerb, upperb)
