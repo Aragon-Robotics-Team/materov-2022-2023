@@ -34,10 +34,14 @@ while result:
 flags = [i for i in dir(cv2) if i.startswith('COLOR_')]
 
 squareOne = cv2.imread(snapshots[0])
+# squareOne = cv2.imread("C:/Users/alexa/Desktop/green1.png")
 hsv_squareOne = cv2.cvtColor(squareOne, cv2.COLOR_RGB2HSV)
 
-lowerb = (2, 0, 0)
-upperb = (179, 255, 255)
+# lowerb = (2, 0, 0)
+# upperb = (179, 255, 255)
+
+lowerb = (0,0,0)
+upperb = (179, 255, 190)
 
 mask = cv2.inRange(hsv_squareOne, lowerb, upperb)
 result = cv2.bitwise_and(squareOne, squareOne, mask=mask)
@@ -68,6 +72,7 @@ cv2.waitKey(0)
 
 
 squareTwo = cv2.imread(snapshots[1])
+# squareTwo = cv2.imread("C:/Users/alexa/Desktop/square2.png")
 hsv_squareTwo = cv2.cvtColor(squareTwo, cv2.COLOR_RGB2HSV)
 
 mask = cv2.inRange(hsv_squareTwo, lowerb, upperb)

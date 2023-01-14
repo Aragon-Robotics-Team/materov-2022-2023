@@ -18,7 +18,7 @@ cv2.createTrackbar('lowV','image',0,255,nothing)
 cv2.createTrackbar('highV','image',255,255,nothing)
  
 
-frame = cv2.imread("C:/Users/alexa/Desktop/green1.png")
+frame = cv2.imread("C:/Users/alexa/Desktop/gray.png")
 while(True):
  
     # get current positions of the trackbars
