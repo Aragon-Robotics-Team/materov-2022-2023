@@ -31,6 +31,5 @@
 # tiger.getAnimal()
 # tiger.testFunc()
 
-num = -5
-
-print(num)
+x = round(5.76543)
+print(x)
