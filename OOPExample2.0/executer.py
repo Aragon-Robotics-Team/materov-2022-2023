@@ -8,7 +8,7 @@ def run():  # initializes and creates Robot object
     rob = Robot(queue)  # pass in the arduino, controller, queue
     rob.initialize()
     teleop = Teleop(rob)
-    teleop.start()
+    teleop.teleop_loop()
 
 
     #rob.run()

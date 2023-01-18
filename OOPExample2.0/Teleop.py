@@ -1,5 +1,4 @@
 import serial
-import MathFunc
 import pygame
 from time import sleep
 from Numbers import Numbers
@@ -21,18 +20,31 @@ class Teleop:
 
         self.numbers = Numbers()
         self.gamepad_states = [] # list you send to math calcs
-        self.message = []  # list you send to robot.get_send_arduino
+        # self.message = []  # list you eventually send to robot.get_send_arduino
         self.robot = rob
 
+    def teleop_loop(self):
 
-    def start(self):
+        if self.controller_name == "Wireless Controller":
+            self.var_ps4_controller()
+        elif self.controller_name == "XBOX":  # XBOX name?
+            self.var_xbox_controller()
+        else:
+            self.var_big_controller()
 
-        self.var_ps4_controller() if self.controller_name == "Wireless Controller" else self.var_big_controller()
         print("TELEOP STARTED")
 
-        self.thruster_calculations(self.get_gamepad_states())
+        # ------ MATH CALC FUNCTION CALL ------ #
+
+        message = self.thruster_calculations(self.get_gamepad_states())
+        self.robot.get_send_arduino(self.robot.make_string(message))
+
+        # takes the message list (all the thruster values) and separates by comma and period
+        # uses arduino function in Robot to send to arduino
+
 
     def var_xbox_controller(self):
+        #  EXAMPLE :D
         self.numbers.set_controller_vals([0, 1, 3, 6, 7])  # shift x, shift y, yaw x, heave a, heave b
 
     def var_big_controller(self):
@@ -42,9 +54,16 @@ class Teleop:
     def var_ps4_controller(self):
         #  SNEAK :D
         pass
-    def thruster_calculations(self, gamepad_states):   # gamepad_states = [shift x, shift y, yaw x, heave a, heave b]
-        #  SNEAK :D
-        pass
+
+    def thruster_calculations(self, gamepad_states):
+        message = []
+        # gamepad_states = [shift x, shift y, yaw x, heave a, heave b]
+        #  SNEAK :D please put math calculations in here and change variable names accordingly, thanks you very much.
+
+        # ------ MATH CALCS ------ #
+
+        #  final SIX THRUSTER calculated values stored in "message" list ===>
+        return message
 
     def get_gamepad_states(self):
         while True:
@@ -55,7 +74,7 @@ class Teleop:
             for index in range(axes):
                 axis = self.gamepad.get_axis(index)
                 all_states.append(axis)
-
+                
             # get joystick button values
             buttons = self.gamepad.get_numbuttons()
             for index in range(buttons):

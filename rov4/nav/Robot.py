@@ -54,7 +54,7 @@ class Robot:  # Robot is a multiprocessing class process?
         return self.arduino.getSerial()
 
     def startTeleop(self):
-        self.teleop.start()
+        self.teleop.teleop_loop()
 
     def endTeleop(self):
         pass
