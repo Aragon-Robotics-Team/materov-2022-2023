@@ -53,3 +53,4 @@ def colorSelector(img_path):
 	return (Bnum, Gnum, Rnum)
 
 # colorSelector("/Users/valeriefan/Desktop/reddot.png")
+# print(colorSelector("/Users/valeriefan/Desktop/reddot.png"))

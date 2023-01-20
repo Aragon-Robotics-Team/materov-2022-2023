@@ -8,6 +8,7 @@ from PIL import Image, ImageTk
 
 from autodock1 import autodockinit
 from autodock1 import autodocking
+from autodock1 import autodockingloop
 
 class GUIClass():
     def __init__(self):
@@ -39,7 +40,14 @@ class GUIClass():
     
         self.AutoDockInitB.grid(row = 1, column = self.vcol + 1, sticky = 'n')
 
-        self.AutoDockingB = Button(self.root, text = "Initialize Auto Docking", command = autodocking)
+        self.AutoDockingB = Button(self.root, text = "Auto Docking Single Frame", command = lambda: autodocking("/Users/valeriefan/Desktop/videosnapshot.png"))
+
+        self.AutoDockingB.grid(row = 2, column = self.vcol + 1, sticky = 'n')
+
+        self.AutoDockingB = Button(self.root, text = "Auto Docking Live", command = lambda: autodockingloop(self.cap))
+
+        self.AutoDockingB.grid(row = 3, column = self.vcol + 1, sticky = 'n')
+
 
     #VIDEO FEED
     def showFrames(self):
