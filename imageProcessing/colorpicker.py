@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 
-color_explore = np.zeros((150,150,3), np.uint8)  
 color_selected = np.zeros((150,150,3), np.uint8)
 
 
@@ -20,7 +19,7 @@ def show_color(event,x,y,flags,param):
 	B=img[y,x][0]
 	G=img[y,x][1]
 	R=img[y,x][2]
-	color_explore [:] = (B,G,R)
+
 
 	if event == cv2.EVENT_LBUTTONDOWN:
 		color_selected [:] = (B,G,R)
@@ -28,7 +27,7 @@ def show_color(event,x,y,flags,param):
 
 #Show selected color when left mouse button pressed
 cv2.namedWindow('color_selected')
-cv2.resizeWindow("color_selected", 50,50);
+cv2.resizeWindow("color_selected", 50,50)
 
 #image window for sample image
 cv2.namedWindow('image')

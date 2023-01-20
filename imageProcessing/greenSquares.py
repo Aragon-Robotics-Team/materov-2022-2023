@@ -41,16 +41,15 @@ def colorSelector(img_path):
 	global Gnum
 	global Rnum 
 
+	Bnum = 0 
+	Gnum = 0
+	Rnum = 0
+
 	#Mouse Callback function
 	def show_color(event,x,y,flags,param): 
 		global Bnum
 		global Gnum
 		global Rnum 
-
-		Bnum = 0
-		Gnum = 0
-		Rnum = 0
-
 		B=img[y,x][0]
 		G=img[y,x][1]
 		R=img[y,x][2]
@@ -61,13 +60,11 @@ def colorSelector(img_path):
 			Gnum = G
 			Rnum = R
 
-		return
-
 	#Show selected color when left mouse button pressed
 	cv2.namedWindow('color_selected')
-	cv2.resizeWindow("color_selected", 50,50);
+	cv2.resizeWindow("color_selected", 50,50)
 
-	#image window for sample imageq
+	#image window for sample image
 	cv2.namedWindow('image')
 
 	#read sample image
@@ -85,37 +82,42 @@ def colorSelector(img_path):
 	return (Bnum, Gnum, Rnum)
 
 
-def mask(colorArray):
 
-	h = colorArray[0]
-	s = colorArray[1]
-	v = colorArray[2]
+def bounds(colors):
 
-	squareOne = cv2.imread(snapshots[0])
-	hsv_squareOne = cv2.cvtColor(squareOne, cv2.COLOR_RGB2HSV)
+	B, G, R = colors
 
-	rgbVal = np.array(colorArray)
-	rgbVal = cv2.cvtColor(rgbVal, cv2.COLOR_RGB2HSV)
+	rgblowerb = (B + 10, G + 10, R + 10)	
+	rgbupperb = (B - 10, G - 10, R - 10)
 
-	lowerb = (h - 10, s - 10, v - 10)
-	upperb = (h + 10, s + 10, v + 10)
+	graylowerb = np.mat(rgblowerb)
+	grayupperb = np.mat(rgbupperb)
 
-	lowerb = np.array(lowerb)
-	upperb = np.array(upperb)
+	rgblowerb = cv2.cvtColor(graylowerb, cv2.COLOR_GRAY2BGR)
+	rgbupperb = cv2.cvtColor(grayupperb, cv2.COLOR_GRAY2BGR)
 
-	mask = cv2.inRange(hsv_squareOne, lowerb, upperb)
-	result = cv2.bitwise_and(squareOne, squareOne, mask=mask)
+	rgblowerb = rgblowerb.astype('int')
+	rgbupperb = rgbupperb.astype('int')
 
-	return (lowerb, upperb, mask)
+	lowerb = cv2.cvtColor(rgblowerb, cv2.COLOR_BGR2HSV)
+	upperb = cv2.cvtColor(rgbupperb, cv2.COLOR_BGR2HSV)
+	
+
+	return (lowerb, upperb)
 
 
 
 
 def findSquares(array):
 
-	lowerb = array[0]
-	upperb = array[1]
-	mask = array[2]
+	lowerb, upperb = array
+
+	squareOne = cv2.imread(snapshots[0])
+	hsv_squareOne = cv2.cvtColor(squareOne, cv2.COLOR_RGB2HSV)
+
+
+	mask = cv2.inRange(hsv_squareOne, lowerb, upperb)
+	result = cv2.bitwise_and(squareOne, squareOne, mask=mask)
 
 	contours, hierarchy = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -134,7 +136,6 @@ def findSquares(array):
 	cv2.waitKey(0)
 
 	squareTwo = cv2.imread(snapshots[1])
-	# squareTwo = cv2.imread("C:/Users/alexa/Desktop/square2.png")
 	hsv_squareTwo = cv2.cvtColor(squareTwo, cv2.COLOR_RGB2HSV)
 
 	mask = cv2.inRange(hsv_squareTwo, lowerb, upperb)
@@ -156,8 +157,7 @@ def findSquares(array):
 
 def calculator(array):
 
-	count = array[0]
-	countAfter = array[1]
+	count, countAfter = array
 
 	totalSquares = 64
 	whiteAfter = totalSquares - countAfter
@@ -180,8 +180,9 @@ flags = [i for i in dir(cv2) if i.startswith('COLOR_')]
 
 result = True
 videoCaptureObject = cv2.VideoCapture(0)
+
+i = 0
 while True:
-	i = 0
 	ret, frame = videoCaptureObject.read()
 	cv2.imshow("Capturing Video", frame)
 		# deletes every frame as the next one comes on, closes all windows when q is pressed
@@ -201,6 +202,6 @@ while True:
 		else:
 			result = False
 
-calculator(findSquares(mask(colorSelector("C:/Users/alexa/Desktop/square0.png"))))
+calculator(findSquares(bounds(colorSelector("C:/Users/alexa/Desktop/square0.png"))))
 
 
