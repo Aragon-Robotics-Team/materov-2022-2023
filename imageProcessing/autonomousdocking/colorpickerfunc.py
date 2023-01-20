@@ -10,6 +10,10 @@ def colorSelector(img_path):
 	global Gnum
 	global Rnum 
 
+	Bnum = 0 
+	Gnum = 0
+	Rnum = 0
+
 	#Mouse Callback function
 	def show_color(event,x,y,flags,param): 
 		global Bnum
@@ -50,4 +54,4 @@ def colorSelector(img_path):
 	print("R: " + str(Rnum))
 	return (Bnum, Gnum, Rnum)
 
-colorSelector("/Users/valeriefan/Desktop/reddot.png")
+# colorSelector("/Users/valeriefan/Desktop/reddot.png")
