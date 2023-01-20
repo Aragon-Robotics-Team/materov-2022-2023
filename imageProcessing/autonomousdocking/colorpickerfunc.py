@@ -3,7 +3,6 @@ import numpy as np
 	
 
 def colorSelector(img_path):
-	color_explore = np.zeros((150,150,3), np.uint8)  
 	color_selected = np.zeros((150,150,3), np.uint8)
 
 	global Bnum
@@ -22,7 +21,6 @@ def colorSelector(img_path):
 		B=img[y,x][0]
 		G=img[y,x][1]
 		R=img[y,x][2]
-		color_explore [:] = (B,G,R)
 
 		if event == cv2.EVENT_LBUTTONDOWN:
 			color_selected [:] = (B,G,R)

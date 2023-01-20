@@ -44,9 +44,10 @@ cv2.setMouseCallback('image',show_color)
 
 #while loop to live update
 while (1):
-    cv2.imshow('image',img)
-    cv2.imshow('color_selected',color_selected)
-    if cv2.waitKey(1) == ord('q'):
-        cv2.destroyAllWindows()
+	cv2.imshow('image',img)
+	cv2.imshow('color_selected',color_selected)
+	if cv2.waitKey(1) == ord('q'):
+		cv2.destroyAllWindows()
+		break
 
 cv2.destroyAllWindows()
