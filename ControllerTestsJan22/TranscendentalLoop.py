@@ -49,11 +49,7 @@ while True:
     A = controller.get_button(3)
     B = controller.get_button(0)
 
-    print(Lx)
-    print(Ly)
-    print(Rx)
-    print(A)
-    print(B)
+    print(Lx, Ly, Rx, A, B)
 
     # construct string, send to arduino, received info back
 
