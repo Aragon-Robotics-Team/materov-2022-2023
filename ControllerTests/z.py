@@ -10,20 +10,6 @@ clock = pygame.time.Clock()
 
 # message contains axis/button values
 message = [] 
-# [0] = LX
-# [1] = LY
-# [2] = LT
-# [3] = RX
-# [4] = RY
-# [5] = RT
-# [6] = A
-# [7] = B
-# [8] = X
-# [9] = Y
-# [10] = LB
-# [11] = RB
-# [12] = LJ
-# [13] = RJ
 
 loop = True
 
@@ -60,8 +46,7 @@ while loop:
             button = joystick.get_button(index)
             message.append(button)
 
-
-        print(message)
+    print(message)
             
 # ---------- END MAIN PROGRAM LOOP ---------- #
 
@@ -93,6 +78,6 @@ pygame.quit()
 #   v1 = Serial.readStringUntil(',').toInt();
 #   v2 = Serial.readStringUntil(',').toInt();
 
-#   Serial.println(br + ", " + fl + ", " + bl + ", " + fr + ", " + v1 + ", " + v2);
+#   Serial.println(br + ", " + fl + ", " + bl + ", " + fr + ", " + v1 + ", "+v2);
 
 # }

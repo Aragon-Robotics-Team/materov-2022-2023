@@ -42,14 +42,14 @@ class Teleop:
         # takes the message list (all the thruster values) and separates by comma and period
         # uses arduino function in Robot to send to arduino
 
-
+    # note: array in [LX, LT, RX, A, B]
     def var_xbox_controller(self):
         #  EXAMPLE :D
         self.numbers.set_controller_vals([0, 1, 3, 6, 7])  # shift x, shift y, yaw x, heave a, heave b
 
     def var_big_controller(self):
-        #  SNEAK :D
-        pass
+        self.numbers.set_controller_vals([0, 1, 2, 3, 5, 8])
+
 
     def var_ps4_controller(self):
         #  SNEAK :D
@@ -60,6 +60,7 @@ class Teleop:
         # gamepad_states = [shift x, shift y, yaw x, heave a, heave b]
         #  SNEAK :D please put math calculations in here and change variable names accordingly, thanks you very much.
 
+        
         # ------ MATH CALCS ------ #
 
         #  final SIX THRUSTER calculated values stored in "message" list ===>
