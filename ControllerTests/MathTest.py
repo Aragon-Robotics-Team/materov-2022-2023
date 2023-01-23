@@ -23,24 +23,24 @@ def makeString(Lx, Ly, Rx, A, B, mode):
     if (mode > 0):
         
         # Front and Back Calculations (cap is 200)
-        br += PWM(Ly) * (capMovement/400)
-        bl += PWM(Ly) * (capMovement/400)
-        fr += PWM(Ly) * (capMovement/400)
-        fl += PWM(Ly) * (capMovement/400)
+        br += -PWM(Ly) * (capMovement/400)
+        bl += -PWM(Ly) * (capMovement/400)
+        fr += -PWM(Ly) * (capMovement/400)
+        fl += -PWM(Ly) * (capMovement/400)
 
         
         #Crabbing Calculations (cap is 200)
-        br += PWM(Lx)  * (capMovement/400)
-        bl += -PWM(Lx) * (capMovement/400)
-        fr += -PWM(Lx) * (capMovement/400)
-        fl += PWM(Lx)  * (capMovement/400)
+        br += -PWM(Lx)  * (capMovement/400)
+        bl += PWM(Lx) * (capMovement/400)
+        fr += PWM(Lx) * (capMovement/400)
+        fl += -PWM(Lx)  * (capMovement/400)
 
 
         #Pivoting CALCULATIONS (cap is 100)
-        br += -PWM(Rx) * (capPivot/400)
-        bl += PWM(Rx)  * (capPivot/400)
-        fr += -PWM(Rx) * (capPivot/400)
-        fl += PWM(Rx)  * (capPivot/400)
+        br += PWM(Rx) * (capPivot/400)
+        bl += -PWM(Rx)  * (capPivot/400)
+        fr += PWM(Rx) * (capPivot/400)
+        fl += -PWM(Rx)  * (capPivot/400)
 
     #EXPONENTIAL MODE (ACCELERATION)
     else:

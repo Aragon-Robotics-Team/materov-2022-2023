@@ -1,8 +1,10 @@
 import pygame
 import serial
-import MathFunc    
+import MathTest    
 from time import sleep
 
+
+arduino = serial.Serial('/dev/cu.usbmodem142401', 9600)
 
 pygame.init()
 pygame.joystick.init()
@@ -60,8 +62,21 @@ while loop:
             button = joystick.get_button(index)
             message.append(button)
 
+        # taking the values list
+        Lx = message[0] 
+        Ly = message[1]
+        Rx = message[3]
+        A = message[6]
+        B = message[7]
+        
+        # construct string, send to arduino, received info back
+        messageToSend = MathTest.makeString(Lx, Ly, Rx, A, B, 1)
+        messageToSend = messageToSend.encode("ascii")
 
-        print(message)
+        arduino.write(messageToSend) 
+
+        received = arduino.readline().decode("ascii")
+        print(received)
             
 # ---------- END MAIN PROGRAM LOOP ---------- #
 

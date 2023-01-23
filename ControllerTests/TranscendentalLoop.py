@@ -4,7 +4,7 @@ import MathFunc
 from time import sleep
 
 
-arduino = serial.Serial('/dev/cu.usbmodem14101', 9600)
+arduino = serial.Serial('/dev/cu.usbmodem142401', 9600)
 
 pygame.init()
 pygame.joystick.init()
@@ -12,6 +12,21 @@ clock = pygame.time.Clock()
 
 # message contains axis/button values
 message = [] 
+# [0] = LX
+# [1] = LY
+# [2] = LT
+# [3] = RX
+# [4] = RY
+# [5] = RT
+# [6] = A
+# [7] = B
+# [8] = X
+# [9] = Y
+# [10] = LB
+# [11] = RB
+# [12] = LJ
+# [13] = RJ
+
 loop = True
 
 # this make code work instant
@@ -55,7 +70,7 @@ while loop:
         B = message[7]
         
         # construct string, send to arduino, received info back
-        messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B)
+        messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B, 1)
         messageToSend = messageToSend.encode("ascii")
 
         arduino.write(messageToSend) 
@@ -93,6 +108,6 @@ pygame.quit()
 #   v1 = Serial.readStringUntil(',').toInt();
 #   v2 = Serial.readStringUntil(',').toInt();
 
-#   Serial.println(br + ", " + fl + ", " + bl + ", " + fr + ", " + v1 + ", "+v2);
+#   Serial.println(br + ", " + fl + ", " + bl + ", " + fr + ", " + v1 + ", " + v2);
 
 # }
