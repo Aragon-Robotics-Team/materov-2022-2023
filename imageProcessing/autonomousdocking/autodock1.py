@@ -7,22 +7,41 @@ B = 0
 G = 0
 R = 0
 
+#--------------------------
+#ASSOCIATED GUI CODE:  
+#from autodock1 import autodockinit
+#self.AutoDockInitB = Button(self.root, text = "Initialize Auto Docking", command = lambda: autodockinit(self.snapshot()))
+#self.AutoDockInitB.grid(row = 1, column = self.vcol + 1, sticky = 'n')
 def autodockinit(img_path):
-    #find the color of the target  
+    #find the color of the target in order to create a range for our mask in autodocking()
     global B, G, R
     B,G,R = colorSelector(img_path)
 
+#---------------------------
+#ASSOCIATED GUI CODE: 
+#from autodock1 import autodockingloop
+#self.AutoDockingB = Button(self.root, text = "Auto Docking Live", command = lambda: autodockingloop(self.cap))
+#self.AutoDockingB.grid(row = 3, column = self.vcol + 1, sticky = 'n')
 def autodockingloop(cap):
     videocap = cap
-    autodockingimgpath = "/Users/valeriefan/Desktop/autodockingloop.jpg"
-    while True: 
+    autodockingimgpath = "/Users/valeriefan/Desktop/MATE ROV 2023/autodockingloop.jpg"
+    #tracking the docking button in the live video feed 
+    while (1): 
         cv2.imwrite(autodockingimgpath, videocap.read()[1])
         contours, cX, cY = autodocking(autodockingimgpath)
         cv2.imshow("Contours", contours)
+        #calculatethrust(cX, cY)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             cv2.destroyAllWindows
             break
         # cv2.waitKey(0)
+
+#------------------------------------------
+
+def calculateandsendthrust(cX, cY):
+    #*insert calculations for thrust* 
+    #*use queue to send to nav process* 
+    return 
 
 def autodocking(img_path): 
     #set the threshold for the mask, based on the color of the target  
@@ -31,7 +50,7 @@ def autodocking(img_path):
 
     image = cv2.imread(img_path)
 
-    #blur, mask and grayscale the image 
+    #blur, mask and grayscale the image --- mask everything but the red circle 
     blurImg = cv2.blur(image,(10,10)) 
     mask = cv2.inRange(blurImg, lower, upper)
     output = cv2.bitwise_and(image, image, mask = mask)
@@ -39,11 +58,14 @@ def autodocking(img_path):
     # cv2.imshow("gray", gray)
     # cv2.waitKey(0)
 
-    #finding contours
+    #finding contours 
     cnts = cv2.findContours(gray.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
+
     if len(cnts) != 0: 
+        #grabs contours 
         cnts = imutils.grab_contours(cnts)
+        #finds the largest contour 
         c = max(cnts, key=cv2.contourArea, default = 0 )
 
         #finding center of contours
@@ -52,7 +74,7 @@ def autodocking(img_path):
             cX = int(M["m10"] / M["m00"])
             cY = int(M["m01"] / M["m00"])
 
-            #draw contours 
+            #draw contours onto the original image 
             contours = image.copy()
             cv2.drawContours(contours, [c], -1, (0, 255, 0), 3)
             (x, y, w, h) = cv2.boundingRect(c)
@@ -65,6 +87,8 @@ def autodocking(img_path):
             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
             # cv2.imshow("Original Contour", contours)
+            
+            #returns the modified image (with red circle marked), and the coordiantes of the red circle 
             return (contours, cX, cY)
         # cv2.waitKey(0)
 
