@@ -3,7 +3,7 @@
 import serial
 from time import sleep  #the sleep is supa important
 
-ser = serial.Serial('/dev/cu.usbmodem1101', 9600)
+ser = serial.Serial('/dev/cu.usbmodem1411401', 9600)
 
 counter = 32 # Below 32 everything in ASCII is gibberish
 while True:

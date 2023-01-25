@@ -4,7 +4,7 @@ import MathTest
 from time import sleep
 
 
-arduino = serial.Serial('/dev/cu.usbmodem142401', 9600)
+arduino = serial.Serial('/dev/cu.usbmodem1421401', 9600)
 
 pygame.init()
 pygame.joystick.init()
@@ -70,7 +70,7 @@ while loop:
         B = message[7]
         
         # construct string, send to arduino, received info back
-        messageToSend = MathTest.makeString(Lx, Ly, Rx, A, B, 1)
+        messageToSend = MathTest.makeString(Lx, Ly, Rx, A, B, 0)
         messageToSend = messageToSend.encode("ascii")
 
         arduino.write(messageToSend) 
