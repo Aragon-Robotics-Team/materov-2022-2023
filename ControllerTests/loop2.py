@@ -4,7 +4,7 @@ import MathTest
 from time import sleep
 
 
-arduino = serial.Serial('/dev/cu.usbmodem1421401', 9600)
+arduino = serial.Serial('/dev/cu.usbmodem142401', 9600)
 
 pygame.init()
 pygame.joystick.init()

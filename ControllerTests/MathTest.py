@@ -13,7 +13,9 @@ def makeString(Lx, Ly, Rx, A, B, mode):
     capPivot = 100
     Vstrength = 200 #vertical thruster code chunks
     expMulti = 1.2
+    Lx = Lx * (-1)
     Ly = Ly * (-1)
+    
     
     #deadband 0.1 deviation
     if(Lx < 0.1 and Lx > -0.1):
