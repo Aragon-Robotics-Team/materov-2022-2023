@@ -109,17 +109,25 @@ stopBot = Button(screen1, text = "Disable Bot (Emergency Halt)", command = disab
 
 #VIDEO FEED ------------------------------------------------------------------------------------------------------
 
-label = Label(screen1, height = 800, width = 1000) ##CHANGE SO THE FULL VIDEO IS SHOWN 
+videolabel = Label(screen1, height = 800, width = 1000) ##CHANGE SO THE FULL VIDEO IS SHOWN 
+videolabel.grid(row = 0, column = 0, sticky = 'n')
+
+
+cap = cv2.VideoCapture(0)
+
 
 def showFrames():
-    cv2image= cv2.cvtColor(map.read()[1],cv2.COLOR_BGR2RGB)
-    img = Image.fromarray(cv2image)
-    # Convert image to PhotoImage
-    imgtk = ImageTk.PhotoImage(image = img)
-    label.imgtk = imgtk
-    label.configure(image=imgtk)
-    # Repeat after an interval to capture continiously
-    label.after(20, showFrames)
+        cv2image= cv2.cvtColor(cap.read()[1],cv2.COLOR_BGR2RGB)
+        #error is fine 
+        img = Image.fromarray(cv2image)
+        # Convert image to PhotoImage
+        imgtk = ImageTk.PhotoImage(image = img)
+        #error is fine
+        videolabel.imgtk = imgtk
+        videolabel.configure(image=imgtk)
+        # Repeat after an interval to capture continiously
+        videolabel.after(20, showFrames)
+
 
 showFrames()
 
