@@ -6,14 +6,17 @@ from matplotlib import cm
 from matplotlib import colors
 import time
 import keyboard
+import tkinter as tk
 
 snapshots = ["C:/Users/alexa/Desktop/square0.png", "C:/Users/alexa/Desktop/square1.png"]
 
 image_hsv = None
 
+root = tk.Tk()
+
+
 def video():
 	while True:
-		videoCaptureObject = cv2.VideoCapture(0)
 		i = 0
 		ret, frame = videoCaptureObject.read()
 		cv2.imshow("Capturing Video", frame)
@@ -36,7 +39,12 @@ def video():
 # lowerb = (2, 0, 0)
 # upperb = (179, 255, 255)
 
-def colorSelector(img_path):
+def HSVColorPicker(img_path):
+
+	image = cv2.imread(img_path)
+	image_hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
+	image_hsv = cv2.blur(image_hsv, (5,5))
+
 	color_selected = np.zeros((150,150,3), np.uint8)
 
 	global Bnum
@@ -82,14 +90,14 @@ def colorSelector(img_path):
 			break
 
 	return (Hnum, Snum, Vnum)
-5
 
-def bounds(colors):
+
+def square1(colors):
 
 	H, S, V = colors
 
-	lowerb = (H - 15, S - 15, V - 15)	
-	upperb = (S + 15, S + 15, V + 15)
+	lowerb = (H - 7, S - 55, V - 60)	
+	upperb = (H + 7, S + 55, V + 60)
 
 	lowerb = np.mat(lowerb)
 	upperb = np.mat(upperb)
@@ -98,6 +106,7 @@ def bounds(colors):
 	#count squares
 
 	squareOne = cv2.imread(snapshots[0])
+	squareOne = cv2.GaussianBlur(squareOne, (5,5), 0)
 	hsv_squareOne = cv2.cvtColor(squareOne, cv2.COLOR_RGB2HSV)
 
 
@@ -110,23 +119,29 @@ def bounds(colors):
 		
 	for pic, contour in enumerate(contours):
 		area = cv2.contourArea(contour)
-		if(area > 300):
+		if(area > 250):
 			x, y, w, h = cv2.boundingRect(contour)
 			imageFrame = cv2.rectangle(mask, (x,y), (x+w, y+h), (0,255,0), 2)
 			cv2.putText(imageFrame, "Green", (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0))
 			count += 1
 	
-
 	cv2.imshow("Multiple Color Detection in Real-Time", imageFrame)
 	cv2.waitKey(0)
 
-	lowerb = (H - 5, S - 5, V - 5)	
-	upperb = (S + 5, S + 5, V + 5)
+	return count
+
+def square2(colors):
+
+	H, S, V = colors
+
+	lowerb = (H - 5, S - 40, V - 40)	
+	upperb = (H + 5, S + 40, V + 40)
 
 	lowerb = np.mat(lowerb)
 	upperb = np.mat(upperb)
 
 	squareTwo = cv2.imread(snapshots[1])
+	squareTwo = cv2.GaussianBlur(squareTwo, (5,5), 0)
 	hsv_squareTwo = cv2.cvtColor(squareTwo, cv2.COLOR_RGB2HSV)
 
 	mask = cv2.inRange(hsv_squareTwo, lowerb, upperb)
@@ -138,7 +153,7 @@ def bounds(colors):
 		
 	for pic, contour in enumerate(contours):
 		area = cv2.contourArea(contour)
-		if(area > 300):
+		if(area > 250):
 			x, y, w, h = cv2.boundingRect(contour)
 			imageFrame = cv2.rectangle(mask, (x,y), (x+w, y+h), (0,255,0), 2)
 			cv2.putText(imageFrame, "Green", (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0))
@@ -146,8 +161,11 @@ def bounds(colors):
 	
 	cv2.imshow("Second pic", imageFrame)
 	cv2.waitKey(0)
+
+	return countAfter
 		
-	#calculator
+def calculator(count, countAfter):
+
 	print("countafter" + str(countAfter))
 	print("count" + str(count))
 
@@ -171,33 +189,36 @@ def bounds(colors):
 
 #running stuff
 
-flags = [i for i in dir(cv2) if i.startswith('COLOR_')]
+# flags = [i for i in dir(cv2) if i.startswith('COLOR_')]
 
-result = True
-videoCaptureObject = cv2.VideoCapture(0)
+# result = True
+# videoCaptureObject = cv2.VideoCapture(0)
 
-i = 0
-while True:
-	ret, frame = videoCaptureObject.read()
-	cv2.imshow("Capturing Video", frame)
-		# deletes every frame as the next one comes on, closes all windows when q is pressed
-	if cv2.waitKey(1) == ord('q'):
-		videoCaptureObject.release()
-		cv2.destroyAllWindows()
-		break
-		# when s is pressed
-	if keyboard.is_pressed('s'):
-			# and the index is less than the length of the snapshot list
-		if i < 2:
-				# take as snapshot, save it, show it
-			cv2.imwrite(snapshots[i], frame)
-			cv2.imshow(snapshots[i], frame)
-			time.sleep(1)
-			i += 1
-		else:
-			result = False
+# i = 0
+# while True:
+# 	ret, frame = videoCaptureObject.read()
+# 	cv2.imshow("Capturing Video", frame)
+# 		# deletes every frame as the next one comes on, closes all windows when q is pressed
+# 	if cv2.waitKey(1) == ord('q'):
+# 		videoCaptureObject.release()
+# 		cv2.destroyAllWindows()
+# 		break
+# 		# when s is pressed
+# 	if keyboard.is_pressed('s'):
+# 			# and the index is less than the length of the snapshot list
+# 		if i < 2:
+# 				# take as snapshot, save it, show it
+# 			cv2.imwrite(snapshots[i], frame)
+# 			cv2.imshow(snapshots[i], frame)
+# 			time.sleep(1)
+# 			i += 1
+# 		else:
+# 			result = False
 
-image = cv2.imread("C:/Users/alexa/Desktop/square0.png")
-image_hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
+# image = cv2.imread("C:/Users/alexa/Desktop/square0.png")
+# image_hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
 
-print(bounds(colorSelector(image_hsv)))
+# count = square1(HSVColorPicker("C:/Users/alexa/Desktop/square0.png"))
+# countAfter = square2(HSVColorPicker("C:/Users/alexa/Desktop/square1.png"))
+
+# print(calculator(count, countAfter))
