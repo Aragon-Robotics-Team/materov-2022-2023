@@ -9,6 +9,8 @@ import keyboard
 
 snapshots = ["C:/Users/alexa/Desktop/square0.png", "C:/Users/alexa/Desktop/square1.png"]
 
+image_hsv = None
+
 def video():
 	while True:
 		videoCaptureObject = cv2.VideoCapture(0)
@@ -47,18 +49,18 @@ def colorSelector(img_path):
 
 	#Mouse Callback function
 	def show_color(event,x,y,flags,param): 
-		global Bnum
-		global Gnum
-		global Rnum 
-		B=img[y,x][0]
-		G=img[y,x][1]
-		R=img[y,x][2]
+		global Hnum
+		global Snum
+		global Vnum 
+		H=image_hsv[y,x][0]
+		S=image_hsv[y,x][1]
+		V=image_hsv[y,x][2]
 
 		if event == cv2.EVENT_LBUTTONDOWN:
-			color_selected [:] = (B,G,R)
-			Bnum = B
-			Gnum = G
-			Rnum = R
+			color_selected [:] = (H,S,V)
+			Hnum = H
+			Snum = S
+			Vnum = V
 
 	#Show selected color when left mouse button pressed
 	cv2.namedWindow('color_selected')
@@ -68,49 +70,32 @@ def colorSelector(img_path):
 	cv2.namedWindow('image')
 
 	#read sample image
-	img=cv2.imread(img_path)
+	# img=cv2.imread(img_path)
 
 	#mouse call back function declaration
 	cv2.setMouseCallback('image',show_color)
 	while (1):
-		cv2.imshow('image',img)
+		cv2.imshow('image',image_hsv)
 		cv2.imshow('color_selected', color_selected)
 		if cv2.waitKey(1) == ord('q'):
 			cv2.destroyAllWindows()
 			break
 
-	return (Bnum, Gnum, Rnum)
-
-
+	return (Hnum, Snum, Vnum)
+5
 
 def bounds(colors):
 
-	B, G, R = colors
+	H, S, V = colors
 
-	rgblowerb = (B + 10, G + 10, R + 10)	
-	rgbupperb = (B - 10, G - 10, R - 10)
+	lowerb = (H - 15, S - 15, V - 15)	
+	upperb = (S + 15, S + 15, V + 15)
 
-	graylowerb = np.mat(rgblowerb)
-	grayupperb = np.mat(rgbupperb)
-
-	rgblowerb = cv2.cvtColor(graylowerb, cv2.COLOR_GRAY2BGR)
-	rgbupperb = cv2.cvtColor(grayupperb, cv2.COLOR_GRAY2BGR)
-
-	rgblowerb = rgblowerb.astype('int')
-	rgbupperb = rgbupperb.astype('int')
-
-	lowerb = cv2.cvtColor(rgblowerb, cv2.COLOR_BGR2HSV)
-	upperb = cv2.cvtColor(rgbupperb, cv2.COLOR_BGR2HSV)
+	lowerb = np.mat(lowerb)
+	upperb = np.mat(upperb)
 	
 
-	return (lowerb, upperb)
-
-
-
-
-def findSquares(array):
-
-	lowerb, upperb = array
+	#count squares
 
 	squareOne = cv2.imread(snapshots[0])
 	hsv_squareOne = cv2.cvtColor(squareOne, cv2.COLOR_RGB2HSV)
@@ -132,8 +117,14 @@ def findSquares(array):
 			count += 1
 	
 
-	cv2.imshow("Multiple Color Detection in Real-TIme", imageFrame)
+	cv2.imshow("Multiple Color Detection in Real-Time", imageFrame)
 	cv2.waitKey(0)
+
+	lowerb = (H - 5, S - 5, V - 5)	
+	upperb = (S + 5, S + 5, V + 5)
+
+	lowerb = np.mat(lowerb)
+	upperb = np.mat(upperb)
 
 	squareTwo = cv2.imread(snapshots[1])
 	hsv_squareTwo = cv2.cvtColor(squareTwo, cv2.COLOR_RGB2HSV)
@@ -152,16 +143,20 @@ def findSquares(array):
 			imageFrame = cv2.rectangle(mask, (x,y), (x+w, y+h), (0,255,0), 2)
 			cv2.putText(imageFrame, "Green", (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0))
 			countAfter += 1
-
-	return (count, countAfter)
-
-def calculator(array):
-
-	count, countAfter = array
+	
+	cv2.imshow("Second pic", imageFrame)
+	cv2.waitKey(0)
+		
+	#calculator
+	print("countafter" + str(countAfter))
+	print("count" + str(count))
 
 	totalSquares = 64
 	whiteAfter = totalSquares - countAfter
 	whiteCount = totalSquares - count
+
+	print("whiteafter" + str(whiteAfter))
+	print("whitecount" + str(whiteCount))
 
 	whiteDiff = whiteAfter - whiteCount
 	greenDiff = countAfter - count
@@ -202,6 +197,7 @@ while True:
 		else:
 			result = False
 
-calculator(findSquares(bounds(colorSelector("C:/Users/alexa/Desktop/square0.png"))))
+image = cv2.imread("C:/Users/alexa/Desktop/square0.png")
+image_hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
 
-
+print(bounds(colorSelector(image_hsv)))
