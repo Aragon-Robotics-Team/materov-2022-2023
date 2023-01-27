@@ -1,7 +1,7 @@
 import numpy as np 
 import imutils
 import cv2 
-from colorpickerfunc import colorSelector
+from autodockcolorpickerfunc import colorSelector
 
 B = 0
 G = 0
