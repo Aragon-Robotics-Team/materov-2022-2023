@@ -23,12 +23,17 @@ class Robot:  # Robot is a multiprocessing class process?
         self.arduino = serial.Serial(port=f'/dev/cu.usbmodem{self.portNum}',
                                      baudrate=self.baudRate,
                                      timeout=1)
+
         sleep(1)
+
         message = "Arduino Connected" + ","
         message = message.encode("ascii")
+
         self.arduino.write(message)
+
         while (self.arduino.in_waiting == 0):
             pass
+        
         received = self.arduino.readline().decode("ascii")
         print(received)
 
@@ -40,13 +45,16 @@ class Robot:  # Robot is a multiprocessing class process?
 
     def get_send_arduino(self, string):
         self.arduino.write(string.encode("ascii"))
+
+        # not sure if this line is needed
         while self.arduino.in_waiting == 0:
             pass
+
         self.receivedData = self.arduino.readline().decode("ascii")
         return self.receivedData
 
     def make_string(self, list):
-        return ','.join(list) + '.'
+        return ','.join(list) + ','
 
 
 if __name__ == '__main__':
