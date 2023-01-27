@@ -52,32 +52,3 @@ while loop:
 
 # quit pygame after user exists
 pygame.quit()
-
-# ---------- ARDUINO CODE ---------- #
-
-# //global variables for thruster pwms
-# String br = "";
-# String fl = "";
-# String bl = "";
-# String fr = "";
-# String v1 = "";
-# String v2 = "";
-
-# void setup() {
-# Serial.begin(9600); // set the baud rate
-# delay(2000);
-# Serial.println("Arduino is ready!");
-# }
-
-# void loop() {
-
-#   br = Serial.readStringUntil(',').toInt();
-#   fl = Serial.readStringUntil(',').toInt();
-#   bl = Serial.readStringUntil(',').toInt();
-#   fr = Serial.readStringUntil(',').toInt();
-#   v1 = Serial.readStringUntil(',').toInt();
-#   v2 = Serial.readStringUntil(',').toInt();
-
-#   Serial.println(br + ", " + fl + ", " + bl + ", " + fr + ", " + v1 + ", "+v2);
-
-# }

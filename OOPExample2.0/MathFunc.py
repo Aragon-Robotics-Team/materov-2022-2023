@@ -5,7 +5,8 @@ def PWM(joyVal): #converting a double to a PWM value
     joyVal = joyVal*Limit
     return joyVal
 
-def makeString(Lx, Ly, Rx, A, B, mode):
+#note: modified funciton here to return array of PWM values, instead of a string
+def makeCalc(Lx, Ly, Rx, A, B, mode):
     #Lx-Double/float, Ly-Double/float, Rx-Double/float, A-Boolean, B-Boolean, "Sensitive Mode" - Boolean
     v1 = v2 = fr = fl = br = bl = 1500
     sendStr = "" #constructed string to be sent to the arduino
@@ -96,10 +97,7 @@ def makeString(Lx, Ly, Rx, A, B, mode):
 
     # sends the PWM values in the order:
     # fr, fl, br, bl, v1, v2
-    sendStr  = str(pwmArray[0]) + "," + str(pwmArray[1]) + "," + str(pwmArray[2]) + "," + str(pwmArray[3]) + "," + str(pwmArray[4]) + "," + str(pwmArray[5]) + ","
-    return sendStr
-
-print(makeString(1,0,0,0,0,0))
+    return pwmArray
 
 
     
