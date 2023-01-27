@@ -9,7 +9,6 @@ win = Tk()
 # Set the size of the window
 win.geometry("500x50")
 
-
 # Define a function to take the screenshot
 def take_screenshot():
    x = 0
