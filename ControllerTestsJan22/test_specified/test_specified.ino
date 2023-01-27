@@ -27,8 +27,10 @@ void loop() {
   while(!Serial.available());
   int thrusterToRun = Serial.readStringUntil('\n').toInt() - 8;
   thrusters[thrusterToRun].writeMicroseconds(1650);
-  delay(2000);
+  Serial.println("running thruster on pin " + String(thrusterToRun + 8));
+  delay(4000);
   thrusters[thrusterToRun].writeMicroseconds(1500);
+  Serial.println("done running");
   delay(1000);
 
   //Documentation: (LF, LB, RF, RB, VL, VR)

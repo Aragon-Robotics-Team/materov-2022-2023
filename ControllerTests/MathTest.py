@@ -12,6 +12,10 @@ def makeString(Lx, Ly, Rx, A, B, mode):
     capMovement = 200
     capPivot = 100
     Vstrength = 200 #vertical thruster code chunks
+    expMulti = 1.2
+    Lx = Lx * (-1)
+    Ly = Ly * (-1)
+    
     
     #deadband 0.1 deviation
     if(Lx < 0.1 and Lx > -0.1):
@@ -20,53 +24,55 @@ def makeString(Lx, Ly, Rx, A, B, mode):
         Ly = 0
 
     #LINEAR MODE
-    if (mode > 0):
-        
+    #if button is not pressed
+    if (mode <= 0.5):
+
         # Front and Back Calculations (cap is 200)
-        br += -PWM(Ly) * (capMovement/400)
-        bl += -PWM(Ly) * (capMovement/400)
-        fr += -PWM(Ly) * (capMovement/400)
-        fl += -PWM(Ly) * (capMovement/400)
-
+        br += PWM(Ly) * (capMovement/400) 
+        bl += PWM(Ly) * (capMovement/400)
+        fr += PWM(Ly) * (capMovement/400)
+        fl += PWM(Ly) * (capMovement/400)
         
-        #Crabbing Calculations (cap is 200)
-        br += -PWM(Lx)  * (capMovement/400)
-        bl += PWM(Lx) * (capMovement/400)
-        fr += PWM(Lx) * (capMovement/400)
-        fl += -PWM(Lx)  * (capMovement/400)
 
+        #Crabbing Calculations (cap is 200)
+        br += PWM(Lx)  * (capMovement/400)
+        bl += -PWM(Lx) * (capMovement/400)
+        fr += -PWM(Lx) * (capMovement/400)
+        fl += PWM(Lx)  * (capMovement/400)
+        
 
         #Pivoting CALCULATIONS (cap is 100)
-        br += PWM(Rx) * (capPivot/400)
-        bl += -PWM(Rx)  * (capPivot/400)
-        fr += PWM(Rx) * (capPivot/400)
-        fl += -PWM(Rx)  * (capPivot/400)
+        br += -PWM(Rx) * (capPivot/400)
+        bl += PWM(Rx)  * (capPivot/400)
+        fr += -PWM(Rx) * (capPivot/400)
+        fl += PWM(Rx)  * (capPivot/400)
+        
 
-    #EXPONENTIAL MODE (ACCELERATION)
+    #EXP MODE
     else:
 
-        #eq: cap*x^1.2
-        exponent = 1.2
         # Front and Back Calculations (cap is 200)
-        br += (PWM(Ly)**exponent) * (capMovement/400)
-        bl += (PWM(Ly)**exponent) * (capMovement/400)
-        fr += (PWM(Ly)**exponent) * (capMovement/400)
-        fl += (PWM(Ly)**exponent) * (capMovement/400)
-
+        br += (PWM(Ly**expMulti)) * (capMovement/400)
+        bl += (PWM(Ly**expMulti)) * (capMovement/400)
+        fr += (PWM(Ly**expMulti)) * (capMovement/400)
+        fl += (PWM(Ly**expMulti)) * (capMovement/400)
+        print(br)
         
-        #Crabbing Calculations (cap is 200)
-        br += (PWM(Lx)**exponent)  * (capMovement/400)
-        bl += -(PWM(Lx)**exponent) * (capMovement/400)
-        fr += -(PWM(Lx)**exponent) * (capMovement/400)
-        fl += (PWM(Lx)**exponent)  * (capMovement/400)
 
+        #Crabbing Calculations (cap is 200)
+        br += (PWM(Lx**expMulti))  * (capMovement/400)
+        bl += -(PWM(Lx**expMulti)) * (capMovement/400)
+        fr += -(PWM(Lx**expMulti)) * (capMovement/400)
+        fl += (PWM(Lx**expMulti))  * (capMovement/400)
+        
 
         #Pivoting CALCULATIONS (cap is 100)
-        br += -(PWM(Rx)**exponent) * (capPivot/400)
-        bl += (PWM(Rx)**exponent)  * (capPivot/400)
-        fr += -(PWM(Rx)**exponent) * (capPivot/400)
-        fl += (PWM(Rx)**exponent)  * (capPivot/400)
-        #if-else END
+        br += -(PWM(Rx**expMulti)) * (capPivot/400)
+        bl += (PWM(Rx**expMulti))  * (capPivot/400)
+        fr += -(PWM(Rx**expMulti)) * (capPivot/400)
+        fl += (PWM(Rx**expMulti))  * (capPivot/400)
+
+
 
     #up-down movement
     if(A): #if A is pressed
@@ -82,8 +88,6 @@ def makeString(Lx, Ly, Rx, A, B, mode):
     pwmArray = [fr, fl, br, bl, v1, v2]
     for index in range(len(pwmArray)):
 
-        #round to whole number
-        pwmArray[index] = round(pwmArray[index])
         
         #cap
         pwmArray[index] = max(1100, pwmArray[index])
@@ -95,8 +99,6 @@ def makeString(Lx, Ly, Rx, A, B, mode):
     sendStr  = str(pwmArray[0]) + "," + str(pwmArray[1]) + "," + str(pwmArray[2]) + "," + str(pwmArray[3]) + "," + str(pwmArray[4]) + "," + str(pwmArray[5]) + ","
     return sendStr
 
-calc = makeString(0, 1, 0, 0, 0, 0)
-print(calc)
 
     
 

@@ -25,7 +25,7 @@ def makeString(Lx, Ly, Rx, A, B, mode):
 
         # Front and Back Calculations (cap is 200)
         lf += PWM(Ly) * (capMovement/400)
-        lb += PWM(Ly) * (capMovement/400)
+        lb -= PWM(Ly) * (capMovement/400)
         rf += PWM(Ly) * (capMovement/400)
         rb += PWM(Ly) * (capMovement/400)
 

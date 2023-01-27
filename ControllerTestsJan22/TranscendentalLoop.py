@@ -3,11 +3,11 @@ import serial
 import MathFunc    
 from time import sleep
 
-serialOn = False
-delay = 0.5
+serialOn = True
+delay = 0.2
 
 if serialOn:
-    arduino = serial.Serial('/dev/cu.usbmodem1431401', 9600)
+    arduino = serial.Serial('/dev/cu.usbmodem1421401', 9600)
 
 pygame.init()
 pygame.joystick.init()
@@ -43,18 +43,18 @@ print("Controller name:" + controller.get_name())
 while True:
     sleep(delay)
     pygame.event.pump()
-    Lx = controller.get_axis(0)
-    Ly = controller.get_axis(1) * -1  # y is inverted on joystick
-    Rx = controller.get_axis(3)
-    A = controller.get_button(3)
-    B = controller.get_button(0)
+    Lx = controller.get_axis(0) * -1
+    Ly = controller.get_axis(1)   # y is inverted on joystick
+    Rx = controller.get_axis(3) * -1
+    A = controller.get_button(0)
+    B = controller.get_button(3)
 
     print(Lx, Ly, Rx, A, B)
 
     # construct string, send to arduino, received info back
 
     messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B, 1)
-    print(messageToSend)
+    print("sending: ", messageToSend)
 
     if serialOn:
         messageToSend = messageToSend.encode("ascii")
@@ -62,38 +62,9 @@ while True:
         arduino.write(messageToSend)
 
         received = arduino.readline().decode("ascii")
-        print(received)
+        print("received: " + received)
             
 # ---------- END MAIN PROGRAM LOOP ---------- #
 
 # quit pygame after user exists
 pygame.quit()
-
-# ---------- ARDUINO CODE ---------- #
-#
-# //global variables for thruster pwms
-# String br = "";
-# String fl = "";
-# String bl = "";
-# String fr = "";
-# String v1 = "";
-# String v2 = "";
-#
-# void setup() {
-# Serial.begin(9600); // set the baud rate
-# delay(2000);
-# Serial.println("Arduino is ready!");
-# }
-#
-# void loop() {
-#
-#   br = Serial.readStringUntil(',').toInt();
-#   fl = Serial.readStringUntil(',').toInt();
-#   bl = Serial.readStringUntil(',').toInt();
-#   fr = Serial.readStringUntil(',').toInt();
-#   v1 = Serial.readStringUntil(',').toInt();
-#   v2 = Serial.readStringUntil(',').toInt();
-#
-#   Serial.println(br + ", " + fl + ", " + bl + ", " + fr + ", " + v1 + ", "+v2);
-#
-# }
