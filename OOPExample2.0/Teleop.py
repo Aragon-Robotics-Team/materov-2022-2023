@@ -1,6 +1,6 @@
-import serial
 import pygame
 import MathFunc
+import Robot
 from time import sleep
 from Numbers import Numbers
 
@@ -26,7 +26,6 @@ class Teleop:
         self.robot = rob
 
     def teleop_loop(self):
-
         if self.controller_name == "Wireless Controller":
             self.var_ps4_controller()
         elif self.controller_name == "XBOX":  # XBOX name?
@@ -37,10 +36,12 @@ class Teleop:
         print("TELEOP STARTED")
 
         # ------ MATH CALC FUNCTION CALL ------ #
-
-        message = self.thruster_calculations(self.get_gamepad_states())
-        self.robot.get_send_arduino(self.robot.make_string(message))
-        
+        while True:
+            pygame.event.pump()
+            message = self.thruster_calculations(self.get_gamepad_states())
+            self.robot.get_send_arduino(self.robot.make_string(message))
+            pygame.event.clear()
+            sleep(self.robot.delay)
         # takes the message list (all the thruster values) and separates by comma and period
         # uses arduino function in Robot to send to arduino
 

@@ -1,6 +1,7 @@
-from Teleop import *
 import pygame
 from time import sleep
+import serial
+
 
 """
 Robot runs the main loop, starts the tasks such as Teleop and Autonomous
@@ -51,6 +52,10 @@ class Robot:  # Robot is a multiprocessing class process?
             pass
 
         self.receivedData = self.arduino.readline().decode("ascii")
+        # return self.receivedData
+
+        while self.arduino.in_waiting != 0:
+            self.receivedData = self.arduino.readline().decode("ascii")
         return self.receivedData
 
     def make_string(self, list):
