@@ -96,7 +96,9 @@ def makeString(Lx, Ly, Rx, A, B, mode):
 
     # sends the PWM values in the order:
     # fr, fl, br, bl, v1, v2
-    sendStr  = str(pwmArray[0]) + "," + str(pwmArray[1]) + "," + str(pwmArray[2]) + "," + str(pwmArray[3]) + "," + str(pwmArray[4]) + "," + str(pwmArray[5]) + ","
+    #sendStr  = str(pwmArray[0]) + "," + str(pwmArray[1]) + "," + str(pwmArray[2]) + "," + str(pwmArray[3]) + "," + str(pwmArray[4]) + "," + str(pwmArray[5]) + ","
+    sendStr  = str(pwmArray[0]) + "-" + str(pwmArray[1]) + "=" + str(pwmArray[2]) + "+" + str(pwmArray[3]) + "," + str(pwmArray[4]) + "." 
+    
     return sendStr
 
 print(makeString(1,0,0,0,0,0))

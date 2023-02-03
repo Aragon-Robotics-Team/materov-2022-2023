@@ -17,6 +17,7 @@ Servo R_VERT; //left vertical
 
 
 
+
 void setup() {
 Serial.begin(9600); // set the baud rate
 delay(2000);
@@ -36,13 +37,13 @@ Serial.println("Arduino is ready!");
 
 void loop() {
   //getting PWM values from computer
-  fr = Serial.readStringUntil(',').toInt();
-  fl = Serial.readStringUntil(',').toInt();
-  br = Serial.readStringUntil(',').toInt();
-  bl = ((Serial.readStringUntil(',').toInt() - 1500) * (-1)) + 1500;;
-  v1 = Serial.readStringUntil(',').toInt();
-  v2 = Serial.readStringUntil(',').toInt();
-  // - 1500) * (-1)) + 1500;
+  fr = Serial.readStringUntil('-').toInt();
+  fl = Serial.readStringUntil('=').toInt();
+  br = Serial.readStringUntil('+').toInt();
+  bl = ((Serial.readStringUntil(',').toInt() - 1500) * (-1)) + 1500;
+  v1 = Serial.readStringUntil('.').toInt();
+  v2 = v1;
+
   //send pwm values to thrusters
   LF_T.writeMicroseconds(fl);
   LB_T.writeMicroseconds(bl);
@@ -51,7 +52,12 @@ void loop() {
   L_VERT.writeMicroseconds(v1);
   R_VERT.writeMicroseconds(v2);
   
-  Serial.println(String(br) + ", " + String(fl) + ", " + String(bl) + ", " + String(fr) + ", " + String(v1) + ", " + String(v2));
+  Serial.println("BR: " + String(br) + ", " + 
+                 "FL: " + String(fl) + ", " + 
+                 "BL: " + String(bl) + ", " + 
+                 "FR: " + String(fr) + ", " + 
+                 "V1: " + String(v1) + ", " + 
+                 "V2: " + String(v2));
   
   delay(50);
   

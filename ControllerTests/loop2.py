@@ -4,11 +4,13 @@ import MathTest
 from time import sleep
 
 
-arduino = serial.Serial('/dev/cu.usbmodem142401', 9600)
+arduino = serial.Serial('/dev/cu.usbmodem14201', 9600)
 
 pygame.init()
 pygame.joystick.init()
-clock = pygame.time.Clock()
+pygame.display.init()
+pygame.display.set_mode((500,500))
+
 
 # message contains axis/button values
 message = [] 
