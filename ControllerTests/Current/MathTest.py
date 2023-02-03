@@ -56,7 +56,6 @@ def makeString(Lx, Ly, Rx, A, B, mode):
         bl += (PWM(Ly**expMulti)) * (capMovement/400)
         fr += (PWM(Ly**expMulti)) * (capMovement/400)
         fl += (PWM(Ly**expMulti)) * (capMovement/400)
-        print(br)
         
 
         #Crabbing Calculations (cap is 200)
