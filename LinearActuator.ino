@@ -1,8 +1,8 @@
 int ControlPin1 = 9; // 
 int ControlPin2= 10; // 
-int Sec = 1000;
-int setSec = 90*Sec; //90 seconds to put Float at its place
-int sinkSec = 30*Sec; //30 seconds to sink
+int Sec = 0; //Should be =1000 for actual dleays to happen
+int setSec = 9*Sec; //90 seconds to put Float at its place
+int sinkSec = 3*Sec; //30 seconds to sink
 int floatSec = sinkSec; //for now sinking time and floating time
 
 void setup(){
@@ -25,13 +25,13 @@ void loop(){
 void sinkFloat() { // pull in water/retract Actuator
 digitalWrite(ControlPin2, LOW);
 digitalWrite(ControlPin1, HIGH);
-delay(15000); // max range is 30000, mid point is 15000
+delay(3000); // max range is 30000, mid point is 15000
 }
 
 void floatyFloat() { // pull in water/retract Actuator
 digitalWrite(ControlPin2, HIGH);
 digitalWrite(ControlPin1, LOW);
-delay(15000); // max range is 30000, mid point is 15000
+delay(3000); // max range is 30000, mid point is 15000
 }
 
 void InitialPosition(){
@@ -45,4 +45,3 @@ digitalWrite(ControlPin2, LOW);
 digitalWrite(ControlPin1, LOW);
 delay(7000);
 }
-
