@@ -1,27 +1,25 @@
 #include <Servo.h>
 
-//global variables for thruster pwms
-int br;
-int fl;
-int bl;
-int fr;
+//global variaLB_PWMes for thruster pwms
+int RB_PWM;
+int LF_PWM;
+int LB_PWM;
+int RF_PWM;
 int v1;
 int v2;
 
-Servo LF_T; //left front
+Servo LF_T; //left RF_PWMont
 Servo LB_T; //left back
-Servo RF_T; //right front
+Servo RF_T; //right RF_PWMont
 Servo RB_T; //right back
 Servo L_VERT; //left vertical
 Servo R_VERT; //left vertical
 
 
-
-
 void setup() {
-Serial.begin(9600); // set the baud rate
-delay(2000);
-Serial.println("Arduino is ready!");
+  Serial.begin(9600); // set the baud rate
+  delay(2000);
+  Serial.println("Arduino is ready!");
 
 //Attaching thrusteeee to PWM pins on arduino
   LF_T.attach(8); 
@@ -36,26 +34,26 @@ Serial.println("Arduino is ready!");
 
 
 void loop() {
-  //getting PWM values from computer
-  fr = Serial.readStringUntil('-').toInt();
-  fl = Serial.readStringUntil('=').toInt();
-  br = Serial.readStringUntil('+').toInt();
-  bl = ((Serial.readStringUntil(',').toInt() - 1500) * (-1)) + 1500;
+  //getting PWM values RF_PWMom computer
+  RF_PWM = Serial.readStringUntil('-').toInt();
+  LF_PWM = Serial.readStringUntil('=').toInt();
+  RB_PWM = Serial.readStringUntil('+').toInt();
+  LB_PWM = ((Serial.readStringUntil(',').toInt() - 1500) * (-1)) + 1500;
   v1 = Serial.readStringUntil('.').toInt();
   v2 = v1;
 
   //send pwm values to thrusters
-  LF_T.writeMicroseconds(fl);
-  LB_T.writeMicroseconds(bl);
-  RF_T.writeMicroseconds(fr);
-  RB_T.writeMicroseconds(br);
+  LF_T.writeMicroseconds(LF_PWM);
+  LB_T.writeMicroseconds(LB_PWM);
+  RF_T.writeMicroseconds(RF_PWM);
+  RB_T.writeMicroseconds(RB_PWM);
   L_VERT.writeMicroseconds(v1);
   R_VERT.writeMicroseconds(v2);
   
-  Serial.println("BR: " + String(br) + ", " + 
-                 "FL: " + String(fl) + ", " + 
-                 "BL: " + String(bl) + ", " + 
-                 "FR: " + String(fr) + ", " + 
+  Serial.println("RB_PWM: " + String(RB_PWM) + ", " + 
+                 "LF_PWM: " + String(LF_PWM) + ", " + 
+                 "LB_PWM: " + String(LB_PWM) + ", " + 
+                 "RF_PWM: " + String(RF_PWM) + ", " + 
                  "V1: " + String(v1) + ", " + 
                  "V2: " + String(v2));
   
