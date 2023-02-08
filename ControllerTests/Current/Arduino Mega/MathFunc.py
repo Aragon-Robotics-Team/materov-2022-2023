@@ -14,7 +14,7 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive):
     Vstrength = 200 #vertical thruster code chunks
     expMulti = 1.2
     Ly = Ly * (-1)
-    # Lx = Lx * (-1)  #not sure if Lx is inversed, make changes accordingly
+    Lx = Lx * (-1)  #not sure if Lx is inversed, make changes accordingly
     
     if sensitive == True:
         capMovement = capMovement/2
@@ -61,8 +61,6 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive):
             bl += (PWM(-(Ly**expMulti))) * (capMovement/400)
             fr += (PWM(-(Ly**expMulti))) * (capMovement/400)
             fl += (PWM(-(Ly**expMulti))) * (capMovement/400)
-
-
         else:
             br += (PWM(Ly**expMulti)) * (capMovement/400)
             bl += (PWM(Ly**expMulti)) * (capMovement/400)
@@ -75,8 +73,6 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive):
             bl += -(PWM(-(Lx**expMulti))) * (capMovement/400)
             fr += -(PWM(-(Lx**expMulti))) * (capMovement/400)
             fl += (PWM(-(Lx**expMulti)))  * (capMovement/400)
-
-
         else:
             br += (PWM(Lx**expMulti))  * (capMovement/400)
             bl += -(PWM(Lx**expMulti)) * (capMovement/400)
@@ -90,17 +86,12 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive):
             bl += (PWM(-(Rx**expMulti)))  * (capPivot/400)
             fr += -(PWM(-(Rx**expMulti))) * (capPivot/400)
             fl += (PWM(-(Rx**expMulti)))  * (capPivot/400)
-
-
         else:
             br += -(PWM(Rx**expMulti)) * (capPivot/400)
             bl += (PWM(Rx**expMulti))  * (capPivot/400)
             fr += -(PWM(Rx**expMulti)) * (capPivot/400)
             fl += (PWM(Rx**expMulti))  * (capPivot/400)
         
-
-
-
     #up-down movement
     if(A): #if A is pressed
         v1 += Vstrength
@@ -111,20 +102,25 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive):
         v2 -= Vstrength
         #v1 and v2 go down
 
+
     #capping the pwm values at 1900/1100, also rounding them to the whole number
     pwmArray = [fr, fl, br, bl, v1, v2]
     for index in range(len(pwmArray)):
-        
-        
-        #cap
-        #pwmArray[index] = max(1100, pwmArray[index])
-        #pwmArray[index] = min(1900, pwmArray[index])
-        pass
-    
+        # round to whole number
+        pwmArray[index] = round(pwmArray[index])
+
+        pwmArray[index] = max(1100, pwmArray[index])
+        pwmArray[index] = min(1900, pwmArray[index])
+
 
     # sends the PWM values in the order:
     # fr, fl, br, bl, v1, v2
-    #sendStr  = str(pwmArray[0]) + "," + str(pwmArray[1]) + "," + str(pwmArray[2]) + "," + str(pwmArray[3]) + "," + str(pwmArray[4]) + "," + str(pwmArray[5]) + ","
-    sendStr  = str(pwmArray[0]) + "-" + str(pwmArray[1]) + "=" + str(pwmArray[2]) + "+" + str(pwmArray[3]) + "," + str(pwmArray[4]) + "." 
-    
+    sendStr  = (str(pwmArray[0]) + "-" + 
+                str(pwmArray[1]) + "=" + 
+                str(pwmArray[2]) + "+" + 
+                str(pwmArray[3]) + "*" + 
+                str(pwmArray[4]) + "," + 
+                str(pwmArray[5]) + ".")
+
+
     return sendStr

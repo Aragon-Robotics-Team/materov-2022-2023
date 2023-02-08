@@ -14,7 +14,7 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive):
     Vstrength = 200 #vertical thruster code chunks
     expMulti = 1.2
     Ly = Ly * (-1)
-    # Lx = Lx * (-1)  #not sure if Lx is inversed, make changes accordingly
+    Lx = Lx * (-1)  #not sure if Lx is inversed, make changes accordingly
     
     if sensitive == True:
         capMovement = capMovement/2
@@ -106,8 +106,13 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive):
     #capping the pwm values at 1900/1100, also rounding them to the whole number
     pwmArray = [fr, fl, br, bl, v1, v2]
     for index in range(len(pwmArray)):
+        # round to whole number or micro will die from num of decimals sent
+        pwmArray[index] = round(pwmArray[index])
+        
         pwmArray[index] = max(1100, pwmArray[index])
         pwmArray[index] = min(1900, pwmArray[index])
+
+        
 
 
     # sends the PWM values in the order:
@@ -115,8 +120,9 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive):
     sendStr  = (str(pwmArray[0]) + "-" + 
                 str(pwmArray[1]) + "=" + 
                 str(pwmArray[2]) + "+" + 
-                str(pwmArray[3]) + "," + 
-                str(pwmArray[4]) + ".")
+                str(pwmArray[3]) + "*" + 
+                str(pwmArray[4]) + "," + 
+                str(pwmArray[5]) + ".")
 
 
     return sendStr

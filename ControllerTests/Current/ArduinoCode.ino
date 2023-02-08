@@ -1,6 +1,6 @@
 #include <Servo.h>
 
-//global variaLB_PWMes for thruster pwms
+//global variables for thruster pwms
 int RB_PWM;
 int LF_PWM;
 int LB_PWM;
@@ -8,9 +8,9 @@ int RF_PWM;
 int v1;
 int v2;
 
-Servo LF_T; //left RF_PWMont
+Servo LF_T; //left front
 Servo LB_T; //left back
-Servo RF_T; //right RF_PWMont
+Servo RF_T; //right front
 Servo RB_T; //right back
 Servo L_VERT; //left vertical
 Servo R_VERT; //left vertical
@@ -21,7 +21,7 @@ void setup() {
   delay(2000);
   Serial.println("Arduino is ready!");
 
-//Attaching thrusteeee to PWM pins on arduino
+//Attaching thrusters to PWM pins on arduino
   LF_T.attach(8); 
   LB_T.attach(9);
   RF_T.attach(10);
@@ -34,29 +34,33 @@ void setup() {
 
 
 void loop() {
-  //getting PWM values RF_PWMom computer
-  RF_PWM = Serial.readStringUntil('-').toInt();
-  LF_PWM = Serial.readStringUntil('=').toInt();
-  RB_PWM = Serial.readStringUntil('+').toInt();
-  LB_PWM = ((Serial.readStringUntil(',').toInt() - 1500) * (-1)) + 1500;
-  v1 = Serial.readStringUntil('.').toInt();
-  v2 = v1;
 
-  //send pwm values to thrusters
-  LF_T.writeMicroseconds(LF_PWM);
-  LB_T.writeMicroseconds(LB_PWM);
-  RF_T.writeMicroseconds(RF_PWM);
-  RB_T.writeMicroseconds(RB_PWM);
-  L_VERT.writeMicroseconds(v1);
-  R_VERT.writeMicroseconds(v2);
+  if (Serial.available()) {
+   
+    //getting PWM values pyserial
+    RF_PWM = Serial.readStringUntil('-').toInt();
+    LF_PWM = Serial.readStringUntil('=').toInt();
+    RB_PWM = Serial.readStringUntil('+').toInt();
+    LB_PWM = ((Serial.readStringUntil('*').toInt() - 1500) * (-1)) + 1500;
+    v1 = Serial.readStringUntil(',').toInt();
+    v2 = Serial.readStringUntil('.').toInt();
   
-  Serial.println("RB_PWM: " + String(RB_PWM) + ", " + 
-                 "LF_PWM: " + String(LF_PWM) + ", " + 
-                 "LB_PWM: " + String(LB_PWM) + ", " + 
-                 "RF_PWM: " + String(RF_PWM) + ", " + 
-                 "V1: " + String(v1) + ", " + 
-                 "V2: " + String(v2));
-  
-  delay(50);
-  
+    //send pwm values to thrusters
+    LF_T.writeMicroseconds(LF_PWM);
+    LB_T.writeMicroseconds(LB_PWM);
+    RF_T.writeMicroseconds(RF_PWM);
+    RB_T.writeMicroseconds(RB_PWM);
+    L_VERT.writeMicroseconds(v1);
+    R_VERT.writeMicroseconds(v2);
+    
+    //note: LB is adjusted to its actual "value" when printed by serial
+    Serial.println("RB_PWM: " + String(RB_PWM) + ", " + 
+                   "LF_PWM: " + String(LF_PWM) + ", " + 
+                   "LB_PWM: " + String(((LB_PWM - 1500) * (-1)) + 1500) + ", " + 
+                   "RF_PWM: " + String(RF_PWM) + ", " + 
+                   "V1: " + String(v1) + ", " + 
+                   "V2: " + String(v2));
+    
+    delay(50);
+  }
 }

@@ -1,6 +1,6 @@
 import pygame
 import serial
-import MathTest    
+import MathFunc    
 from time import sleep
 
 pygame.init()
@@ -91,7 +91,7 @@ while loop:
 
     
         # Math Calculations
-        messageToSend = MathTest.makeString(Lx, Ly, Rx, A, B, linearMode, sensitiveMode)
+        messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B, linearMode, sensitiveMode)
         messageToSend = messageToSend.encode("ascii")
         
         arduino.write(messageToSend) 
@@ -100,6 +100,8 @@ while loop:
         print(received)
         print("Linear Mode: " + str(linearMode))
         print("Sensitive Mode: " + str(sensitiveMode))
+        
+        pygame.display.update()
 
 
 
