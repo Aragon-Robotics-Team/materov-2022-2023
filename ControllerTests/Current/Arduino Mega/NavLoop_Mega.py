@@ -29,7 +29,7 @@ message = []
 loop = True
 linearMode = False
 sensitiveMode = False
-arduino = serial.Serial('/dev/cu.usbmodem14201', 9600)
+arduino = serial.Serial('/dev/cu.usbmodem142101', 9600)
 
 # this make code work instant
 sleep(1)
@@ -42,6 +42,14 @@ while loop:
     # event handler
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            # reset thrusters to prevent them from running after closing program
+            arduino.write(str(1500) + "-" + 
+                str(1500) + "=" + 
+                str(1500) + "+" + 
+                str(1500) + "*" + 
+                str(1500) + "," + 
+                str(1500) + ".") 
+
             loop = False
 
     # Get count of interactables.
@@ -66,7 +74,7 @@ while loop:
 
         Lx = message[0] 
         Ly = message[1]
-        Rx = message[3]
+        Rx = message[2]
         A = message[6]
         B = message[7]
         X = message[8]
@@ -100,10 +108,12 @@ while loop:
         print(received)
         print("Linear Mode: " + str(linearMode))
         print("Sensitive Mode: " + str(sensitiveMode))
-
-
-
         
+        pygame.display.update()
+
+
+
+
 
             
 # ---------- END MAIN PROGRAM LOOP ---------- #

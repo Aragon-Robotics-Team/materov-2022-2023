@@ -27,10 +27,8 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive):
     if(Ly < 0.1 and Ly > -0.1):
         Ly = 0
 
-    print(Rx)
     #LINEAR MODE
     #if button is not pressed
-    
     if (mode == False):
 
         # Front and Back Calculations (cap is 200)
@@ -48,10 +46,10 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive):
         
 
         #Pivoting CALCULATIONS (cap is 100)
-        br += PWM(Rx) * (capPivot/400)
-        bl += -PWM(Rx)  * (capPivot/400)
-        fr += PWM(Rx) * (capPivot/400)
-        fl += -PWM(Rx)  * (capPivot/400)
+        br += -PWM(Rx) * (capPivot/400)
+        bl += PWM(Rx)  * (capPivot/400)
+        fr += -PWM(Rx) * (capPivot/400)
+        fl += PWM(Rx)  * (capPivot/400)
         
 
     #EXP MODE
@@ -94,16 +92,14 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive):
             fr += -(PWM(Rx**expMulti)) * (capPivot/400)
             fl += (PWM(Rx**expMulti))  * (capPivot/400)
         
-        
-
     #up-down movement
     if(A): #if A is pressed
         v1 += Vstrength
-        v2 += Vstrength + 38
+        v2 += Vstrength
         #v1 and v2 go up
     if(B): #if B is pressed
         v1 -= Vstrength
-        v2 -= Vstrength + 38
+        v2 -= Vstrength
         #v1 and v2 go down
 
 
@@ -116,7 +112,7 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive):
         pwmArray[index] = max(1100, pwmArray[index])
         pwmArray[index] = min(1900, pwmArray[index])
 
-    pwmArray[4] = pwmArray[4] 
+
     # sends the PWM values in the order:
     # fr, fl, br, bl, v1, v2
     sendStr  = (str(pwmArray[0]) + "-" + 
