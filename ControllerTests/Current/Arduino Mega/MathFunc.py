@@ -13,8 +13,9 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive):
     capPivot = 100
     Vstrength = 200 #vertical thruster code chunks
     expMulti = 1.2
-    Ly = Ly * (-1)  #test to see if inversed
-    Lx = Lx * (-1)  #not sure if Lx is inversed, make changes accordingly
+
+    Ly = Ly * (-1)  
+    Lx = Lx * (-1)  
     
     if sensitive == True:
         capMovement = capMovement/2
@@ -27,7 +28,7 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive):
     if(Ly < 0.1 and Ly > -0.1):
         Ly = 0
 
-    print(Rx)
+
     #LINEAR MODE
     #if button is not pressed
     
