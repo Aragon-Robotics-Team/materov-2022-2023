@@ -26,8 +26,14 @@ PID_y = [depth]
 # D_x = [0.0]
 # D_y = [depth]
 
+time_counter = 0
+isTrue = False
+isTrue2 = True
+previous_depth = depth
+max_overshoot = 0
+
 pid_obj = PID_Func.PID()
-pid_obj.tune_PID(200, 0, 0)
+pid_obj.tune_PID(500, 100, 100)
 
 def animate(i):
     # ok for some reason 
@@ -52,6 +58,11 @@ def animate(i):
     global I_y
     global D_x
     global D_y
+    global time_counter
+    global isTrue
+    global isTrue2
+    global previous_depth
+    global max_overshoot
 
 
     tick += 1
@@ -66,14 +77,40 @@ def animate(i):
     PID_y.append(depth)
     goal_line_x.append(tick)
     goal_line_y.append(goal)
+
+    
+    # calculate the ticks elasped for first overshoot
+    if depth > goal:
+        isTrue = True
+    if depth > goal and isTrue and isTrue2:
+        time_counter += 1
+        if (depth > max_overshoot):
+            max_overshoot = depth
+    elif depth < goal and isTrue == True:
+        isTrue2 = False
+    
+    print("Tick: " + str(tick) + " | Depth: " + str(depth))
+    print("Ticks Elapsed: " + str(time_counter))
+    print("Maximum overshoot: " + str(max_overshoot))
+  
+
+    if tick == 10:
+        goal = float(input("Enter new goal: "))
     # P_x.append(tick)
     # P_y.append(p_depth)
     # I_x.append(tick)
     # I_y.append(i_depth)
     # D_x.append(tick)
     # D_y.append(d_depth)
-    
 
+    # if len(PID_x) > 50:
+    #     PID_x.pop(0)
+    #     PID_y.pop(0)
+    #     goal_line_x.pop(0)
+    #     goal_line_y.pop(0)
+
+    previous_depth = depth
+    
     plt.cla() #clear axes so lines don't change color
     plt.plot(goal_line_x, goal_line_y, label = "GOAL LINE")
     plt.plot(PID_x, PID_y, label = "PID")
