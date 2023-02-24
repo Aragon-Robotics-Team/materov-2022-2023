@@ -8,7 +8,8 @@ pygame.joystick.init()
 pygame.display.init()
 pygame.display.set_mode((500,500))
 
-
+autoTransect = False
+autoDock = False
 # message contains axis/button values
 message = [] 
 # [0] = LX
@@ -96,6 +97,25 @@ while loop:
         if Y > 0:
             sensitiveMode = False
 
+        if(autoDock): #add in button number(LT-2 and RT-5)
+            #request ip process autodock to begin
+            #take data from ip process autodock
+            #Lx = get x-vector fromqueue
+            #Ly = make it some constant that can be easily changed
+            #Rx = getfromqueue
+            #A = convert y-vector to vertical thrust
+            #B = getfromqueue
+            pass
+        if(autoTransect):
+            #request ip process autoTransect to begin
+            #take data from ip process autoTransect
+            #Lx = get x vector from queue
+            #Ly = some constant speed forward that can be easily changed
+            #Rx = getfromqueue(optional: if not straight go turn the center)
+            #A = getfromqueue(optional: if too big go make A higher)
+            #B = getfromqueue(optional: if too small make B lower)
+            pass
+        #Vishal: ask how nav tells IP to start calculating things
 
     
         # Math Calculations
