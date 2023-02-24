@@ -39,12 +39,3 @@ while True:
 print(PID_y)
 plt.plot(PID_x, PID_y)
 plt.show()
-
-
-
-    
-
-
-
-
-

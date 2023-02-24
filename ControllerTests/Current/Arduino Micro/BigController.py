@@ -29,10 +29,6 @@ message = []
 loop = True
 linearMode = False
 sensitiveMode = False
-arduino = serial.Serial('/dev/cu.usbmodem14201', 9600)
-
-# this make code work instant
-sleep(1)
 
 # ---------- MAIN PROGRAM LOOP ---------- #
 
@@ -87,20 +83,13 @@ while loop:
             sensitiveMode = True
         if Y > 0:
             sensitiveMode = False
-
-
-
+    
         # Math Calculations
         messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B, linearMode, sensitiveMode)
-        messageToSend = messageToSend.encode("ascii")
-        
-        arduino.write(messageToSend) 
-        
-        received = arduino.readline().decode("ascii")
-        print(received)
+        print(messageToSend)
         print("Linear Mode: " + str(linearMode))
         print("Sensitive Mode: " + str(sensitiveMode))
-
+        
         pygame.display.update()
 
 

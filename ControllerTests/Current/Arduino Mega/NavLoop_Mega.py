@@ -43,13 +43,6 @@ while loop:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             # reset thrusters to prevent them from running after closing program
-            arduino.write(str(1500) + "-" + 
-                str(1500) + "=" + 
-                str(1500) + "+" + 
-                str(1500) + "*" + 
-                str(1500) + "," + 
-                str(1500) + ".") 
-
             loop = False
 
     # Get count of interactables.
