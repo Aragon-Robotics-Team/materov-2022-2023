@@ -1,6 +1,5 @@
 import pygame
 import MathFunc
-import Robot
 from time import sleep
 from Numbers import Numbers
 
