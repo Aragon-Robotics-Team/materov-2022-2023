@@ -1,7 +1,7 @@
 //timer code send to Tera Term
 
 #include <SoftwareSerial.h>// import the serial library
-SoftwareSerial MateROV(10, 11); // RX, TX
+SoftwareSerial MateROV(10, 11); // TX, RX
 int BluetoothData; // the data given from Computer
 
 

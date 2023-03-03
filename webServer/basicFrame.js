@@ -4,5 +4,5 @@ var http = require('http'); //create the server with module
    res.end('Hello World!'); //writes the http response back --> returns data the server has to return
  }).listen(8080); //binds the server to a network address
 
- //type http://localhost:8080/ into webserver to run webserver but not the html file 
+ //to run only this file, type http://localhost:8080/ into webserver to run webserver but not the html file 
 

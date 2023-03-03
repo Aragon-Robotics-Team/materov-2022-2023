@@ -1,5 +1,5 @@
 #include <SoftwareSerial.h>// import the serial library
-SoftwareSerial Genotronex(10, 11); // RX, TX
+SoftwareSerial Genotronex(10, 11); // TX, RX
 int ledpin = LED_BUILTIN; // led on D13 will show blink on / off
 int BluetoothData; // the data given from Computer
 
