@@ -1,4 +1,4 @@
-from Robot import *
+from OOPExample2.robot.Robot import *
 from Teleop import Teleop
 
 def run():  # initializes and creates Robot object
