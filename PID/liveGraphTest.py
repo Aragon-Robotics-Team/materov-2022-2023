@@ -1,14 +1,11 @@
-import time
 import PID_Func
-import numpy as np 
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
 
 tick = 0 # represents each PID output (used for x-axis)
 depth = 0.0
-goal = 10.0
+goal = 2.5
 # p_depth = depth
 # i_depth = depth
 # d_depth = depth
@@ -33,7 +30,7 @@ previous_depth = depth
 max_overshoot = 0
 
 pid_obj = PID_Func.PID()
-pid_obj.tune_PID(500, 100, 100)
+pid_obj.tune_PID(500, 0, 0)
 
 def animate(i):
     # ok for some reason 
@@ -92,10 +89,12 @@ def animate(i):
     print("Tick: " + str(tick) + " | Depth: " + str(depth))
     print("Ticks Elapsed: " + str(time_counter))
     print("Maximum overshoot: " + str(max_overshoot))
+    print("PWM: " + str(PWM_Output[0]))
   
 
-    if tick == 10:
+    if tick == 50:
         goal = float(input("Enter new goal: "))
+
     # P_x.append(tick)
     # P_y.append(p_depth)
     # I_x.append(tick)

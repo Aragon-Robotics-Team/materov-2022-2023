@@ -8,8 +8,7 @@ pygame.joystick.init()
 pygame.display.init()
 pygame.display.set_mode((500,500))
 
-autoTransect = False
-autoDock = False
+
 # message contains axis/button values
 message = [] 
 # [0] = LX
@@ -30,10 +29,6 @@ message = []
 loop = True
 linearMode = False
 sensitiveMode = False
-arduino = serial.Serial('/dev/cu.usbmodem142101', 9600)
-
-# this make code work instant
-sleep(1)
 
 # ---------- MAIN PROGRAM LOOP ---------- #
 
@@ -43,7 +38,6 @@ while loop:
     # event handler
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            # reset thrusters to prevent them from running after closing program
             loop = False
 
     # Get count of interactables.
@@ -68,7 +62,7 @@ while loop:
 
         Lx = message[0] 
         Ly = message[1]
-        Rx = message[2]
+        Rx = message[3]
         A = message[6]
         B = message[7]
         X = message[8]
@@ -89,36 +83,10 @@ while loop:
             sensitiveMode = True
         if Y > 0:
             sensitiveMode = False
-
-        if(autoDock): #add in button number(LT-2 and RT-5)
-            #request ip process autodock to begin
-            #take data from ip process autodock
-            #Lx = get x-vector fromqueue
-            #Ly = make it some constant that can be easily changed
-            #Rx = getfromqueue
-            #A = convert y-vector to vertical thrust
-            #B = getfromqueue
-            pass
-        if(autoTransect):
-            #request ip process autoTransect to begin
-            #take data from ip process autoTransect
-            #Lx = get x vector from queue
-            #Ly = some constant speed forward that can be easily changed
-            #Rx = getfromqueue(optional: if not straight go turn the center)
-            #A = getfromqueue(optional: if too big go make A higher)
-            #B = getfromqueue(optional: if too small make B lower)
-            pass
-        #Vishal: ask how nav tells IP to start calculating things
-
     
         # Math Calculations
         messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B, linearMode, sensitiveMode)
-        messageToSend = messageToSend.encode("ascii")
-        
-        arduino.write(messageToSend) 
-        
-        received = arduino.readline().decode("ascii")
-        print(received)
+        print(messageToSend)
         print("Linear Mode: " + str(linearMode))
         print("Sensitive Mode: " + str(sensitiveMode))
         
@@ -126,7 +94,7 @@ while loop:
 
 
 
-
+        
 
             
 # ---------- END MAIN PROGRAM LOOP ---------- #

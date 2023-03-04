@@ -89,7 +89,7 @@ while loop:
             sensitiveMode = False
 
 
-    
+
         # Math Calculations
         messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B, linearMode, sensitiveMode)
         messageToSend = messageToSend.encode("ascii")
@@ -100,7 +100,7 @@ while loop:
         print(received)
         print("Linear Mode: " + str(linearMode))
         print("Sensitive Mode: " + str(sensitiveMode))
-        
+
         pygame.display.update()
 
 
