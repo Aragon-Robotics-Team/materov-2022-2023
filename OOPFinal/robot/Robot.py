@@ -47,16 +47,9 @@ class Robot:  # Robot is a multiprocessing class process?
     def get_send_arduino(self, string):
         self.arduino.write(string.encode("ascii"))
 
-        # not sure if this line is needed
-        while self.arduino.in_waiting == 0:
-            pass
-
-        self.receivedData = self.arduino.readline().decode("ascii")
-        # return self.receivedData
-
         while self.arduino.in_waiting != 0:
-            self.receivedData = self.arduino.readline().decode("ascii")
-        return self.receivedData
+            self.receivedData = self.arduino.readline()
+        return self.receivedData.decode("ascii")
 
     def make_string(self, list):
         return ','.join(list) + ','
