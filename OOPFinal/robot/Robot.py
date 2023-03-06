@@ -10,29 +10,28 @@ This class is for Interfacing with the GUI. This is the MAIN PROCESS for Nav
 
 """
 class Robot:  # Robot is a multiprocessing class process?
-    def __init__(self, queue) -> None:  # gui creates object bot and interacts with it
+    def __init__(self, queue_in, queue_out) -> None:  # gui creates object bot and interacts with it
         self.gamepad = pygame.joystick.Joystick(0)
         self.gamepad.init()
-        self.arduino = None
-        self.queue = queue
+        self.queue_in = queue_in
+        self.queue_out = queue_out
         self.portNum = 142101
         self.baudRate = 115200
         self.receivedData = None
-
-    def initialize(self):  # initiates serial connection and "handshakes" with arduino
-
+        self.delay = 0.05
         self.arduino = serial.Serial(port=f'/dev/cu.usbmodem{self.portNum}',
                                      baudrate=self.baudRate,
                                      timeout=1)
+        sleep(0.5)
 
-        sleep(1)
+    def initialize(self):  # initiates serial connection and "handshakes" with arduino
 
         message = "Arduino Connected" + ","
         message = message.encode("ascii")
 
         self.arduino.write(message)
 
-        while (self.arduino.in_waiting == 0):
+        while self.arduino.in_waiting == 0:
             pass
         
         received = self.arduino.readline().decode("ascii")
@@ -41,14 +40,16 @@ class Robot:  # Robot is a multiprocessing class process?
         return "initialized"
 
     def testGamepad(self):
-        # do later
+        # PUT IN STUFF
         pass
 
-    def get_send_arduino(self, string):
-        self.arduino.write(string.encode("ascii"))
-
-        while self.arduino.in_waiting != 0:
-            self.receivedData = self.arduino.readline()
+    def get_send_arduino(self, string: str) -> str:
+        self.arduino.write(string.encode("ascii"))  # write (output) to arduino
+        while self.arduino.in_waiting == 0:
+            pass
+        self.receivedData = self.arduino.readline()  # read input from arduino
+        self.arduino.reset_input_buffer()  # clear the input buffer
+        self.arduino.reset_output_buffer()  # clear the output buffer
         return self.receivedData.decode("ascii")
 
     def make_string(self, list):
