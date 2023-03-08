@@ -27,7 +27,7 @@ def runGreenSquares():
     flags = [i for i in dir(cv2) if i.startswith('COLOR_')]
 
     result = True
-    videoCaptureObject = cv2.VideoCapture(0)
+    videoCaptureObject = cv2.VideoCapture(1)
 
     i = 0
     while True:
@@ -40,7 +40,7 @@ def runGreenSquares():
             break
             # when s is pressed
         if keyboard.is_pressed('s'):
-                # and the index is less than the length of the snapshot list
+                # and the index is less than txhe length of the snapshot list
             if i < 2:
                     # take as snapshot, save it, show it
                 cv2.imwrite(snapshots[i], frame)
@@ -59,6 +59,6 @@ def runGreenSquares():
     print(calculator(count, countAfter))
 
 root = tk.Tk()
-greeting = tk.Button(text="Green Squares", command=runGreenSquares).pack()
+run = tk.Button(text="Green Squares", command=runGreenSquares).pack()
 
 root.mainloop()

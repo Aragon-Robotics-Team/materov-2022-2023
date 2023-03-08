@@ -119,7 +119,7 @@ def square1(colors):
 		
 	for pic, contour in enumerate(contours):
 		area = cv2.contourArea(contour)
-		if(area > 250):
+		if(area > 200):
 			x, y, w, h = cv2.boundingRect(contour)
 			imageFrame = cv2.rectangle(mask, (x,y), (x+w, y+h), (0,255,0), 2)
 			cv2.putText(imageFrame, "Green", (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0))
@@ -153,7 +153,7 @@ def square2(colors):
 		
 	for pic, contour in enumerate(contours):
 		area = cv2.contourArea(contour)
-		if(area > 250):
+		if(area > 200):
 			x, y, w, h = cv2.boundingRect(contour)
 			imageFrame = cv2.rectangle(mask, (x,y), (x+w, y+h), (0,255,0), 2)
 			cv2.putText(imageFrame, "Green", (x,y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0))
@@ -185,40 +185,3 @@ def calculator(count, countAfter):
 		return("The anchor tear recovered by " + str(greenDiff) + " green squares.")
 	elif greenDiff == whiteDiff: 
 		return("No change.")
-
-
-#running stuff
-
-# flags = [i for i in dir(cv2) if i.startswith('COLOR_')]
-
-# result = True
-# videoCaptureObject = cv2.VideoCapture(0)
-
-# i = 0
-# while True:
-# 	ret, frame = videoCaptureObject.read()
-# 	cv2.imshow("Capturing Video", frame)
-# 		# deletes every frame as the next one comes on, closes all windows when q is pressed
-# 	if cv2.waitKey(1) == ord('q'):
-# 		videoCaptureObject.release()
-# 		cv2.destroyAllWindows()
-# 		break
-# 		# when s is pressed
-# 	if keyboard.is_pressed('s'):
-# 			# and the index is less than the length of the snapshot list
-# 		if i < 2:
-# 				# take as snapshot, save it, show it
-# 			cv2.imwrite(snapshots[i], frame)
-# 			cv2.imshow(snapshots[i], frame)
-# 			time.sleep(1)
-# 			i += 1
-# 		else:
-# 			result = False
-
-# image = cv2.imread("C:/Users/alexa/Desktop/square0.png")
-# image_hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
-
-# count = square1(HSVColorPicker("C:/Users/alexa/Desktop/square0.png"))
-# countAfter = square2(HSVColorPicker("C:/Users/alexa/Desktop/square1.png"))
-
-# print(calculator(count, countAfter))
