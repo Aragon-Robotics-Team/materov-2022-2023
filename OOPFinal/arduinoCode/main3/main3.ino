@@ -1,7 +1,5 @@
 #include <Servo.h>
 
-int pwmVals[6];
-
 /*
  * [0] lf
  * [1] lb
@@ -20,7 +18,14 @@ Servo R_VERT; //left vertical
 Servo thrusters[] = {LF_T, LB_T, RF_T, RB_T, L_VERT, R_VERT};
 // 8, 9, 10, 11, 12, 13
 
-String sendBack;
+int pwmVals[6];
+int out_len = 6;  //# of values we want to output
+int in_len = 6;  //# of values we are receiving
+
+String serialOutput;
+String serialInput;
+
+
 
 void setup() {
 Serial.begin(9600); // set the baud rate
@@ -35,11 +40,13 @@ for(int i = 0; i<6; i++){
 
 void loop() {
   
-  while(Serial.available()){
+  if(Serial.available()){
     readSerial();
   }
   
   moveThrusters();
+
+  depthPID();  // not made yet
 
   Serial.println(createSendString());
 
@@ -50,10 +57,18 @@ void loop() {
 
 //reading serial data from python
 void readSerial(){
-  for(int i = 0; i<5; i++){
-    pwmVals[i] = Serial.readStringUntil(',').toInt();
+
+  serialInput = Serial.readStringUntil('.');
+
+  int startIndex = 0;
+  int endIndex = 0;
+
+  for(int i = 0; i<6; i++){
+    endIndex = serialInput.indexOf(',', startIndex);
+    pwmVals[i] = serialInput.substring(startIndex, endIndex);
+    startIndex = endIndex + 1;
   }
-  pwmVals[5] = Serial.readStringUntil('.').toInt();
+
 }
 
 
@@ -67,9 +82,9 @@ void moveThrusters(){
 
 //creating string to send back to python
 String createSendString(){
-  sendback = "";
-  for(int i = 0; i<6; i++){
-    sendBack += String(pwmVals[i]) + ",";
+  serialOutput = "";
+  for(int i = 0; i<out_len; i++){
+    serialOutput += String(pwmVals[i]) + ",";
   }
-  return sendBack;
+  return serialOutput;
 }

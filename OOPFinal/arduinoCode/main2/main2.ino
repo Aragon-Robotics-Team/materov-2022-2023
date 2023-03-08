@@ -35,11 +35,13 @@ for(int i = 0; i<6; i++){
 
 void loop() {
   
-  while(Serial.available()){
+  if(Serial.available()){
     readSerial();
   }
   
   moveThrusters();
+
+  depthPID();  // not made yet
 
   Serial.println(createSendString());
 

@@ -26,7 +26,7 @@ void loop() {
 
   while(!Serial.available());
   int thrusterToRun = Serial.readStringUntil('\n').toInt() - 8;
-  thrusters[thrusterToRun].writeMicroseconds(1650);
+  thrusters[thrusterToRun].writeMicroseconds(1800);
   Serial.println("running thruster on pin " + String(thrusterToRun + 8));
   delay(4000);
   thrusters[thrusterToRun].writeMicroseconds(1500);
