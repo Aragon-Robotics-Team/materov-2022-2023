@@ -1,7 +1,7 @@
 unsigned long myTime = 0;
-int givenHour = 9;
-int givenMin = 42;
-int givenSec = 50;
+int givenHour;
+int givenMin;
+int givenSec;
 int storeMin = 0;
 int hour = 0;
 int min = 0;
@@ -13,9 +13,18 @@ int countToMin = 0;
 void setup() {
   Serial.begin(9600);
   Serial.print("start");  
+  //delay(100);
 }
 //min --> 3,600,000
 void loop() {
+  if (Serial.available() > 8){
+    givenHour = Serial.readStringUntil(',').toInt();
+    givenMin = Serial.readStringUntil(',').toInt();
+    givenSec = Serial.readStringUntil(',').toInt();
+   // Serial.println(givenHour);
+   // Serial.println(givenMin);
+   // Serial.println(givenSec);
+  
   myTime = millis();
   sec = givenSec + (myTime/1000);
   if (sec < 60){
@@ -40,4 +49,5 @@ void loop() {
      }
     Serial.println(String(hour) + " : " + String(min) + " : " + String(store));
   }
+}
 }
