@@ -1,11 +1,11 @@
-from Robot import *
+from OOPFinal.robot.Robot import *
 from Teleop import Teleop
 
-def run():  # initializes and creates Robot object
+def run(queue_in, queue_out):  # initializes and creates Robot object
 
     queue = None
 
-    rob = Robot(queue)  # pass in the arduino, controller, queue
+    rob = Robot(queue_in, queue_out)  # pass in the arduino, controller, queue
     rob.initialize()
     teleop = Teleop(rob)
     teleop.teleop_loop()

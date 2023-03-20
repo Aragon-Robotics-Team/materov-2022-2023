@@ -1,14 +1,13 @@
 import pygame
 import serial
-import MathTest    
+import MathFunc    
 from time import sleep
-
-
-arduino = serial.Serial('/dev/cu.usbmodem142401', 9600)
 
 pygame.init()
 pygame.joystick.init()
-clock = pygame.time.Clock()
+pygame.display.init()
+pygame.display.set_mode((500,500))
+
 
 # message contains axis/button values
 message = [] 
@@ -28,6 +27,9 @@ message = []
 # [13] = RJ
 
 loop = True
+linearMode = False
+sensitiveMode = False
+arduino = serial.Serial('/dev/cu.usbmodem14201', 9600)
 
 # this make code work instant
 sleep(1)
@@ -62,52 +64,51 @@ while loop:
             button = joystick.get_button(index)
             message.append(button)
 
-        # taking the values list
         Lx = message[0] 
         Ly = message[1]
         Rx = message[3]
         A = message[6]
         B = message[7]
-        
-        # construct string, send to arduino, received info back
-        messageToSend = MathTest.makeString(Lx, Ly, Rx, A, B, 0)
+        X = message[8]
+        Y = message[9]
+        LB_Value = message[10]
+        RB_Value = message[11]
+
+        messageToSend = ""
+
+        # Get controller input, decide whether linearMode is enabled or not
+        if RB_Value > 0:
+            linearMode = True
+        if LB_Value > 0:
+            linearMode = False
+
+        # Enable Sensitive Mode or Not
+        if X > 0:
+            sensitiveMode = True
+        if Y > 0:
+            sensitiveMode = False
+
+
+
+        # Math Calculations
+        messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B, linearMode, sensitiveMode)
         messageToSend = messageToSend.encode("ascii")
-
+        
         arduino.write(messageToSend) 
-
+        
         received = arduino.readline().decode("ascii")
         print(received)
+        print("Linear Mode: " + str(linearMode))
+        print("Sensitive Mode: " + str(sensitiveMode))
+
+        pygame.display.update()
+
+
+
+        
+
             
 # ---------- END MAIN PROGRAM LOOP ---------- #
 
 # quit pygame after user exists
 pygame.quit()
-
-# ---------- ARDUINO CODE ---------- #
-
-# //global variables for thruster pwms
-# String br = "";
-# String fl = "";
-# String bl = "";
-# String fr = "";
-# String v1 = "";
-# String v2 = "";
-
-# void setup() {
-# Serial.begin(9600); // set the baud rate
-# delay(2000);
-# Serial.println("Arduino is ready!");
-# }
-
-# void loop() {
-
-#   br = Serial.readStringUntil(',').toInt();
-#   fl = Serial.readStringUntil(',').toInt();
-#   bl = Serial.readStringUntil(',').toInt();
-#   fr = Serial.readStringUntil(',').toInt();
-#   v1 = Serial.readStringUntil(',').toInt();
-#   v2 = Serial.readStringUntil(',').toInt();
-
-#   Serial.println(br + ", " + fl + ", " + bl + ", " + fr + ", " + v1 + ", " + v2);
-
-# }

@@ -1,0 +1,3 @@
+<h1>Transect Line Readme File<h1>
+
+</p>This program helps the ROV follow two parallel lines using contour detection, although this is subject to change (to color detection). The lines are continuously detected from the camera feed and the program filters out lines that are too short (which could otherwise result in inaccurate calculations). These lines are defined by two endpoints, which are used in dot products to calculate the angle the robot needs to adjust. The program also determines whether the robot is centered between the two lines, and both the angle and position of the robot are continuously calculated.</p>

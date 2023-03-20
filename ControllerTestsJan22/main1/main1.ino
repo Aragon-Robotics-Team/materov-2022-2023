@@ -36,10 +36,10 @@ Serial.println("Arduino is ready!");
 
 void loop() {
   //getting PWM values from computer
-  lf = Serial.readStringUntil(',').toInt();
-  lb = Serial.readStringUntil(',').toInt();
-  rf = Serial.readStringUntil(',').toInt();
   rb = Serial.readStringUntil(',').toInt();
+  lb = ((Serial.readStringUntil(',').toInt() - 1500)*-1) + 1500;
+  rf = Serial.readStringUntil(',').toInt();
+  lf = Serial.readStringUntil(',').toInt(); //FLIPPED DURING TESTING
   v1 = Serial.readStringUntil(',').toInt();
   v2 = Serial.readStringUntil(',').toInt();
 

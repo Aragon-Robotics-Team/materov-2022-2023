@@ -1,12 +1,11 @@
-import serial
 import pygame
 import MathFunc
 from time import sleep
 from Numbers import Numbers
-
+from OOPFinal.robot.Robot import Robot
 
 class Teleop:
-    def __init__(self, rob) -> None:
+    def __init__(self, rob: Robot) -> None:
         #### Pygame initialization
         pygame.init()
         pygame.joystick.init()
@@ -26,10 +25,9 @@ class Teleop:
         self.robot = rob
 
     def teleop_loop(self):
-
         if self.controller_name == "Wireless Controller":
             self.var_ps4_controller()
-        elif self.controller_name == "XBOX":  # XBOX name?
+        elif self.controller_name.find("XBOX") != -1:  # XBOX name?
             self.var_xbox_controller()
         else:
             self.var_big_controller()
@@ -37,10 +35,13 @@ class Teleop:
         print("TELEOP STARTED")
 
         # ------ MATH CALC FUNCTION CALL ------ #
-
-        message = self.thruster_calculations(self.get_gamepad_states())
-        self.robot.get_send_arduino(self.robot.make_string(message))
-        
+        while True:
+            pygame.event.pump()
+            message = self.thruster_calculations(self.get_gamepad_states())
+            string_to_arduino = self.robot.make_string(message)
+            self.robot.get_send_arduino(string_to_arduino)
+            pygame.event.clear()
+            sleep(self.robot.delay)
         # takes the message list (all the thruster values) and separates by comma and period
         # uses arduino function in Robot to send to arduino
 
@@ -55,7 +56,7 @@ class Teleop:
     def var_ps4_controller(self):
         self.numbers.set_controller_vals([0, 1, 2, 6, 7]) 
 
-    def thruster_calculations(self, gamepad_states):
+    def thruster_calculations(self, gamepad_states) -> str:
         
         # gamepad_states = [shift x, shift y, yaw x, heave a, heave b]
         #variables here are for readability
@@ -71,7 +72,7 @@ class Teleop:
 
         return message
 
-    def get_gamepad_states(self):
+    def get_gamepad_states(self) -> list:
         while True:
             all_states = []  # clearing the contents of the list with each loop iteration
 

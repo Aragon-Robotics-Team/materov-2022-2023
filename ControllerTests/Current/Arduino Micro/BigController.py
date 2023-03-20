@@ -3,18 +3,32 @@ import serial
 import MathFunc    
 from time import sleep
 
-
 pygame.init()
 pygame.joystick.init()
-clock = pygame.time.Clock()
+pygame.display.init()
+pygame.display.set_mode((500,500))
+
 
 # message contains axis/button values
 message = [] 
+# [0] = LX
+# [1] = LY
+# [2] = LT
+# [3] = RX
+# [4] = RY
+# [5] = RT
+# [6] = A
+# [7] = B
+# [8] = X
+# [9] = Y
+# [10] = LB
+# [11] = RB
+# [12] = LJ
+# [13] = RJ
 
 loop = True
-
-# this make code work instant
-sleep(1)
+linearMode = False
+sensitiveMode = False
 
 # ---------- MAIN PROGRAM LOOP ---------- #
 
@@ -46,7 +60,42 @@ while loop:
             button = joystick.get_button(index)
             message.append(button)
 
-    print(message)
+        Lx = message[0] 
+        Ly = message[1]
+        Rx = message[3]
+        A = message[6]
+        B = message[7]
+        X = message[8]
+        Y = message[9]
+        LB_Value = message[10]
+        RB_Value = message[11]
+
+        messageToSend = ""
+
+        # Get controller input, decide whether linearMode is enabled or not
+        if RB_Value > 0:
+            linearMode = True
+        if LB_Value > 0:
+            linearMode = False
+
+        # Enable Sensitive Mode or Not
+        if X > 0:
+            sensitiveMode = True
+        if Y > 0:
+            sensitiveMode = False
+    
+        # Math Calculations
+        messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B, linearMode, sensitiveMode)
+        print(messageToSend)
+        print("Linear Mode: " + str(linearMode))
+        print("Sensitive Mode: " + str(sensitiveMode))
+        
+        pygame.display.update()
+
+
+
+        
+
             
 # ---------- END MAIN PROGRAM LOOP ---------- #
 

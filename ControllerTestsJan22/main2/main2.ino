@@ -18,7 +18,9 @@ Servo RB_T; //right back
 Servo L_VERT; //left vertical
 Servo R_VERT; //left vertical
 Servo thrusters[] = {LF_T, LB_T, RF_T, RB_T, L_VERT, R_VERT};
+// 8, 9, 10, 11, 12, 13
 
+String sendBack;
 
 void setup() {
 Serial.begin(9600); // set the baud rate
@@ -33,13 +35,13 @@ for(int i = 0; i<6; i++){
 
 void loop() {
   
-  while(!Serial.available());
+  while(Serial.available()){
+    readSerial();
+  }
   
-  readSerial();
   moveThrusters();
-  String sendBack = createSendString();
-  
-  Serial.println(sendBack);
+
+  Serial.println(createSendString());
 
   delay(50);
 
@@ -65,7 +67,7 @@ void moveThrusters(){
 
 //creating string to send back to python
 String createSendString(){
-  String sendBack;
+  sendback = "";
   for(int i = 0; i<6; i++){
     sendBack += String(pwmVals[i]) + ",";
   }
