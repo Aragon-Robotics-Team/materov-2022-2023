@@ -2,7 +2,7 @@ import pygame
 import MathFunc
 from time import sleep
 from Numbers import Numbers
-from OOPFinal.robot.Robot import Robot
+from OOPFinal.nav.Robot import Robot
 
 class Teleop:
     def __init__(self, rob: Robot) -> None:

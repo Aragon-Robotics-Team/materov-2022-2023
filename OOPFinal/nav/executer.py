@@ -1,5 +1,5 @@
-from OOPFinal.robot.Robot import *
-from Teleop import Teleop
+from OOPFinal.nav.Robot import Robot
+from OOPFinal.nav.Teleop import Teleop
 
 def run(queue_in, queue_out):  # initializes and creates Robot object
 
