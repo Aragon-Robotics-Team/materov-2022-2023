@@ -63,8 +63,8 @@ class GUIClass():
         self.videolabel.after(20, self.showFrames)
 
     def snapshot(self):
-        cv2.imwrite("/Users/valeriefan/Desktop/MATE ROV 2023/videosnapshot.png", self.cap.read()[1])
-        return("/Users/valeriefan/Desktop/MATE ROV 2023/videosnapshot.png") 
+        cv2.imwrite("/Users/valeriefan/Desktop/MATE ROV 2023 /videosnapshot.png", self.cap.read()[1])
+        return("/Users/valeriefan/Desktop/MATE ROV 2023 /videosnapshot.png") 
       
     def run(self):
         while True:

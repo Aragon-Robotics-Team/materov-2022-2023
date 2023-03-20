@@ -112,9 +112,7 @@ stopBot = Button(screen1, text = "Disable Bot (Emergency Halt)", command = disab
 videolabel = Label(screen1, height = 800, width = 1000) ##CHANGE SO THE FULL VIDEO IS SHOWN 
 videolabel.grid(row = 0, column = 0, sticky = 'n')
 
-
 cap = cv2.VideoCapture(0)
-
 
 def showFrames():
         cv2image= cv2.cvtColor(cap.read()[1],cv2.COLOR_BGR2RGB)

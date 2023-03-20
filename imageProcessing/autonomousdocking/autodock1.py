@@ -24,7 +24,7 @@ def autodockinit(img_path):
 #self.AutoDockingB.grid(row = 3, column = self.vcol + 1, sticky = 'n')
 def autodockingloop(cap):
     videocap = cap
-    autodockingimgpath = "/Users/valeriefan/Desktop/MATE ROV 2023/autodockingloop.jpg"
+    autodockingimgpath = "/Users/valeriefan/Desktop/MATE ROV 2023 /autodockingloop.jpg"
     #tracking the docking button in the live video feed 
     while (1): 
         cv2.imwrite(autodockingimgpath, videocap.read()[1])
