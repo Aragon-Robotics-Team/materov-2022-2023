@@ -1,8 +1,9 @@
 import pygame
-import MathFunc
+from OOPFinal.nav.Teleop import MathFunc
 from time import sleep
-from Numbers import Numbers
-from OOPFinal.nav.Robot import Robot
+from OOPFinal.nav.Teleop.Numbers import Numbers
+from OOPFinal.nav.Robot.Robot import Robot
+from OOPFinal.nav.Autonomous import Autonomous
 
 class Teleop:
     def __init__(self, rob: Robot) -> None:
@@ -20,7 +21,7 @@ class Teleop:
         print("Pygame initialized. Controller name:" + self.controller_name)
 
         self.numbers = Numbers()
-        self.gamepad_states = [] # list you send to math calcs
+        self.gamepad_states = [] # list you send to MathFunc
         # self.message = []  # list you eventually send to robot.get_send_arduino
         self.robot = rob
 
@@ -40,6 +41,16 @@ class Teleop:
             message = self.thruster_calculations(self.get_gamepad_states())
             string_to_arduino = self.robot.make_string(message)
             self.robot.get_send_arduino(string_to_arduino)
+            period = self.check_queue()
+            if period != 0:  # if the queue is saying to exit teleop
+                if period == 1:
+                    newauto = Autonomous.Autonomous1(rob)
+
+                    pass
+                if period ==1:
+                    # auto2(rob)
+                    pass
+
             pygame.event.clear()
             sleep(self.robot.delay)
         # takes the message list (all the thruster values) and separates by comma and period
@@ -97,3 +108,6 @@ class Teleop:
 
             return self.gamepad_states
 
+    def check_queue(self):
+        array = self.robot.get_queue()
+        return array[0]

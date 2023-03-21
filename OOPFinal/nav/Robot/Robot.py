@@ -1,6 +1,7 @@
 import pygame
 from time import sleep
 import serial
+from multiprocessing import Queue
 
 
 """
@@ -10,7 +11,8 @@ This class is for Interfacing with the GUI. This is the MAIN PROCESS for Nav
 
 """
 class Robot:  # Robot is a multiprocessing class process?
-    def __init__(self, queue_in, queue_out) -> None:  # gui creates object bot and interacts with it
+
+    def __init__(self, queue_in: Queue, queue_out: Queue) -> None:  # gui creates object bot and interacts with it
         self.gamepad = pygame.joystick.Joystick(0)
         self.gamepad.init()
         self.queue_in = queue_in
@@ -54,6 +56,9 @@ class Robot:  # Robot is a multiprocessing class process?
 
     def make_string(self, list):
         return ','.join(list) + ','
+
+    def get_queue(self):
+        return self.queue_in.get()
 
 
 if __name__ == '__main__':

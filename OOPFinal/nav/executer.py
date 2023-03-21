@@ -1,5 +1,5 @@
-from OOPFinal.nav.Robot import Robot
-from OOPFinal.nav.Teleop import Teleop
+from OOPFinal.nav.Robot.Robot import Robot
+from OOPFinal.nav.Teleop.Teleop import Teleop
 
 def run(queue_in, queue_out):  # initializes and creates Robot object
 
@@ -26,23 +26,23 @@ Once it recieves something, it will return it, and the Loop will perform the nec
 
 
 while True:
-//receive stuff from gui
-list qeuestuff
-queue.recieve() =  queuestuff
+#receive stuff from gui
 
-        if nextTask = teleop:  # enters a loop
-            teleopPeriod = Teleop(rob)
-            nextTask = teleopPeriod.start()  will return the next GUI command
-        else if nextTask = auto1:
-            auto1 = Auto(rob)
-            nextTask = auto1.start()  will return the next GUI command
-        else if nextTask = auto2:
-            auto2 = Auto2(rob)
-            nextTask = auto2.start()  will return the next GUI command
-        else if nextTask = test gamepad:
-            nextTask = rob.testGamepad()  will return the next GUI command
+    queue_data = queue.recieve()
 
+    if nextTask = teleop:  # enters a loop
+        teleopPeriod = Teleop(rob)
+        nextTask = teleopPeriod.start()
+    else if nextTask = auto1:
+        auto1 = Auto(rob)
+        nextTask = auto1.start()
+    else if nextTask = auto2:
+        auto2 = Auto2(rob)
+        nextTask = auto2.start()
+    else if nextTask = test gamepad:
+        nextTask = rob.testGamepad()
 """
 
+
 if __name__ == '__main__':
-    run()
+    run(1, 2)
