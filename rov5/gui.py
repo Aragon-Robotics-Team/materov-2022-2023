@@ -2,7 +2,6 @@
 #there should only be imports and tk functions in this folder that call imported functions 
 
 #---------------------------------------
-
 #basic gui imports
 from tkinter import *
 from tkinter import ttk
@@ -17,12 +16,10 @@ class GUIClass():
         self.root = Tk()
         self.root.geometry("1300x1000")
 
+        #styling
         self.style =  ttk.Style()
-
         self.style.theme_create( "button-center", parent="alt", settings={"TButton": {"configure": {"anchor": "center"}}} )
-
         self.style.configure('TButton', font = ('Helvetica', 13), width = 25)
-
         self.vcol = 3 #number of columns that the video feed, or else the video is weirdly squished for some reason 
         self.vrow = 40 #number of rows that the video feed needs to span, same reasoning as above 
 
@@ -35,6 +32,8 @@ class GUIClass():
 
         EndNavB = Button(self.root, text = "Terminate Nav Process", command = navProcessStart.terminateNavProcess)
         EndNavB.grid(row = 1, column = self.vcol + 1, sticky = 'n')
+
+        #insert Button/Label 
 
     def run(self):
         while True:
