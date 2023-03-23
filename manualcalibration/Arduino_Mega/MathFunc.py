@@ -36,24 +36,24 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive, coeffs):
     if (mode == False):
 
         # Front and Back Calculations (cap is 200)
-        br += PWM(Ly) * (capMovement/400) * coeffs[0] 
-        bl += PWM(Ly) * (capMovement/400) * coeffs[1] 
-        fr += PWM(Ly) * (capMovement/400) * coeffs[2] 
-        fl += PWM(Ly) * (capMovement/400) * coeffs[3] 
+        br += PWM(Ly) * (capMovement/400) * coeffs[0]/10 
+        bl += PWM(Ly) * (capMovement/400) * coeffs[1]/10
+        fr += PWM(Ly) * (capMovement/400) * coeffs[2]/10 
+        fl += PWM(Ly) * (capMovement/400) * coeffs[3]/10
         
 
         #Crabbing Calculations (cap is 200)
-        br += PWM(Lx)  * (capMovement/400) * coeffs[0]
-        bl += -PWM(Lx) * (capMovement/400) * coeffs[1]
-        fr += -PWM(Lx) * (capMovement/400) * coeffs[2]
-        fl += PWM(Lx)  * (capMovement/400) * coeffs[3]
+        br += PWM(Lx)  * (capMovement/400) * coeffs[0]/10
+        bl += -PWM(Lx) * (capMovement/400) * coeffs[1]/10
+        fr += -PWM(Lx) * (capMovement/400) * coeffs[2]/10
+        fl += PWM(Lx)  * (capMovement/400) * coeffs[3]/10
         
 
         #Pivoting CALCULATIONS (cap is 100)
-        br += PWM(Rx) * (capPivot/400) * coeffs[0]
-        bl += -PWM(Rx)  * (capPivot/400) * coeffs[1]
-        fr += PWM(Rx) * (capPivot/400) * coeffs[2]
-        fl += -PWM(Rx)  * (capPivot/400) * coeffs[3]
+        br += PWM(Rx) * (capPivot/400) * coeffs[0]/10
+        bl += -PWM(Rx)  * (capPivot/400) * coeffs[1]/10
+        fr += PWM(Rx) * (capPivot/400) * coeffs[2]/10
+        fl += -PWM(Rx)  * (capPivot/400) * coeffs[3]/10
         
 
     #EXP MODE
@@ -100,12 +100,12 @@ def makeString(Lx, Ly, Rx, A, B, mode, sensitive, coeffs):
 
     #up-down movement
     if(A): #if A is pressed
-        v1 += Vstrength * coeffs[4]
-        v2 += (Vstrength + 38) * coeffs[5] 
+        v1 += Vstrength * coeffs[4]/10
+        v2 += (Vstrength + 38) * coeffs[5]/10 
         #v1 and v2 go up
     if(B): #if B is pressed
-        v1 -= Vstrength * coeffs[4]
-        v2 -= (Vstrength + 38) * coeffs[5]
+        v1 -= Vstrength * coeffs[4]/10
+        v2 -= (Vstrength + 38) * coeffs[5]/10
         #v1 and v2 go down
 
     # print(coeffs)

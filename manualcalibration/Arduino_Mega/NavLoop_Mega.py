@@ -136,4 +136,3 @@ class Navigation:
 def startNavClass(input_queue): 
     nav = Navigation(input_queue)
     nav.startNav()
-    # nav.startNav()
