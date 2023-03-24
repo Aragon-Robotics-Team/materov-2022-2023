@@ -35,12 +35,12 @@ void loop() {
 
   //Documentation: (LF, LB, RF, RB, VL, VR)
   /*
-   * 8: 
-   * 9: 
-   * 10: 
-   * 11: 
-   * 12: 
-   * 13: 
+   * 8: right back
+   * 9: left back
+   * 10: right front
+   * 11: left front
+   * 12: back vertical
+   * 13: front vertical
    */
 
 }

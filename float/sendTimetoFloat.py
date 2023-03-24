@@ -1,7 +1,7 @@
 #import pygame
 from serial import Serial
 from time import sleep
-arduino = Serial('/dev/cu.usbmodem143101', 9600, timeout = 0)
+arduino = Serial('/dev/cu.usbmodem14101', 9600, timeout = 0)
 
 from datetime import datetime
 
