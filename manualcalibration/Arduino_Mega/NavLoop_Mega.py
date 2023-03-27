@@ -39,10 +39,8 @@ class Navigation:
         self.linearMode = False
         self.sensitiveMode = False
 
-        #COMMENTED OUT---------
-        #self.arduino = serial.Serial('/dev/cu.usbmodem142101', 9600)
-        #---------------
-
+        self.arduino = serial.Serial('/dev/cu.usbmodem142101', 9600) #might need to adjust the port 
+        
         # this make code work instant
         sleep(1)
         print("nav initialized")
@@ -109,13 +107,11 @@ class Navigation:
                 
                 print(messageToSend)
                 
-
-                #COMMENTED OUT---------
-                # self.arduino.write(messageToSend) 
+                self.arduino.write(messageToSend) 
                 
-                # received = self.arduino.readline().decode("ascii")
-                # print(received)
-                #------------------
+                received = self.arduino.readline().decode("ascii")
+                print(received)
+                
 
                 print("Linear Mode: " + str(self.linearMode))
                 print("Sensitive Mode: " + str(self.sensitiveMode))

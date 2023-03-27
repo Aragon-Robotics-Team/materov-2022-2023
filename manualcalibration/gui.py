@@ -70,9 +70,6 @@ class GUIClass:
         VLeft = Scale(self.root, variable = self.vl, from_ = 0, to = 10, orient = HORIZONTAL)
         VLeft.pack()
         Label(self.root, text = "_________________________________").pack()
-
-        
-        self.sendThroughQueue([0,0,0,0,0,0])
         #----------------
 
     def run(self):
@@ -88,6 +85,7 @@ class GUIClass:
         self.root.after(20, lambda: self.sendThroughQueue(self.coeffs))
 
     def GUIloop(self):
+        self.sendThroughQueue([0,0,0,0,0,0])
         while True: 
             self.root.update()
             # self.sendThroughQueue()

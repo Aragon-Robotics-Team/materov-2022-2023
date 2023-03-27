@@ -1,3 +1,7 @@
+#include <SoftwareSerial.h>
+SoftwareSerial MegaloDon(10,11); //TX, RX
+int BluetoothData;
+
 unsigned long myTime = 0;
 int givenHour;
 int givenMin;
@@ -13,28 +17,25 @@ int countToMin = 0;
 
 void setup() {
   Serial.begin(9600);
-  Serial.print("start");
+  MegaloDon.begin(9600);
+  MegaloDon.println("Bluetooth ON");
+  Serial.println("start");
   Serial.flush();
   while (!Serial.available());
   givenHour = Serial.readStringUntil(',').toInt();
   givenMin = Serial.readStringUntil(',').toInt();
   givenSec = Serial.readStringUntil('.').toInt();
-  Serial.println(String(givenHour) + " : " + String(givenMin) + " : " + String(givenSec));
+  MegaloDon.println(String(givenHour) + " : " + String(givenMin) + " : " + String(givenSec));
 
 }
 
 //min --> 3,600,000
 void loop() {
-
-
-   // Serial.println(givenHour);
-   // Serial.println(givenMin);
-   // Serial.println(givenSec);
-
+  while(MegaloDon.available()){
   myTime = millis();
   sec = givenSec + (myTime/1000);
   if (sec < 60){
-    Serial.println(String(givenHour) + " : " + String(givenMin) + " : " + String(sec));
+    MegaloDon.println(String(givenHour) + " : " + String(givenMin) + " : " + String(sec));
   }
   if (sec >= 60){
     store = (sec % 60);
@@ -53,6 +54,7 @@ void loop() {
         }
        }
      }
-    Serial.println(String(hour) + " : " + String(mins) + " : " + String(store));
+    MegaloDon.println(String(hour) + " : " + String(mins) + " : " + String(store));
+  }
   }
 }
