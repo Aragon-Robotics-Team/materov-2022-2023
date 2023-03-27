@@ -13,6 +13,8 @@ TLDR; just follow the instructions below lmao
 3. Upload code in ArduinoCode.ino to Arduino.
 4. Make sure Controller is connected to Device
 5. Run NavLoop.py
+6. X and Y buttons control vertical slider
+7. RB and LB control horizontal slider
 
 
 

@@ -93,7 +93,6 @@ while running:
     messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B, text_horizontal.getPercent(), text_vert.getPercent())
     messageToSend = messageToSend.encode("ascii")
 
-    print(messageToSend)
     arduino.write(messageToSend)
     received = arduino.readline().decode("ascii")
     print(received)
@@ -108,8 +107,8 @@ while running:
         slider_horizontal.rect.move_ip(-text_horizontal.getPixels(), 0)
 
     # display  info
-    text_vert.update(f'Vertical: {text_vert.getPercent()}', font, orange)
-    text_horizontal.update(f'Horizontal: {text_horizontal.getPercent()}', font, orange)
+    text_vert.update(f'Vertical: {text_vert.getPercent()}%', font, orange)
+    text_horizontal.update(f'Horizontal: {text_horizontal.getPercent()}%', font, orange)
     screen.fill((165, 85, 255))
 
     screen.blit(line_vert.surface, line_vert.rect)
