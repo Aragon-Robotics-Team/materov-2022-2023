@@ -19,17 +19,17 @@ orange = (255, 221, 186)
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 font = pygame.font.SysFont('freesansbold', 32)
 
-slider_vert = Button('/Users/jiaqi/Desktop/no/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/3))
-slider_horizontal = Button('/Users/jiaqi/Desktop/no/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/1.5))
+slider_vert = Button('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/3))
+slider_horizontal = Button('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/1.5))
 
-line_vert = SliderLine('/Users/jiaqi/Desktop/no/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/3))
-line_horizontal = SliderLine('/Users/jiaqi/Desktop/no/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/1.5))
+line_vert = SliderLine('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/3))
+line_horizontal = SliderLine('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/1.5))
 
 text_vert = TextDisplay(font, black, (200, 200), "hi", slider_vert, line_vert)
 text_horizontal = TextDisplay(font, black, (200, 200), "hi", slider_horizontal, line_horizontal)
 
 serial_number = 14201
-arduino = serial.Serial(f'/dev/cu.usbmodem{serial_number}', 9600)
+# arduino = serial.Serial(f'/dev/cu.usbmodem{serial_number}', 9600)
 running = True
 
 sleep(1)
@@ -85,18 +85,18 @@ while running:
     Rx = message[3]
     A = message[5]
     B = message[6]
-    X = message[11]
-    Y = message[14]
-    LB = message[10]
-    RB = message[13]
+    X = message[10]
+    Y = message[13]
+    LB = message[11]
+    RB = message[14]
 
     messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B, text_horizontal.getPercent(), text_vert.getPercent())
     messageToSend = messageToSend.encode("ascii")
 
     print(messageToSend)
-    arduino.write(messageToSend)
-    received = arduino.readline().decode("ascii")
-    print(received)
+    # arduino.write(messageToSend)
+    # received = arduino.readline().decode("ascii")
+    # print(received)
 
     if Y > 0.5:
         slider_vert.rect.move_ip(text_vert.getPixels(), 0)
