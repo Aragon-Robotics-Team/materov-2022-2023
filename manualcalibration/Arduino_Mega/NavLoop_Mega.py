@@ -106,7 +106,8 @@ class Navigation:
                 # Math Calculations
                 coeffs = self.queueRecieve()
                 messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B, self.linearMode, self.sensitiveMode, coeffs)
-                messageToSend = messageToSend.encode("ascii")
+                
+                print(messageToSend)
                 
 
                 #COMMENTED OUT---------
@@ -119,7 +120,6 @@ class Navigation:
                 print("Linear Mode: " + str(self.linearMode))
                 print("Sensitive Mode: " + str(self.sensitiveMode))
                 
-                pygame.display.update()
                 
         # ---------- END MAIN PROGRAM LOOP ---------- #
 

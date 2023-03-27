@@ -18,14 +18,19 @@ Servo R_VERT; //left vertical
 
 void setup() {
   Serial.begin(9600); // set the baud rate
-  delay(2000);
   Serial.println("Arduino is ready!");
 
-//Attaching thrusters to PWM pins on arduino
-  LF_T.attach(8); 
-  LB_T.attach(9);
-  RF_T.attach(10);
-  RB_T.attach(11);
+////Attaching thrusters to PWM pins on arduino
+//  LF_T.attach(8); 
+//  LB_T.attach(9);
+//  RF_T.attach(10);
+//  RB_T.attach(11);
+//  L_VERT.attach(12); //check 6 and 7 pins(if they are pwm)
+//  R_VERT.attach(13);
+  LF_T.attach(11); 
+  RB_T.attach(9);
+  LB_T.attach(10);
+  RF_T.attach(8);
   L_VERT.attach(12); //check 6 and 7 pins(if they are pwm)
   R_VERT.attach(13);
   
