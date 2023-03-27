@@ -45,8 +45,8 @@ void loop() {
     //getting PWM values pyserial
     RF_PWM = Serial.readStringUntil('-').toInt();
     LF_PWM = Serial.readStringUntil('=').toInt();
-    RB_PWM = Serial.readStringUntil('+').toInt();
-    LB_PWM = ((Serial.readStringUntil('*').toInt() - 1500) * (-1)) + 1500;
+    RB_PWM = ((Serial.readStringUntil('+').toInt() - 1500) * (-1)) + 1500;
+    LB_PWM = Serial.readStringUntil('*').toInt();
     v1 = Serial.readStringUntil(',').toInt();
     v2 = Serial.readStringUntil('.').toInt();
   
@@ -59,9 +59,9 @@ void loop() {
     R_VERT.writeMicroseconds(v2);
     
     //note: LB is adjusted to its actual "value" when printed by serial
-    Serial.println("RB_PWM: " + String(RB_PWM) + ", " + 
+    Serial.println("RB_PWM: " + String(((RB_PWM - 1500) * (-1)) + 1500) + ", " +
                    "LF_PWM: " + String(LF_PWM) + ", " + 
-                   "LB_PWM: " + String(((LB_PWM - 1500) * (-1)) + 1500) + ", " + 
+                   "LB_PWM: " + String(LB_PWM) + ", " + 
                    "RF_PWM: " + String(RF_PWM) + ", " + 
                    "V1: " + String(v1) + ", " + 
                    "V2: " + String(v2));
