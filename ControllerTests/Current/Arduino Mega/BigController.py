@@ -85,10 +85,10 @@ while running:
     Rx = message[3]
     A = message[5]
     B = message[6]
-    X = message[10]
-    Y = message[13]
-    LB = message[11]
-    RB = message[14]
+    X = message[9]  # button 5
+    Y = message[10]  # button 6
+    LB = message[13]  # button R29
+    RB = message[14]  # button R210
 
     messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B, text_horizontal.getPercent(), text_vert.getPercent())
     messageToSend = messageToSend.encode("ascii")
@@ -98,13 +98,13 @@ while running:
     # received = arduino.readline().decode("ascii")
     # print(received)
 
-    if Y > 0.5:
+    if RB > 0.5:
+        slider_vert.rect.move_ip(-text_vert.getPixels(), 0)
+    if LB > 0.5:
         slider_vert.rect.move_ip(text_vert.getPixels(), 0)
     if X > 0.5:
-        slider_vert.rect.move_ip(-text_vert.getPixels(), 0)
-    if RB > 0.5:
         slider_horizontal.rect.move_ip(text_horizontal.getPixels(), 0)
-    if LB > 0.5:
+    if Y > 0.5:
         slider_horizontal.rect.move_ip(-text_horizontal.getPixels(), 0)
 
     # display  info
