@@ -8,7 +8,7 @@ pygame.init()
 pygame.font.init()
 pygame.display.init()
 pygame.joystick.init()
-pygame.display.set_caption(";-;")
+pygame.display.set_caption(";-; jiaqi is poo")
 
 WIDTH, HEIGHT = 520, 580
 SLIDER_X, SLIDER_Y = 52, 52
