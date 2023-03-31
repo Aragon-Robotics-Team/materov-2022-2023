@@ -28,8 +28,8 @@ line_horizontal = SliderLine('/Users/familywan/PyCharmProjects/materov-2022-2023
 text_vert = TextDisplay(font, black, (200, 200), "hi", slider_vert, line_vert)
 text_horizontal = TextDisplay(font, black, (200, 200), "hi", slider_horizontal, line_horizontal)
 
-serial_number = 14201
-# arduino = serial.Serial(f'/dev/cu.usbmodem{serial_number}', 9600)
+serial_number = 14101
+arduino = serial.Serial(f'/dev/cu.usbmodem{serial_number}', 9600)
 running = True
 
 sleep(1)
@@ -80,7 +80,7 @@ while running:
             button = joystick.get_button(index)
             message.append(button)
 
-    Lx = message[0] 
+    Lx = message[0]
     Ly = message[1]
     Rx = message[3]
     A = message[5]
@@ -94,9 +94,10 @@ while running:
     messageToSend = messageToSend.encode("ascii")
 
     print(messageToSend)
-    # arduino.write(messageToSend)
-    # received = arduino.readline().decode("ascii")
-    # print(received)
+    arduino.write(messageToSend)
+    sleep(0.1)
+    received = arduino.readline().decode("ascii")
+    print(received)
 
     if RB > 0.5:
         slider_vert.rect.move_ip(-text_vert.getPixels(), 0)
