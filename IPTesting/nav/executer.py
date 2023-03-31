@@ -1,5 +1,5 @@
-from OOPFinal.nav.Robot.Robot import Robot
-from OOPFinal.nav.Teleop.Teleop import Teleop
+from IPTesting.nav.Robot.Robot import Robot
+from IPTesting.nav.Autonomous.Autonomous import Autonomous
 
 def run(queue_in, queue_out):  # initializes and creates Robot object
 
@@ -7,14 +7,14 @@ def run(queue_in, queue_out):  # initializes and creates Robot object
 
     rob = Robot(queue_in, queue_out)  # pass in the arduino, controller, queue
     rob.initialize()
-    teleop = Teleop(rob)
-    teleop.teleop_loop()
-
+    auto = Autonomous(rob)
+    auto.begin()
 
     #rob.run()
     # print(rob.arduino.getSerial())
     # nextTask = rob.testGamepad()
-    
+
+
 """ 
 Ensures that every time each task terminates, it will always
 circle back to controller.test (default starting place).

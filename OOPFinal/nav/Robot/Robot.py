@@ -3,7 +3,6 @@ from time import sleep
 import serial
 from multiprocessing import Queue
 
-
 """
 Robot runs the main loop, starts the tasks such as Teleop and Autonomous
 Initializes Arduino, Controller, and Tests Controller
@@ -35,7 +34,7 @@ class Robot:  # Robot is a multiprocessing class process?
 
         while self.arduino.in_waiting == 0:
             pass
-        
+
         received = self.arduino.readline().decode("ascii")
         print(received)
 
