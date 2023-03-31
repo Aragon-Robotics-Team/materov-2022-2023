@@ -21,16 +21,26 @@ double derivative_value;
 double depth;
 double goal = 0.2; // in meters
 
+double bot_width = 17;
+double bot_length = 17;
+
 MS5837 sensor;
+const int MPU_addr1 = 0x68;
+float xAccel, yAccel, zAccel, roll, pitch;
+
 int v1;
 int v2;
 Servo L_VERT;
 Servo R_VERT;
 
 void setup() {
-  // put your setup code here, to run once:
+  
   Serial.begin(9600);
   Wire.begin();
+  Wire.beginTransmission(MPU_addr1); //begin, send the slave adress (in this case 68)
+  Wire.write(0x6B); //make the reset (place a 0 into the 6B register)
+  Wire.write(0);
+  Wire.endTransmission(true);
 
   L_VERT.attach(12);
   R_VERT.attach(13);
@@ -47,16 +57,45 @@ void setup() {
 
   
 void loop() {
-  // put your main code here, to run repeatedly:
+    // gyro/accel 
+    Wire.beginTransmission(MPU_addr1);
+    Wire.write(0x3B);  //send starting register address, accelerometer high byte
+    Wire.endTransmission(false); //restart for read
+    Wire.requestFrom(MPU_addr1, 6, true); //get six bytes accelerometer data
+    int t = Wire.read();
+    xAccel = (t << 8) | Wire.read();
+    t = Wire.read();
+    yAccel = (t << 8) | Wire.read();
+    t = Wire.read();
+    zAccel = (t << 8) | Wire.read();
+  
+    // IN RADIANS
+    roll = atan2(yAccel , zAccel);
+    pitch = atan2(-xAccel , sqrt(yAccel * yAccel + zAccel * zAccel)); //account for roll already applied
+  
+    // TO DEGREES
+    // roll *= 180.0 / PI;
+    // pitch *= 180.0 / PI;
+
+    
+    double depth_diff = bot_width / (tan(roll - PI/2)); // in inches
+    double depth_diff /= 39.37; // conversion to meters
+    Serial.println(depth_diff);
+    Serial.print("roll = ");
+    Serial.print(roll);
+    Serial.print(", pitch = ");
+    Serial.println(pitch);
+
+    // pressure sensor 
     sensor.read();
 
     Serial.print("Depth: "); 
     Serial.print(sensor.depth()); 
     Serial.println(" m");
   
-    delay(10);
     double sens_depth = (double)sensor.depth(); //casting to double 
-    double PWM_Value = PID(sens_depth, 0.2);
+    double L_VERT_PWM = PID(sens_depth + depth_diff, goal);
+    double R_VERT_PWM = PID(sens_depth, goal)
     PWM_Value += 1500;
     
 
