@@ -9,7 +9,7 @@ class Autonomous():
         self.rob = rob
 
 
-    def begin(self):  # Main Loop of Autonomous
+    def beginAndLoop(self):  # Main Loop of Autonomous
         while True:
             qList = self.rob.get_queue()
             whichAuto = qList[0]
@@ -17,9 +17,9 @@ class Autonomous():
             y = round(qList[2], 2)
 
             if whichAuto == 0:
-                sendStr = self.auto1(x, y)
+                sendStr = self.transectLine(x, y)
             elif whichAuto == 1:
-                sendStr = self.auto2(x, y)
+                sendStr = self.autoDocking(x, y)
 
             self.rob.get_send_arduino(sendStr)  # send to Robot arduino comm function
             sleep(0.1)
@@ -33,7 +33,7 @@ class Autonomous():
     output: 
         list of size 6: [fr, fl, br, bl, v1, v2]
     '''
-    def auto1(self, x: float, y: float) -> list:
+    def transectLine(self, x: float, y: float) -> list:
         pass
 
 
@@ -45,5 +45,5 @@ class Autonomous():
         output: 
             list of size 6: [fr, fl, br, bl, v1, v2]
         '''
-    def auto2(self, x: float, y: float) -> list:
+    def autoDocking(self, x: float, y: float) -> list:
         pass
