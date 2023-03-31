@@ -26,21 +26,21 @@ class Robot:  # Robot is a multiprocessing class process?
                                      timeout=1)
         sleep(0.5)
 
-    def get_send_arduino(self, ls: list) -> str:
+    def get_send_arduino(self, ls: list):
         sendStr = (str(ls[0]) + "-" +
                    str(ls[1]) + "=" +
                    str(ls[2]) + "+" +
                    str(ls[3]) + "*" +
                    str(ls[4]) + "," +
                    str(ls[5]) + ".")
-
         self.arduino.write(sendStr.encode("ascii"))  # write (output) to arduino
         while self.arduino.in_waiting == 0:
             pass
         self.receivedData = self.arduino.readline()  # read input from arduino
+
         # self.arduino.reset_input_buffer()  # clear the input buffer
         # self.arduino.reset_output_buffer()  # clear the output buffer
-        return self.receivedData.decode("ascii")
+        # return self.receivedData.decode("ascii")
 
     def get_queue(self):
         return self.queue_in.get()
