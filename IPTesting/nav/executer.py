@@ -6,7 +6,6 @@ def run(queue_in, queue_out):  # initializes and creates Robot object
     queue = None
 
     rob = Robot(queue_in, queue_out)  # pass in the arduino, controller, queue
-    rob.initialize()
     auto = Autonomous(rob)
     auto.begin()
 

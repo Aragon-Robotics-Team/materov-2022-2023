@@ -13,8 +13,8 @@ This class is for Interfacing with the GUI. This is the MAIN PROCESS for Nav
 class Robot:  # Robot is a multiprocessing class process?
 
     def __init__(self, queue_in: Queue, queue_out: Queue) -> None:  # gui creates object bot and interacts with it
-        self.gamepad = pygame.joystick.Joystick(0)
-        self.gamepad.init()
+        # self.gamepad = pygame.joystick.Joystick(0)
+        # self.gamepad.init()
         self.queue_in = queue_in
         self.queue_out = queue_out
         self.portNum = 142101
@@ -25,25 +25,6 @@ class Robot:  # Robot is a multiprocessing class process?
                                      baudrate=self.baudRate,
                                      timeout=1)
         sleep(0.5)
-
-    def initialize(self):  # initiates serial connection and "handshakes" with arduino
-
-        message = "Arduino Connected" + ","
-        message = message.encode("ascii")
-
-        self.arduino.write(message)
-
-        while self.arduino.in_waiting == 0:
-            pass
-        
-        received = self.arduino.readline().decode("ascii")
-        print(received)
-
-        return "initialized"
-
-    def testGamepad(self):
-        # PUT IN STUFF
-        pass
 
     def get_send_arduino(self, ls: list) -> str:
         sendStr = (str(ls[0]) + "-" +
