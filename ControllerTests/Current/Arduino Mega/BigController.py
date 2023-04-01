@@ -83,10 +83,10 @@ while running:
     Lx = message[0]
     Ly = message[1]
     Rx = message[3]
-    A = message[5]
-    B = message[6]
-    X = message[9]  # button 5
-    Y = message[10]  # button 6
+    A = message[5]  # orange button
+    B = message[6]  # button behind orange button
+    X = message[9]  # button 5  increase horizontal
+    Y = message[10]  # button 6  decrease horizontal
     LB = message[13]  # button R29
     RB = message[14]  # button R210
 

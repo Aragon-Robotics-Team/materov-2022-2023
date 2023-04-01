@@ -22,7 +22,7 @@ class Autonomous():
                 sendStr = self.autoDocking(x, y)
 
             self.rob.get_send_arduino(sendStr)  # send to Robot arduino comm function
-            sleep(0.1)
+            sleep(self.rob.delay)
 
 
     '''

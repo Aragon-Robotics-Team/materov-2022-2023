@@ -1,5 +1,5 @@
 import pygame
-from OOPFinal.nav.Teleop import MathFunc
+from OOPFinal.nav.Robot import MathFunc
 from time import sleep
 from OOPFinal.nav.Teleop.Numbers import Numbers
 from OOPFinal.nav.Robot.Robot import Robot

@@ -20,7 +20,7 @@ class Robot:  # Robot is a multiprocessing class process?
         self.portNum = 142101
         self.baudRate = 115200
         self.receivedData = None
-        self.delay = 0.05
+        self.delay = 0.1
         self.arduino = serial.Serial(port=f'/dev/cu.usbmodem{self.portNum}',
                                      baudrate=self.baudRate,
                                      timeout=1)

@@ -1,9 +1,9 @@
 import pygame
-from OOPFinal.nav.Teleop import MathFunc
+from OOPFinal.nav.Robot import MathFunc
 from time import sleep
 from OOPFinal.nav.Teleop.Numbers import Numbers
 from OOPFinal.nav.Robot.Robot import Robot
-from OOPFinal.nav.Autonomous import Autonomous
+from OOPFinal.nav.Autonomous.Autonomous import Autonomous
 
 class Teleop:
     def __init__(self, rob: Robot) -> None:
@@ -28,7 +28,7 @@ class Teleop:
     def teleop_loop(self):
         if self.controller_name == "Wireless Controller":
             self.var_ps4_controller()
-        elif self.controller_name.find("XBOX") != -1:  # XBOX name?
+        elif self.controller_name.find("BOX") != -1:  # XBOX name?
             self.var_xbox_controller()
         else:
             self.var_big_controller()
@@ -38,18 +38,13 @@ class Teleop:
         # ------ MATH CALC FUNCTION CALL ------ #
         while True:
             pygame.event.pump()
-            message = self.thruster_calculations(self.get_gamepad_states())
-            string_to_arduino = self.robot.make_string(message)
-            self.robot.get_send_arduino(string_to_arduino)
-            period = self.check_queue()
-            if period != 0:  # if the queue is saying to exit teleop
-                if period == 1:
-                    newauto = Autonomous.Autonomous1(rob)
 
-                    pass
-                if period ==1:
-                    # auto2(rob)
-                    pass
+            if self.switch_to_auto():  # if the queue is saying to switch to auto
+                auto = Autonomous(self.robot)
+                auto.begin_and_loop()
+
+            message = self.thruster_calculations(self.get_gamepad_states())
+            self.robot.get_send_arduino(message)
 
             pygame.event.clear()
             sleep(self.robot.delay)
@@ -57,17 +52,23 @@ class Teleop:
         # uses arduino function in Robot to send to arduino
 
     # note: array in [LX, LT, RX, A, B]
+    def switch_to_auto(self) -> bool:
+        period = self.robot.get_queue()[0]
+        if period != 0:
+            return True
+        return False
+
     def var_xbox_controller(self):
         #  EXAMPLE :D
         self.numbers.set_controller_vals([0, 1, 3, 6, 7])  # shift x, shift y, yaw x, heave a, heave b
 
     def var_big_controller(self):
-        self.numbers.set_controller_vals([0, 1, 2, 3, 5, 8]) # buttons that are used TBD
+        self.numbers.set_controller_vals([0, 1, 2, 3, 5, 6])
 
     def var_ps4_controller(self):
         self.numbers.set_controller_vals([0, 1, 2, 6, 7]) 
 
-    def thruster_calculations(self, gamepad_states) -> str:
+    def thruster_calculations(self, gamepad_states) -> list:
         
         # gamepad_states = [shift x, shift y, yaw x, heave a, heave b]
         #variables here are for readability
@@ -78,7 +79,7 @@ class Teleop:
         heave_b = gamepad_states[4]
         
         # ------ MATH CALCS ------ #
-        message = MathFunc.makeCalc(shift_x, shift_y, yaw_x, heave_a, heave_b, 0)
+        message = MathFunc.makeString(shift_x, shift_y, yaw_x, heave_a, heave_b, 100, 100)
         #  final SIX THRUSTER calculated values stored in "message" list ===>
 
         return message
