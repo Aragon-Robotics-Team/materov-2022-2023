@@ -6,10 +6,12 @@ from multiprocessing import Queue
 """
 Robot runs the main loop, starts the tasks such as Teleop and Autonomous
 Initializes Arduino, Controller, and Tests Controller
-This class is for Interfacing with the GUI. This is the MAIN PROCESS for Nav
+This class is for Interfacing with the GUI.
 
 """
-class Robot:  # Robot is a multiprocessing class process?
+
+
+class Robot:
 
     def __init__(self, queue_in: Queue, queue_out: Queue) -> None:  # gui creates object bot and interacts with it
         # self.gamepad = pygame.joystick.Joystick(0)
@@ -18,7 +20,6 @@ class Robot:  # Robot is a multiprocessing class process?
         self.queue_out = queue_out
         self.portNum = 142101
         self.baudRate = 115200
-        self.receivedData = None
         self.delay = 0.05
         self.arduino = serial.Serial(port=f'/dev/cu.usbmodem{self.portNum}',
                                      baudrate=self.baudRate,
@@ -35,14 +36,29 @@ class Robot:  # Robot is a multiprocessing class process?
         self.arduino.write(sendStr.encode("ascii"))  # write (output) to arduino
         while self.arduino.in_waiting == 0:
             pass
-        self.receivedData = self.arduino.readline()  # read input from arduino
+        received_data_list = self.arduino.readline().decode("ascii").split(',')  # read input from arduino
+        self.put_queue(received_data_list)
+
+        '''
+        list sent to output queue:
+        [fr, fl, br, bl, v1, v2, depth (m), rotation (rad)]
+        '''
 
         # self.arduino.reset_input_buffer()  # clear the input buffer
         # self.arduino.reset_output_buffer()  # clear the output buffer
         # return self.receivedData.decode("ascii")
 
+
     def get_queue(self):
         return self.queue_in.get()
+
+    '''
+    list received from queue: 
+    [period (0/1/2/-1), target depth]
+    '''
+
+    def put_queue(self, obj: list):
+        self.queue_out.put(obj)
 
 
 if __name__ == '__main__':
