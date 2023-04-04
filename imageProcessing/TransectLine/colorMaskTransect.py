@@ -3,7 +3,7 @@ import numpy as np
 import argparse
 import math
 
-def findAngle(videoImg): 
+def findAngle(videoImg, B, G, R): 
     global image
     image = videoImg
     #gray_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
@@ -19,8 +19,6 @@ def findAngle(videoImg):
     edges = cv2.Canny(output, 75, 150)
     lines = cv2.HoughLinesP(edges, 1, np.pi/180, 40, minLineLength = 100, maxLineGap = 20)
     #cnts = cv2.findContours(gray.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) ---may be used? hmm test
-
-
 
     i = 0
     rightLinePresent = False
@@ -53,7 +51,7 @@ def findAngle(videoImg):
             cv2.line(image, (rightx1, righty1), (rightx2, righty2), (255, 255, 255), 10)
             StraightLFPWMOutput(leftEndX, leftStartX, lefty1, lefty2, videoImg)
 
-def StraightLFPWMOutput(x1, x2, y1, y2, videoImg):
+def straightLFPWMOutput(x1, x2, y1, y2, videoImg):
     yComponent = abs(y1-y2) 
     xComponent = x1-x2
     if x1-x2 > 0:
@@ -104,7 +102,7 @@ def colorSelector(img):
 	#img = cv2.imread(img_path)
 
 	#mouse call back function declaration
-	cv2.setMouseCallback('image',show_color)
+	cv2.setMouseCallback('image', show_color)
 	while (1):
 		cv2.imshow('image', img)
 		cv2.imshow('color_selected', color_selected)
@@ -117,16 +115,19 @@ def colorSelector(img):
 	print("R: " + str(Rnum))
 	return (Bnum, Gnum, Rnum)
 
-videoCaptureObject = cv2.VideoCapture(0)
-ret,frame = videoCaptureObject.read()
-B,G,R = colorSelector(frame)
-result = True
-while result:
-    ret,frame = videoCaptureObject.read()
-    # cv2.imshow("Capturing Video",frame)
-    findAngle(frame)
-    cv2.imshow("linesDetected", image)
-    if(cv2.waitKey(1) & 0xFF == ord('q')):
-        videoCaptureObject.release()
-        result = False
-        cv2.destroyAllWindows()
+# def startTransect():
+#     videoCaptureObject = cv2.VideoCapture(0)
+#     ret,frame = videoCaptureObject.read()
+#     B,G,R = colorSelector(frame)
+#     result = True
+#     while result:
+#         ret,frame = videoCaptureObject.read()
+#         # cv2.imshow("Capturing Video",frame)
+#         findAngle(frame, B, G, R)
+#         cv2.imshow("linesDetected", image)
+#         if(cv2.waitKey(1) & 0xFF == ord('q')):
+#             videoCaptureObject.release()
+#             result = False
+#             cv2.destroyAllWindows()
+
+# startTransect()
