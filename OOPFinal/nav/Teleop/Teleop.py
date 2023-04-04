@@ -1,9 +1,9 @@
 import pygame
-from OOPFinal.nav.Robot import MathFunc
+from nav.Robot import MathFunc
 from time import sleep
-from OOPFinal.nav.Teleop.Numbers import Numbers
-from OOPFinal.nav.Robot.Robot import Robot
-from OOPFinal.nav.Autonomous.Autonomous import Autonomous
+from nav.Teleop.Numbers import Numbers
+from nav.Robot.Robot import Robot
+from nav.Autonomous.Autonomous import Autonomous
 
 class Teleop:
     def __init__(self, rob: Robot) -> None:
