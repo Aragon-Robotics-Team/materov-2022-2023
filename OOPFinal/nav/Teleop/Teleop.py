@@ -1,5 +1,5 @@
 import pygame
-from nav.Robot import MathFunc
+from nav.Robot import MathFunc1
 from time import sleep
 from nav.Teleop.Numbers import Numbers
 from nav.Robot.Robot import Robot
@@ -26,12 +26,13 @@ class Teleop:
         self.robot = rob
 
     def teleop_loop(self):
-        if self.controller_name == "Wireless Controller":
-            self.var_ps4_controller()
-        elif self.controller_name.find("BOX") != -1:  # XBOX name?
-            self.var_xbox_controller()
-        else:
-            self.var_big_controller()
+        # if self.controller_name == "Wireless Controller":
+        #     self.var_ps4_controller()
+        # elif self.controller_name.find("BOX") != -1:  # XBOX name?
+        #     self.var_xbox_controller()
+        # else:
+        #     self.var_big_controller()
+        self.var_xbox_controller()
 
         print("TELEOP STARTED")
 
@@ -39,9 +40,9 @@ class Teleop:
         while True:
             pygame.event.pump()
 
-            if self.switch_to_auto():  # if the queue is saying to switch to auto
-                auto = Autonomous(self.robot)
-                auto.begin_and_loop()
+            # if self.switch_to_auto():  # if the queue is saying to switch to auto
+            #     auto = Autonomous(self.robot)
+            #     auto.begin_and_loop()
 
             message = self.thruster_calculations(self.get_gamepad_states())
             self.robot.get_send_arduino(message)

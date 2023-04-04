@@ -53,15 +53,17 @@ def makeString(Lx, Ly, Rx, A, B, percent_horiz, percent_vert) -> list:
 
     # capping the pwm values at 1900/1100, also rounding them to the whole number
     pwmArray = [fr, fl, br, bl, v1, v2]
+
+    print (pwmArray)
     for index in range(len(pwmArray)):
         # round to whole number
         pwmArray[index] = round(pwmArray[index])
 
-        pwmArray[index] = max(1100, pwmArray[index])
-        pwmArray[index] = min(1900, pwmArray[index])
+        pwmArray[index] = max(1300, pwmArray[index])
+        pwmArray[index] = min(1700, pwmArray[index])
 
     # pwmArray[4] = pwmArray[4]
     # sends the PWM values in the order:
     # fr, fl, br, bl, v1, v2
-
+    print(pwmArray)
     return pwmArray

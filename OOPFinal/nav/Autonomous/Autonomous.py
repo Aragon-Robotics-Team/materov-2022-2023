@@ -15,7 +15,7 @@ class Autonomous():
         while True:
             qList = self.rob.get_queue()
             if len(qList) != 0:
-                print("Auto queue yes")
+                # print("Auto queue yes")
                 print(qList)
                 whichAuto = qList[0]
                 x = round(qList[1], 2)  # round vector component to 2 decimal places
@@ -27,8 +27,12 @@ class Autonomous():
                     sendStr = self.transectLine(x, y)
                 elif whichAuto == 2:
                     sendStr = self.autoDocking(x, y)
+                    print("autodocking")
 
-                self.rob.get_send_arduino(sendStr)  # send to Robot arduino comm function
+                # self.rob.get_send_arduino(sendStr)  # send to Robot arduino comm function
+                self.rob.get_send_arduino([1300, 1300, 1300, 1300, 1300, 1300])  # send to Robot arduino comm function
+
+                print("sent string")
                 sleep(self.rob.delay)
 
 
@@ -84,6 +88,7 @@ class Autonomous():
         percent_horiz=100
         percent_vert=100
         
+        print("in nav autodocking")
         return makeString(Lx, Ly, Rx, A, B, percent_horiz, percent_vert) 
         
     

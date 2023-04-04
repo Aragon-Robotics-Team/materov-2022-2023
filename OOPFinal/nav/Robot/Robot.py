@@ -35,11 +35,24 @@ class Robot:
                    str(ls[5]) + ".")
         print(sendStr)
         self.arduino.write(sendStr.encode("ascii"))  # write (output) to arduino
-        while self.arduino.in_waiting == 0:
-            pass
+        sleep(0.1)
+        received = self.arduino.readline().decode("ascii")
+        print(received)
 
-        received_data_list = self.arduino.readline().decode("ascii").split(',')  # read input from arduino
-        self.put_queue(received_data_list)
+        # while self.arduino.in_waiting == 0:
+        #     pass
+
+        # received_data_list = self.arduino.readline().decode("ascii").split(',')  # read input from arduino
+        # self.put_queue(received_data_list)
+
+        '''
+        messageToSend = messageToSend.encode("ascii")
+
+    print(messageToSend)
+    arduino.write(messageToSend)
+    sleep(0.1)
+    received = arduino.readline().decode("ascii")
+    print(received)'''
 
         '''
         list sent to output queue:
@@ -56,8 +69,7 @@ class Robot:
         while self.queue_in.empty() == False:
             obj = self.queue_in.get()
 
-        print('gotten from queue: ')
-        print(obj)
+        # print('gotten from queue: ')
 
         return obj
 
