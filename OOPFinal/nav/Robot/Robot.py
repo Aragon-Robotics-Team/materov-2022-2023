@@ -18,7 +18,7 @@ class Robot:
         # self.gamepad.init()
         self.queue_in = queue_in
         self.queue_out = queue_out
-        self.portNum = 142101
+        self.portNum = 101
         self.baudRate = 115200
         self.delay = 0.05
         self.arduino = serial.Serial(port=f'/dev/cu.usbmodem{self.portNum}',
@@ -33,9 +33,11 @@ class Robot:
                    str(ls[3]) + "*" +
                    str(ls[4]) + "," +
                    str(ls[5]) + ".")
+        print(sendStr)
         self.arduino.write(sendStr.encode("ascii"))  # write (output) to arduino
         while self.arduino.in_waiting == 0:
             pass
+
         received_data_list = self.arduino.readline().decode("ascii").split(',')  # read input from arduino
         self.put_queue(received_data_list)
 
@@ -50,7 +52,14 @@ class Robot:
 
 
     def get_queue(self):
-        return self.queue_in.get()
+        obj = []
+        while self.queue_in.empty() == False:
+            obj = self.queue_in.get()
+
+        print('gotten from queue: ')
+        print(obj)
+
+        return obj
 
     '''
     list received from queue: 
