@@ -49,7 +49,7 @@ def findAngle(videoImg, B, G, R):
         if rightLinePresent:
             cv2.line(image, (leftx1, lefty1), (leftx2, lefty2), (0, 255, 255), 10)
             cv2.line(image, (rightx1, righty1), (rightx2, righty2), (255, 255, 255), 10)
-            StraightLFPWMOutput(leftEndX, leftStartX, lefty1, lefty2, videoImg)
+            straightLFPWMOutput(leftEndX, leftStartX, lefty1, lefty2, videoImg)
 
 def straightLFPWMOutput(x1, x2, y1, y2, videoImg):
     yComponent = abs(y1-y2) 
