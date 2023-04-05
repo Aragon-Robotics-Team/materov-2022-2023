@@ -1,11 +1,4 @@
 import cv2
-import matplotlib.pyplot as plt
-import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
-from matplotlib import colors
-import time
-import keyboard
 import tkinter as tk
 import tkinter as tk
 
@@ -22,7 +15,7 @@ def startTransect():
         ret,frame = videoCaptureObject.read()
         # cv2.imshow("Capturing Video",frame)
         findAngle(frame, B, G, R)
-        cv2.imshow("linesDetected", image)
+        cv2.imshow("linesDetected", frame)
         if(cv2.waitKey(1) & 0xFF == ord('q')):
             videoCaptureObject.release()
             result = False
