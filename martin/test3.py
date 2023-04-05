@@ -13,6 +13,6 @@ canvas=Canvas(window, width=500, height=300)
 canvas.pack()
 
 # Add a line in canvas widget
-canvas.create_line(100,200,200,35, fill="green", width=5)
+canvas.create_line(100,200,200,35, fill="black", width=5)
 
 window.mainloop()
