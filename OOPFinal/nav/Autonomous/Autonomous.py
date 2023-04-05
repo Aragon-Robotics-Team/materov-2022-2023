@@ -12,6 +12,9 @@ class Autonomous():
     def begin_and_loop(self):  # Main Loop of Autonomous
 
         print('AUTONAVSIDE STARTED')
+
+        sleep(10)
+        print ("asdf")
         while True:
             qList = self.rob.get_queue()
             if len(qList) != 0:
@@ -29,11 +32,11 @@ class Autonomous():
                     sendStr = self.autoDocking(x, y)
                     print("autodocking")
 
-                # self.rob.get_send_arduino(sendStr)  # send to Robot arduino comm function
-                self.rob.get_send_arduino([1300, 1300, 1300, 1300, 1300, 1300])  # send to Robot arduino comm function
+                self.rob.get_send_arduino(sendStr)  # send to Robot arduino comm function
+            # self.rob.get_send_arduino([1600, 1600, 1600, 1600, 1600, 1600])  # send to Robot arduino comm function
 
-                print("sent string")
-                sleep(self.rob.delay)
+            print("sent string")
+            # sleep(self.rob.delay)
 
 
     '''

@@ -11,6 +11,7 @@ class NavProcess(multiprocessing.Process):
     def run(self): 
         # teleopStart(self.input_queue, self.output_queue)
         #nav.playground.teleopStart()
+        print("starting auto")
         executer.run(self.input_queue, self.output_queue)
         return 
 

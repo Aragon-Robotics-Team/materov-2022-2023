@@ -19,7 +19,7 @@ class Robot:
         self.queue_in = queue_in
         self.queue_out = queue_out
         self.portNum = 101
-        self.baudRate = 115200
+        self.baudRate = 9600
         self.delay = 0.05
         self.arduino = serial.Serial(port=f'/dev/cu.usbmodem{self.portNum}',
                                      baudrate=self.baudRate,
@@ -37,7 +37,7 @@ class Robot:
         self.arduino.write(sendStr.encode("ascii"))  # write (output) to arduino
         sleep(0.1)
         received = self.arduino.readline().decode("ascii")
-        print(received)
+        print("recieved " + str(received))
 
         # while self.arduino.in_waiting == 0:
         #     pass
