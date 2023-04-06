@@ -1,5 +1,5 @@
 #include <SoftwareSerial.h>
-SoftwareSerial MegaloDon(10,11); //TX, RX
+SoftwareSerial MegaloDon(10,11); //TX = 10, RX = 11, Ground = Ground, VCC = 5V
 int BluetoothData;
 
 unsigned long myTime = 0;
@@ -49,6 +49,7 @@ void loop() {
           mins = 0;
           hour = givenHour + countToMin;
         }
+        if(mins )
         if(mins > 60){
           mins = mins%60;
         }
@@ -59,4 +60,4 @@ void loop() {
   }
 }
 
-//to use, plug the USB and external battery in, run arduino code with COM6, then run the python code, then open the TeraTerm COM8 port, unplug the USB
+//to use, plug the USB in, run arduino code with COM6, then run the python code, then open the TeraTerm COM8 port, unplug the USB
