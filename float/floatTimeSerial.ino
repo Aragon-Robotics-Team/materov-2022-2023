@@ -31,7 +31,7 @@ void setup() {
 
 //min --> 3,600,000
 void loop() {
-  while(MegaloDon.available()){
+  while(!MegaloDon.available()){
   myTime = millis();
   sec = givenSec + (myTime/1000);
   if (sec < 60){
@@ -58,3 +58,5 @@ void loop() {
   }
   }
 }
+
+//to use, plug the USB and external battery in, run arduino code with COM6, then run the python code, then open the TeraTerm COM8 port, unplug the USB
