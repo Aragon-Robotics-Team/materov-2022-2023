@@ -74,9 +74,9 @@ class Autonomous():
         slider = 1
         Lx=1
         if(x>0):
-            Lx=slider #left and right
+            Lx=10*slider #left and right
         if(x<0):
-            Lx=-slider
+            Lx=-10*slider
         Ly=0.2 #going forward
         Rx=0 #no turning
         A=False
