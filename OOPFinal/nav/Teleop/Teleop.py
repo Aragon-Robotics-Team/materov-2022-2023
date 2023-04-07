@@ -1,5 +1,5 @@
 import pygame
-from OOPFinal.nav.Robot import MathFunc1
+from OOPFinal.nav.Robot import MathFunc
 from time import sleep
 from OOPFinal.nav.Teleop.Numbers import Numbers
 from OOPFinal.nav.Robot.Robot import Robot
@@ -54,7 +54,7 @@ class Teleop:
             print(shift_x, shift_y, yaw_x, heave_a, heave_b)
 
             # ------ MATH CALCS ------ #
-            message = MathFunc1.makeString(shift_x, shift_y, yaw_x, heave_a, heave_b, 100, 100)
+            message = MathFunc.makeString(shift_x, shift_y, yaw_x, heave_a, heave_b, 100, 100)
             #  final SIX THRUSTER calculated values stored in "message" list ===>
 
             self.robot.get_send_arduino(message)
