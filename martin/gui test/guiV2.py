@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import *
-import pyautogui
+#import pyautogui
 from PIL import ImageTk, Image
 
 import cv2 
@@ -9,6 +9,9 @@ import multiprocessing
 
 window = tk.Tk()
 window.geometry("2000x1000")
+
+screen_width = window.winfo_screenwidth()
+screen_height = window.winfo_screenheight()
 
 screen = Canvas(window, height = 1000, width = 500, bg="#fff")
 screen.grid(row = 0, column = 0, sticky = 'n' )

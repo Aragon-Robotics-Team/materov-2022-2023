@@ -71,12 +71,12 @@ class Autonomous():
         '''
     def autoDocking(self, x: float, y: float) -> list:
         #def makeString(Lx, Ly, Rx, A, B, percent_horiz, percent_vert) 
-        slider = 1
+        slider = 1 #var to be changed around
         Lx=1
         if(x>0):
-            Lx=slider #left and right
+            Lx=10*slider #left and right
         if(x<0):
-            Lx=-slider
+            Lx=-10*slider
         Ly=0.2 #going forward
         Rx=0 #no turning
         A=False
