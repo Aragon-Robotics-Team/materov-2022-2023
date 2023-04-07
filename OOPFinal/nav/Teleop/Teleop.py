@@ -1,31 +1,31 @@
 import pygame
-from nav.Robot import MathFunc1
+from OOPFinal.nav.Robot import MathFunc1
 from time import sleep
-from nav.Teleop.Numbers import Numbers
-from nav.Robot.Robot import Robot
-from nav.Autonomous.Autonomous import Autonomous
+from OOPFinal.nav.Teleop.Numbers import Numbers
+from OOPFinal.nav.Robot.Robot import Robot
+from OOPFinal.nav.Autonomous.Autonomous import Autonomous
 
 class Teleop:
     def __init__(self, rob: Robot) -> None:
         #### Pygame initialization
-        pygame.init()
-        pygame.joystick.init()
-        pygame.display.init()
-        while True:
-            pygame.event.get()
-            if pygame.joystick.get_count() > 0:
-                break
-        self.gamepad = pygame.joystick.Joystick(0)
-        self.gamepad.init()
-        self.controller_name = self.gamepad.get_name()
-        print("Pygame initialized. Controller name:" + self.controller_name)
+        # pygame.init()
+        # pygame.joystick.init()
+        # pygame.display.init()
+        # while True:
+        #     pygame.event.get()
+        #     if pygame.joystick.get_count() > 0:
+        #         break
+        # self.gamepad = pygame.joystick.Joystick(0)
+        # self.gamepad.init()
+        # self.controller_name = self.gamepad.get_name()
+        # print("Pygame initialized. Controller name:" + self.controller_name)
 
         self.numbers = Numbers()
-        self.gamepad_states = [] # list you send to MathFunc
+        # self.gamepad_states = [] # list you send to MathFunc
         # self.message = []  # list you eventually send to robot.get_send_arduino
         self.robot = rob
 
-    def teleop_loop(self):
+    def teleop_loop(self):  # determines what controller we have and sets Numbers object accordingly
         # if self.controller_name == "Wireless Controller":
         #     self.var_ps4_controller()
         # elif self.controller_name.find("BOX") != -1:  # XBOX name?
@@ -38,21 +38,31 @@ class Teleop:
 
         # ------ MATH CALC FUNCTION CALL ------ #
         while True:
-            pygame.event.pump()
+            # pygame.event.pump()
 
             # if self.switch_to_auto():  # if the queue is saying to switch to auto
             #     auto = Autonomous(self.robot)
             #     auto.begin_and_loop()
+            all_gp_states = self.get_gamepad_states()  # stores all the states of the gamepad into an array
 
-            message = self.thruster_calculations(self.get_gamepad_states())
+            shift_x = all_gp_states[self.numbers.shift_x]  # calculates the states of the speecified things we need based on what controller we have
+            shift_y = all_gp_states[self.numbers.shift_y]
+            yaw_x = all_gp_states[self.numbers.yaw_x]
+            heave_a = all_gp_states[self.numbers.heave_a]
+            heave_b = all_gp_states[self.numbers.heave_b]
+
+            print(shift_x, shift_y, yaw_x, heave_a, heave_b)
+
+            # ------ MATH CALCS ------ #
+            message = MathFunc1.makeString(shift_x, shift_y, yaw_x, heave_a, heave_b, 100, 100)
+            #  final SIX THRUSTER calculated values stored in "message" list ===>
+
             self.robot.get_send_arduino(message)
+            print(message)
 
             pygame.event.clear()
             sleep(self.robot.delay)
-        # takes the message list (all the thruster values) and separates by comma and period
-        # uses arduino function in Robot to send to arduino
 
-    # note: array in [LX, LT, RX, A, B]
     def switch_to_auto(self) -> bool:
         period = self.robot.get_queue()[0]
         if period != 0:
@@ -64,51 +74,36 @@ class Teleop:
         self.numbers.set_controller_vals([0, 1, 3, 6, 7])  # shift x, shift y, yaw x, heave a, heave b
 
     def var_big_controller(self):
-        self.numbers.set_controller_vals([0, 1, 2, 3, 5, 6])
+        self.numbers.set_controller_vals([0, 1, 3, 5, 6])
 
     def var_ps4_controller(self):
         self.numbers.set_controller_vals([0, 1, 2, 6, 7]) 
 
-    def thruster_calculations(self, gamepad_states) -> list:
-        
-        # gamepad_states = [shift x, shift y, yaw x, heave a, heave b]
-        #variables here are for readability
-        shift_x = gamepad_states[0]
-        shift_y = gamepad_states[1]
-        yaw_x = gamepad_states[2]
-        heave_a = gamepad_states[3]
-        heave_b = gamepad_states[4]
-        
-        # ------ MATH CALCS ------ #
-        message = MathFunc.makeString(shift_x, shift_y, yaw_x, heave_a, heave_b, 100, 100)
-        #  final SIX THRUSTER calculated values stored in "message" list ===>
-
-        return message
-
     def get_gamepad_states(self) -> list:
-        while True:
-            all_states = []  # clearing the contents of the list with each loop iteration
-
-            # get joystick axis values
-            axes = self.gamepad.get_numaxes()
-            for index in range(axes):
-                axis = self.gamepad.get_axis(index)
-                all_states.append(axis)
-                
-            # get joystick button values
-            buttons = self.gamepad.get_numbuttons()
-            for index in range(buttons):
-                button = self.gamepad.get_button(index)
-                all_states.append(button)
-
-            # taking only the values that we need
-            temp = [self.numbers.shift_x, self.numbers.shift_y, self.numbers.yaw_x, self.numbers.heave_a,
-                    self.numbers.heave_b]
-
-            for i in range(len(self.gamepad_states)):
-                self.gamepad_states.append(all_states[temp[i]])
-
-            return self.gamepad_states
+        # gp_states = []  # clear every iteration
+        #
+        # # event handler
+        # for event in pygame.event.get():
+        #     # joystick handler
+        #     joystick_count = pygame.joystick.get_count()
+        #     # For each interactable:
+        #     for index in range(joystick_count):
+        #         joystick = pygame.joystick.Joystick(index)
+        #         joystick.init()
+        #
+        #         # get joystick axis values
+        #         axes = joystick.get_numaxes()
+        #         for index in range(axes):
+        #             axis = joystick.get_axis(index)
+        #             gp_states.append(joystick.get_axis(index))
+        #
+        #         # get joystick button values
+        #         buttons = joystick.get_numbuttons()
+        #         for index in range(buttons):
+        #             button = joystick.get_button(index)
+        #             gp_states.append(button)
+        #
+        return [0, 1, 2, 3, 4, 5, 6, 7]
 
     def check_queue(self):
         array = self.robot.get_queue()
