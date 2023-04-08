@@ -1,6 +1,6 @@
 from multiprocessing import Queue
-from nav.Robot.Robot import Robot
-from nav.Robot.MathFunc import PWM, makeString
+from OOPFinal.nav.Robot.Robot import Robot
+from OOPFinal.nav.Robot.MathFunc import PWM, makeString
 from time import sleep
 
 

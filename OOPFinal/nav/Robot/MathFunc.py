@@ -77,4 +77,4 @@ def makeString(Lx, Ly, Rx, A, B, percent_horiz, percent_vert):
                 str(pwmArray[5]) + ".")
 
 
-    return sendStr
+    return pwmArray

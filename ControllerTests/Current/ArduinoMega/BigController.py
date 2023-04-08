@@ -80,7 +80,7 @@ while running:
         axes = joystick.get_numaxes()
         for index in range(axes):
             axis = joystick.get_axis(index)
-            message.append(joystick.get_axis(index))
+            message.append(axis)
 
         # get joystick button values
         buttons = joystick.get_numbuttons()

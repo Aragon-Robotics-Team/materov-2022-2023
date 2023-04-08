@@ -14,8 +14,6 @@ This class is for Interfacing with the GUI.
 class Robot:
 
     def __init__(self, queue_in: Queue, queue_out: Queue) -> None:  # gui creates object bot and interacts with it
-        # self.gamepad = pygame.joystick.Joystick(0)
-        # self.gamepad.init()
         self.queue_in = queue_in
         self.queue_out = queue_out
         self.portNum = 14401

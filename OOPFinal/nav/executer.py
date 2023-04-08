@@ -1,6 +1,6 @@
-from nav.Robot.Robot import Robot
-from nav.Teleop.Teleop import Teleop
-from nav.Autonomous.Autonomous import Autonomous
+from OOPFinal.nav.Robot.Robot import Robot
+from OOPFinal.nav.Teleop.Teleop import Teleop
+from OOPFinal.nav.Autonomous.Autonomous import Autonomous
 
 
 def run(queue_in, queue_out):  # initializes and creates Robot object
@@ -17,4 +17,4 @@ def run(queue_in, queue_out):  # initializes and creates Robot object
 
 
 if __name__ == '__main__':
-    pass
+    run(0,1)
