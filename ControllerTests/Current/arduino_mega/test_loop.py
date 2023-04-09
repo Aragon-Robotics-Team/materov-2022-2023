@@ -80,15 +80,11 @@ while running:
             button = joystick.get_button(index)
             message.append(button)
 
-    Lx = message[0] 
+    Lx = message[0]
     Ly = message[1]
-    Rx = message[2]
-    A = message[6]
-    B = message[7]
-    X = message[8]
-    Y = message[9]
-    LB = message[15]
-    RB = message[16]
+    Rx = message[3]
+    A = message[5]
+    B = message[6]
 
     messageToSend = test_func.makeString(Lx, Ly, Rx, A, B, text_horizontal.getPercent(), text_vert.getPercent())
     messageToSend = messageToSend.encode("ascii")
@@ -97,14 +93,6 @@ while running:
     received = arduino.readline().decode("ascii")
     print(received)
 
-    if Y > 0.5:
-        slider_vert.rect.move_ip(text_vert.getPixels(), 0)
-    if X > 0.5:
-        slider_vert.rect.move_ip(-text_vert.getPixels(), 0)
-    if RB > 0.5:
-        slider_horizontal.rect.move_ip(text_horizontal.getPixels(), 0)
-    if LB > 0.5:
-        slider_horizontal.rect.move_ip(-text_horizontal.getPixels(), 0)
 
     # display  info
     text_vert.update(f'Vertical: {text_vert.getPercent()}%', font, orange)
