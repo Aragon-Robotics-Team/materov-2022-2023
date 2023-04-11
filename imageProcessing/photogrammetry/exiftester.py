@@ -46,8 +46,10 @@ def addExif(img_name):
     # sorted(img.list_all())
     
     img.focal_length = 3.6
+    img.make = "opencv screenshot"
+    img.model = "zosi cctv"
     # print(f'Focal Length: {img.get("focal_length")}')
-    print("set focal length")
+    print("set focal length, make, and model")
 
     with open(f'{folder_path}/modified/{img_name}', 'wb') as new_image_file:
         new_image_file.write(img.get_file())
