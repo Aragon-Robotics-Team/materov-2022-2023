@@ -3,6 +3,8 @@ import time
 import keyboard
 import tkinter as tk
 
+from exif import Image
+
 #Press the button to start the program
 #Press s to take as many photos as you want
 
@@ -19,13 +21,15 @@ def takePhotos():
             cv2.destroyAllWindows()
             break
                 # when s is pressed
+        folder_path = "/Users/valeriefan/Desktop/materovip/test2"
         if cv2.waitKey(1) == ord('s'):
             # and the index is less than txhe length of the snapshot list
             # take as snapshot, save it, show it
             #/Users/valeriefan/Desktop/materovip/{i}.png  
-            cv2.imwrite(f"/Users/valeriefan/Desktop/materovip/{i}.png", frame)
-            cv2.imshow(f"/Users/valeriefan/Desktop/materovip/{i}.png", frame)
-            
+            cv2.imwrite(f"/Users/valeriefan/Desktop/materovip/test2/{i}.JPG", frame)
+            cv2.imshow(f"/Users/valeriefan/Desktop/materovip/test2/{i}.JPG", frame)
+            addExif(f"{i}.JPG")
+
             # cv2.imwrite(f"C://Users//alexa//Desktop//potos//picture//{i}.png", frame)
             # cv2.imshow(f"C://Users//alexa//Desktop//potos//picture//{i}.png", frame)
             cv2.waitKey(0)
@@ -33,10 +37,36 @@ def takePhotos():
         else:
             result = False
     
-
+def addExif(img_name):
+    # print(img_path)
+    folder_path = "/Users/valeriefan/Desktop/materovip/test2"
+    with open(f"{folder_path}/{img_name}", 'rb') as img_file:
+        img = Image(img_file)
+    print(img.has_exif)
+    # sorted(img.list_all())
     
+    img.focal_length = 3.6
+    # print(f'Focal Length: {img.get("focal_length")}')
+    print("set focal length")
+
+    with open(f'{folder_path}/modified/{img_name}', 'wb') as new_image_file:
+        new_image_file.write(img.get_file())
+    print("saved")
+
 
 root = tk.Tk()
 run = tk.Button(text="Start Photo Taking", command=takePhotos).pack()
 
 root.mainloop()
+
+# if __name__ == "__main__":
+
+    # addExif("/Users/valeriefan/Desktop/materovip/0.JPG")
+    # addExif("/Users/valeriefan/Desktop/IMG_8064.JPG")
+    # addExif("/Users/valeriefan/Desktop/test.JPG")
+    # addExif("/Users/valeriefan/Desktop/18.jpeg")
+    # addExif("/Users/valeriefan/Desktop/materovip/test2/0.JPG")
+    # addExif("0.JPG")
+
+
+
