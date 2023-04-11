@@ -47,6 +47,7 @@ def makeString(Lx, Ly, Rx, A, B, percent_horiz, percent_vert):
         
 
     #up-down movement
+    # CHANGE LATER SINCE VERTICAL THRUSTERS ARE MESSED UP
     if(A): #if A is pressed
         v1 += Vstrength
         v2 += Vstrength
@@ -77,4 +78,4 @@ def makeString(Lx, Ly, Rx, A, B, percent_horiz, percent_vert):
                 str(pwmArray[5]) + ".")
 
 
-    return pwmArray
+    return sendStr

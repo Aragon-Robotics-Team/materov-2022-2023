@@ -14,17 +14,15 @@ This class is for Interfacing with the GUI.
 class Robot:
 
     def __init__(self, queue_in: Queue, queue_out: Queue) -> None:  # gui creates object bot and interacts with it
-        # self.gamepad = pygame.joystick.Joystick(0)
-        # self.gamepad.init()
         self.queue_in = queue_in
         self.queue_out = queue_out
-        self.portNum = 101
-        self.baudRate = 9600
-        self.delay = 0.05
-        self.arduino = serial.Serial(port=f'/dev/cu.usbmodem{self.portNum}',
-                                     baudrate=self.baudRate,
-                                     timeout=1)
-        sleep(0.5)
+        self.portNum = 14401
+        self.baudRate = 115200
+        self.delay = 0.1
+        # self.arduino = serial.Serial(port=f'/dev/cu.usbmodem{self.portNum}',
+        #                              baudrate=self.baudRate,
+        #                              timeout=1)
+        sleep(2)
 
     def get_send_arduino(self, ls: list):
         sendStr = (str(ls[0]) + "-" +
@@ -35,15 +33,10 @@ class Robot:
                    str(ls[5]) + ".")
         print(sendStr)
         self.arduino.write(sendStr.encode("ascii"))  # write (output) to arduino
-        sleep(0.1)
-        received = self.arduino.readline().decode("ascii")
-        print("recieved " + str(received))
-
-        # while self.arduino.in_waiting == 0:
-        #     pass
-
-        # received_data_list = self.arduino.readline().decode("ascii").split(',')  # read input from arduino
-        # self.put_queue(received_data_list)
+        while self.arduino.in_waiting == 0:
+            pass
+        received_data_list = self.arduino.readline().decode("ascii").split(',')  # read input from arduino
+        self.put_queue(received_data_list)
 
         '''
         messageToSend = messageToSend.encode("ascii")
@@ -69,7 +62,7 @@ class Robot:
         while self.queue_in.empty() == False:
             obj = self.queue_in.get()
 
-        # print('gotten from queue: ')
+        print('gotten from queue: ')
 
         return obj
 

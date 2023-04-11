@@ -5,7 +5,7 @@ from matplotlib.animation import FuncAnimation
 
 tick = 0 # represents each PID output (used for x-axis)
 depth = 0.0
-goal = 2.5
+goal = -2.5
 # p_depth = depth
 # i_depth = depth
 # d_depth = depth
@@ -30,7 +30,7 @@ previous_depth = depth
 max_overshoot = 0
 
 pid_obj = PID_Func.PID()
-pid_obj.tune_PID(500, 0, 0)
+pid_obj.tune_PID(500, 50, 20)
 
 def animate(i):
     # ok for some reason 

@@ -33,7 +33,6 @@ void setup() {
   RF_T.attach(8);
   L_VERT.attach(12); //check 6 and 7 pins(if they are pwm)
   R_VERT.attach(13);
-  delay(1000);
   
 }
 

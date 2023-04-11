@@ -19,25 +19,17 @@ orange = (255, 221, 186)
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 font = pygame.font.SysFont('freesansbold', 32)
 
+slider_vert = Button('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/3))
+slider_horizontal = Button('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/1.5))
 
-slider_vert = Button('/Users/valeriefan/Desktop/Robotics/materov-2022-2023/ControllerTests/Current/ArduinoMega/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/3))
-slider_horizontal = Button('/Users/valeriefan/Desktop/Robotics/materov-2022-2023/ControllerTests/Current/ArduinoMega/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/1.5))
-
-line_vert = SliderLine('/Users/valeriefan/Desktop/Robotics/materov-2022-2023/ControllerTests/Current/ArduinoMega/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/3))
-line_horizontal = SliderLine('/Users/valeriefan/Desktop/Robotics/materov-2022-2023/ControllerTests/Current/ArduinoMega/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/1.5))
-
-
-# slider_vert = Button('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/3))
-# slider_horizontal = Button('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/1.5))
-
-# line_vert = SliderLine('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/3))
-# line_horizontal = SliderLine('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/1.5))
+line_vert = SliderLine('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/3))
+line_horizontal = SliderLine('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/1.5))
 
 text_vert = TextDisplay(font, black, (200, 200), "hi", slider_vert, line_vert)
 text_horizontal = TextDisplay(font, black, (200, 200), "hi", slider_horizontal, line_horizontal)
 
-serial_number = 101
-arduino = serial.Serial(f'/dev/cu.usbmodem{serial_number}', 9600)
+serial_number = 14201
+# arduino = serial.Serial(f'/dev/cu.usbmodem{serial_number}', 9600)
 running = True
 
 sleep(1)
@@ -80,7 +72,7 @@ while running:
         axes = joystick.get_numaxes()
         for index in range(axes):
             axis = joystick.get_axis(index)
-            message.append(axis)
+            message.append(joystick.get_axis(index))
 
         # get joystick button values
         buttons = joystick.get_numbuttons()
@@ -88,13 +80,13 @@ while running:
             button = joystick.get_button(index)
             message.append(button)
 
-    Lx = message[0]
+    Lx = message[0] 
     Ly = message[1]
     Rx = message[3]
-    A = message[5]  # orange button
-    B = message[6]  # button behind orange button
-    X = message[9]  # button 5  increase horizontal
-    Y = message[10]  # button 6  decrease horizontal
+    A = message[5]
+    B = message[6]
+    X = message[9]  # button 5
+    Y = message[10]  # button 6
     LB = message[13]  # button R29
     RB = message[14]  # button R210
 
@@ -102,10 +94,9 @@ while running:
     messageToSend = messageToSend.encode("ascii")
 
     print(messageToSend)
-    arduino.write(messageToSend)
-    sleep(0.1)
-    received = arduino.readline().decode("ascii")
-    print(received)
+    # arduino.write(messageToSend)
+    # received = arduino.readline().decode("ascii")
+    # print(received)
 
     if RB > 0.5:
         slider_vert.rect.move_ip(-text_vert.getPixels(), 0)

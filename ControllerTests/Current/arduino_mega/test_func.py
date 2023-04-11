@@ -15,33 +15,35 @@ def makeString(Lx, Ly, Rx, A, B, percent_horiz, percent_vert):
     Lx = Lx * (1)
     Rx = Rx * (-1)
     
-    #deadband 0.1 deviation
-    if(Lx < 0.1 and Lx > -0.1):
+    # only works for crabbing and back/forth
+    if abs(Lx) > 0 and abs(Ly) > 0.2:
         Lx = 0
-    if(Ly < 0.1 and Ly > -0.1):
         Ly = 0
+    elif abs(Lx) < 0.2 and abs(Ly) > 0:
+        Lx = 0
+        Lx = 0
 
 
     #LINEAR MODE
-    # Front and Back Calculations (cap is 200)
+    # Front and Back Calculations
     br += PWM(Ly) * (capMovement/400) 
     bl += PWM(Ly) * (capMovement/400)
-    fr += PWM(Ly) * (capMovement/400)
-    fl += PWM(Ly) * (capMovement/400)
+    #fr += PWM(Ly) * (capMovement/400)
+
     
 
-    #Crabbing Calculations (cap is 200)
+    #Crabbing Calculations
     br += PWM(Lx)  * (capMovement/400)
-    bl += -PWM(Lx) * (capMovement/400)
+    #bl += -PWM(Lx) * (capMovement/400)
     fr += -PWM(Lx) * (capMovement/400)
-    fl += PWM(Lx)  * (capMovement/400)
+
     
 
-    #Pivoting CALCULATIONS (cap is 100)
-    br += PWM(Rx) * (capPivot/400)
+    #Pivoting CALCULATIONS 
+    #br += PWM(Rx) * (capPivot/400)
     bl += -PWM(Rx)  * (capPivot/400)
     fr += PWM(Rx) * (capPivot/400)
-    fl += -PWM(Rx)  * (capPivot/400)
+
         
         
         

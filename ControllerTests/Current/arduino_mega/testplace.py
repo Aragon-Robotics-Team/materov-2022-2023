@@ -8,7 +8,7 @@ pygame.init()
 pygame.font.init()
 pygame.display.init()
 pygame.joystick.init()
-pygame.display.set_caption(";-; jiaqi is poo")
+pygame.display.set_caption(";-;")
 
 WIDTH, HEIGHT = 520, 580
 SLIDER_X, SLIDER_Y = 52, 52
@@ -19,25 +19,16 @@ orange = (255, 221, 186)
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 font = pygame.font.SysFont('freesansbold', 32)
 
+slider_vert = Button('/Users/jiaqi/Desktop/no/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/3))
+slider_horizontal = Button('/Users/jiaqi/Desktop/no/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/1.5))
 
-slider_vert = Button('/Users/valeriefan/Desktop/Robotics/materov-2022-2023/ControllerTests/Current/ArduinoMega/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/3))
-slider_horizontal = Button('/Users/valeriefan/Desktop/Robotics/materov-2022-2023/ControllerTests/Current/ArduinoMega/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/1.5))
-
-line_vert = SliderLine('/Users/valeriefan/Desktop/Robotics/materov-2022-2023/ControllerTests/Current/ArduinoMega/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/3))
-line_horizontal = SliderLine('/Users/valeriefan/Desktop/Robotics/materov-2022-2023/ControllerTests/Current/ArduinoMega/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/1.5))
-
-
-# slider_vert = Button('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/3))
-# slider_horizontal = Button('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/round5.png', (SLIDER_X,SLIDER_Y), (WIDTH/2, HEIGHT/1.5))
-
-# line_vert = SliderLine('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/3))
-# line_horizontal = SliderLine('/Users/familywan/PyCharmProjects/materov-2022-2023/ControllerTests/Current/Arduino Mega/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/1.5))
+line_vert = SliderLine('/Users/jiaqi/Desktop/no/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/3))
+line_horizontal = SliderLine('/Users/jiaqi/Desktop/no/slider1.png', (BAR_X, BAR_Y), (WIDTH/2, HEIGHT/1.5))
 
 text_vert = TextDisplay(font, black, (200, 200), "hi", slider_vert, line_vert)
 text_horizontal = TextDisplay(font, black, (200, 200), "hi", slider_horizontal, line_horizontal)
 
-serial_number = 101
-arduino = serial.Serial(f'/dev/cu.usbmodem{serial_number}', 9600)
+# arduino = serial.Serial('/dev/cu.usbmodem14201', 9600)
 running = True
 
 sleep(1)
@@ -80,7 +71,7 @@ while running:
         axes = joystick.get_numaxes()
         for index in range(axes):
             axis = joystick.get_axis(index)
-            message.append(axis)
+            message.append(joystick.get_axis(index))
 
         # get joystick button values
         buttons = joystick.get_numbuttons()
@@ -88,32 +79,31 @@ while running:
             button = joystick.get_button(index)
             message.append(button)
 
-    Lx = message[0]
+    Lx = message[0] 
     Ly = message[1]
-    Rx = message[3]
-    A = message[5]  # orange button
-    B = message[6]  # button behind orange button
-    X = message[9]  # button 5  increase horizontal
-    Y = message[10]  # button 6  decrease horizontal
-    LB = message[13]  # button R29
-    RB = message[14]  # button R210
+    Rx = message[2]
+    A = message[6]
+    B = message[7]
+    X = message[8]
+    Y = message[9]
+    LB = message[15]
+    RB = message[16]
 
     messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B, text_horizontal.getPercent(), text_vert.getPercent())
     messageToSend = messageToSend.encode("ascii")
 
     print(messageToSend)
-    arduino.write(messageToSend)
-    sleep(0.1)
-    received = arduino.readline().decode("ascii")
-    print(received)
+    # arduino.write(messageToSend)
+    # received = arduino.readline().decode("ascii")
+    # print(received)
 
-    if RB > 0.5:
-        slider_vert.rect.move_ip(-text_vert.getPixels(), 0)
-    if LB > 0.5:
+    if Y > 0.5:
         slider_vert.rect.move_ip(text_vert.getPixels(), 0)
     if X > 0.5:
+        slider_vert.rect.move_ip(-text_vert.getPixels(), 0)
+    if RB > 0.5:
         slider_horizontal.rect.move_ip(text_horizontal.getPixels(), 0)
-    if Y > 0.5:
+    if LB > 0.5:
         slider_horizontal.rect.move_ip(-text_horizontal.getPixels(), 0)
 
     # display  info
