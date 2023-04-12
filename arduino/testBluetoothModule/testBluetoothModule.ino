@@ -13,7 +13,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-   if (Genotronex.available()){
+   if (!Genotronex.available()){
 BluetoothData=Genotronex.read();
    if(BluetoothData=='1'){   // if number 1 pressed ....
    digitalWrite(ledpin,1);
