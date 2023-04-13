@@ -28,7 +28,7 @@ def takePhotos():
             #/Users/valeriefan/Desktop/materovip/{i}.png  
             cv2.imwrite(f"/Users/valeriefan/Desktop/materovip/test2/{i}.JPG", frame)
             cv2.imshow(f"/Users/valeriefan/Desktop/materovip/test2/{i}.JPG", frame)
-            addExif(f"{i}.JPG")
+            addExif(folder_path, f"{i}.JPG")
 
             # cv2.imwrite(f"C://Users//alexa//Desktop//potos//picture//{i}.png", frame)
             # cv2.imshow(f"C://Users//alexa//Desktop//potos//picture//{i}.png", frame)
@@ -37,9 +37,9 @@ def takePhotos():
         else:
             result = False
     
-def addExif(img_name):
+def addExif(folder, img_name):
     # print(img_path)
-    folder_path = "/Users/valeriefan/Desktop/materovip/test2"
+    folder_path = folder
     with open(f"{folder_path}/{img_name}", 'rb') as img_file:
         img = Image(img_file)
     print(img.has_exif)
@@ -55,13 +55,42 @@ def addExif(img_name):
         new_image_file.write(img.get_file())
     print("saved")
 
+def existingFolder(folder_path):
+    i=1
+    while i < 10:
+        addExif(folder_path, f"{i}.JPG")
+        print(f"exif added to {i}")
+        i+=1
 
-root = tk.Tk()
-run = tk.Button(text="Start Photo Taking", command=takePhotos).pack()
+def takeVideo():
+    videoCaptureObject = cv2.VideoCapture(0)
+    i = 0
+    while True:
+        ret, frame = videoCaptureObject.read()
+        cv2.imshow("Capturing Video", frame)
+            # deletes every frame as the next one comes on, closes all windows when q i`s pressed
+        folder_path = "/Users/valeriefan/Desktop/materovip/test2"
+        cv2.imwrite(f"/Users/valeriefan/Desktop/materovip/test2/{i}.JPG", frame)
+        cv2.imshow(f"/Users/valeriefan/Desktop/materovip/test2/{i}.JPG", frame)
+        addExif(folder_path, f"{i}.JPG")
+        i += 1
+        if cv2.waitKey(1) == ord('q'):
+            videoCaptureObject.release()
+            cv2.destroyAllWindows()
+            break
 
-root.mainloop()
+        # cv2.imwrite(f"C://Users//alexa//Desktop//potos//picture//{i}.png", frame)
+        # cv2.imshow(f"C://Users//alexa//Desktop//potos//picture//{i}.png", frame)
 
-# if __name__ == "__main__":
+
+# root = tk.Tk()
+# run = tk.Button(text="Start Photo Taking", command=takePhotos).pack()
+
+# root.mainloop()
+
+if __name__ == "__main__":
+    takeVideo()
+    # existingFolder("/Users/valeriefan/Desktop/materovip/bowltest")
 
     # addExif("/Users/valeriefan/Desktop/materovip/0.JPG")
     # addExif("/Users/valeriefan/Desktop/IMG_8064.JPG")
