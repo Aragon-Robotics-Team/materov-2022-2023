@@ -21,16 +21,16 @@ def takePhotos():
             cv2.destroyAllWindows()
             break
                 # when s is pressed
-        folder_path = "/Users/valeriefan/Desktop/materovip/test2"
+        folder_path = "C:/Users/alexa/OneDrive/Desktop/photogrammetryPhotos"
         if cv2.waitKey(1) == ord('s'):
             # and the index is less than txhe length of the snapshot list
             # take as snapshot, save it, show it
             #/Users/valeriefan/Desktop/materovip/{i}.png  
-            cv2.imwrite(f"/Users/valeriefan/Desktop/materovip/test2/{i}.JPG", frame)
-            cv2.imshow(f"/Users/valeriefan/Desktop/materovip/test2/{i}.JPG", frame)
+            cv2.imwrite(f"C:/Users/alexa/OneDrive/Desktop/photogrammetryPhotos/{i}.JPG", frame)
+            cv2.imshow(f"C:/Users/alexa/OneDrive/Desktop/photogrammetryPhotos/{i}.JPG", frame)
             addExif(f"{i}.JPG")
 
-            # cv2.imwrite(f"C://Users//alexa//Desktop//potos//picture//{i}.png", frame)
+            # cv2.imwrite(f"C://Users//alexa    //Desktop//potos//picture//{i}.png", frame)
             # cv2.imshow(f"C://Users//alexa//Desktop//potos//picture//{i}.png", frame)
             cv2.waitKey(0)
             i += 1
@@ -39,7 +39,7 @@ def takePhotos():
     
 def addExif(img_name):
     # print(img_path)
-    folder_path = "/Users/valeriefan/Desktop/materovip/test2"
+    folder_path = "C:/Users/alexa/OneDrive/Desktop/photogrammetryPhotos"
     with open(f"{folder_path}/{img_name}", 'rb') as img_file:
         img = Image(img_file)
     print(img.has_exif)
