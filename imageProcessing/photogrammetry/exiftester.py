@@ -45,9 +45,12 @@ def addExif(folder, img_name):
     print(img.has_exif)
     # sorted(img.list_all())
     
-    img.focal_length = 3.6
-    img.make = "opencv screenshot"
-    img.model = "zosi cctv"
+    # img.focal_length = 3.6
+    # img.make = "opencv screenshot"
+    # img.model = "zosi cctv"
+    img.focal_length = 23
+    img.make = "IPhone"
+    img.model = "13"
     # print(f'Focal Length: {img.get("focal_length")}')
     print("set focal length, make, and model")
 
@@ -56,8 +59,8 @@ def addExif(folder, img_name):
     print("saved")
 
 def existingFolder(folder_path):
-    i=1
-    while i < 10:
+    i=4
+    while i < 42:
         addExif(folder_path, f"{i}.JPG")
         print(f"exif added to {i}")
         i+=1
@@ -89,9 +92,8 @@ def takeVideo():
 # root.mainloop()
 
 if __name__ == "__main__":
-    takeVideo()
     # existingFolder("/Users/valeriefan/Desktop/materovip/bowltest")
-
+    existingFolder("/Users/valeriefan/Desktop/materovip/test5")
     # addExif("/Users/valeriefan/Desktop/materovip/0.JPG")
     # addExif("/Users/valeriefan/Desktop/IMG_8064.JPG")
     # addExif("/Users/valeriefan/Desktop/test.JPG")
