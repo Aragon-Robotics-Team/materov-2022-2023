@@ -1,6 +1,6 @@
 #include <Wire.h>
 #include <Servo.h>
-#include "MS5837.h"
+#include <MS5837.h>
 #define TCAADDR 0x70
 
 MS5837 depthSensor;
@@ -13,47 +13,107 @@ double proportion_value, integral_value, derivative_value;
 double depth, goal, depth_diff; // in meters
 double bot_width = 17; //in inches
 
-int FRONT_PWM;
-int BACK_PWM;
-Servo F_VERT;
-Servo B_VERT;
+//global variables for thruster pwms
+int RB_PWM = 1500;
+int LF_PWM = 1500;
+int LB_PWM = 1500;
+int RF_PWM = 1500;
+int FRONT_PWM = 1500;
+int BACK_PWM = 1500;
+
+Servo LF_T; //left front
+Servo LB_T; //left back
+Servo RF_T; //right front
+Servo RB_T; //right back
+Servo F_VERT; //left vertical
+Servo B_VERT; //left vertical
+
 
 void setup() {
   Serial.begin(9600);
   Wire.begin();
   
+  LF_T.attach(13); 
+  RB_T.attach(12);
+  LB_T.attach(11);
+  RF_T.attach(10);
+  F_VERT.attach(9); //check 6 and 7 pins(if they are pwm)
+  B_VERT.attach(8);
+
+  LF_T.writeMicroseconds(1500);
+  LB_T.writeMicroseconds(1500);
+  RF_T.writeMicroseconds(1500);
+  RB_T.writeMicroseconds(1500);
+  F_VERT.writeMicroseconds(1500);
+  B_VERT.writeMicroseconds(1500);
+  
   initDepthSensor(0);
   initMPU(1);
+  
+  //get initial depth, set as goal
+  
 }
 
 
 void loop() {
+  if (Serial.available()) {
+   
+    //getting PWM values pyserial
+    RF_PWM = Serial.readStringUntil('-').toInt();
+    LF_PWM = Serial.readStringUntil('=').toInt();
+    RB_PWM = ((Serial.readStringUntil('+').toInt() - 1500) * (-1)) + 1500;
+    LB_PWM = Serial.readStringUntil('*').toInt();
+    FRONT_PWM = Serial.readStringUntil(',').toInt();
+    BACK_PWM = Serial.readStringUntil('.').toInt();
+  }
+
   getDepth(0);
   getAngle(1);
-
-  Serial.print("Depth: ");
-  Serial.print(depth);
   
-  Serial.print(" | Roll: ");
-  Serial.print(roll);
-  
-  Serial.print(" | Pitch: ");
-  Serial.println(pitch);
+//------ Angle ------
 
   depth_diff = bot_width / (tan(roll - PI/2)); // in inches
   depth_diff /= 39.37; // conversion to meters
 
-  goal = 1.0;
+//------ Depth ------
 
-  FRONT_PWM = PID(depth + depth_diff, goal) + 1500;
-  BACK_PWM = PID(depth, goal) + 1500;
+  if (FRONT_PWM > 1530){  // if vertical thrusters are being moved
+    goal = depth;
+  }
+
+  FRONT_PWM += PID(depth + depth_diff, goal);
+  BACK_PWM += PID(depth, goal);
+
+//------ Thrusters ------
+
+  //send pwm values to thrusters
+  LF_T.writeMicroseconds(LF_PWM);
+  LB_T.writeMicroseconds(LB_PWM);
+  RF_T.writeMicroseconds(RF_PWM);
+  RB_T.writeMicroseconds(RB_PWM);
+  F_VERT.writeMicroseconds(FRONT_PWM);
+  B_VERT.writeMicroseconds(BACK_PWM);
+
+  Serial.println(String((RF_PWM) + "," +
+                 String(LF_PWM) + "," +
+                 String(RB_PWM - 1500) * (-1) + 1500) + "," +
+                 String(LB_PWM) + "," + 
+                 String(FRONT_PWM) + "," +
+                 String(BACK_PWM));
   
   delay(50);
+
+
+//  Serial.print("Depth: ");
+//  Serial.print(depth);
+//  
+//  Serial.print(" | Roll: ");
+//  Serial.print(roll);
+//  
+//  Serial.print(" | Pitch: ");
+//  Serial.println(pitch);
+
 }
-
-
-
-
 
 // change SDA/SCL on mux
 void selectChannel(int channel) {
@@ -151,8 +211,8 @@ double PID(double depth, double goal) {
   derivativeError = error - previousError;
   
   proportion_value = proportionalGain * error;
-  //integral_value = integralGain * integralSum;
-  //derivative_value = derivativeGain * derivativeError;
+  integral_value = integralGain * integralSum;
+  derivative_value = derivativeGain * derivativeError;
 
   pidOutput = proportion_value + integral_value + derivative_value;
   pidOutput = -pidOutput;
