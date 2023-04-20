@@ -83,6 +83,8 @@ while running:
     Lx = message[0] 
     Ly = message[1]
     Rx = message[2]
+    LT = message[4]
+    RT = message[5]
     A = message[6]
     B = message[7]
     X = message[8]
@@ -90,7 +92,7 @@ while running:
     LB = message[15]
     RB = message[16]
 
-    messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B, text_horizontal.getPercent(), text_vert.getPercent())
+    messageToSend = MathFunc.makeString(Lx, Ly, Rx, A, B, LT, RT, text_horizontal.getPercent(), text_vert.getPercent())
     messageToSend = messageToSend.encode("ascii")
 
     arduino.write(messageToSend)

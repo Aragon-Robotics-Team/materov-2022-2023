@@ -3,7 +3,7 @@ def PWM(joyVal): #converting a double to a PWM value
     joyVal = joyVal*Limit
     return joyVal
 
-def makeString(Lx, Ly, Rx, A, B, percent_horiz, percent_vert):
+def makeString(Lx, Ly, Rx, A, B, LT, RT, percent_horiz, percent_vert):
     #Lx-Double/float, Ly-Double/float, Rx-Double/float, A-Boolean, B-Boolean, "Sensitive Mode" - Boolean
     v1 = v2 = fr = fl = br = bl = 1500
     sendStr = "" #constructed string to be sent to the arduino
@@ -56,6 +56,15 @@ def makeString(Lx, Ly, Rx, A, B, percent_horiz, percent_vert):
         v1 -= Vstrength
         v2 -= Vstrength
         #v1 and v2 go down
+
+    LT = (LT+1)/2
+    RT = (RT+1)/2
+
+    v1 -= PWM(RT)/2
+    v2 -= PWM(LT)/2
+    
+
+
 
 
     #capping the pwm values at 1900/1100, also rounding them to the whole number

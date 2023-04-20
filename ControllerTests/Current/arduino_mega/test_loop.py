@@ -28,7 +28,7 @@ line_horizontal = SliderLine('/Users/jiaqi/Desktop/no/slider1.png', (BAR_X, BAR_
 text_vert = TextDisplay(font, black, (200, 200), "hi", slider_vert, line_vert)
 text_horizontal = TextDisplay(font, black, (200, 200), "hi", slider_horizontal, line_horizontal)
 
-serial_number = 14101
+serial_number = 14201
 arduino = serial.Serial(f'/dev/cu.usbmodem{serial_number}', 9600)
 running = True
 
@@ -83,15 +83,11 @@ while running:
     Lx = message[0]
     Ly = message[1]
     Rx = message[3]
+    
     A = message[5]
     B = message[6]
 
-    messageToSend = test_func.makeString(Lx, Ly, Rx, A, B, text_horizontal.getPercent(), text_vert.getPercent())
-    messageToSend = messageToSend.encode("ascii")
-
-    arduino.write(messageToSend)
-    received = arduino.readline().decode("ascii")
-    print(received)
+    print(message)
 
 
     # display  info
